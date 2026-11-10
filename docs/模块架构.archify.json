@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "箭牌 H5 模块架构",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "device-path",
+        "label": "设备下发",
+        "focus": ["page", "http", "turn", "gate", "iot", "arrow"],
+        "note": "页面把设备句交给执行模块，闸门放行后才由 IoT 客户端出站。"
+      },
+      {
+        "id": "room-auth",
+        "label": "进房授权",
+        "focus": ["page", "brtc", "http", "session"],
+        "note": "页面与 BRTC 直接传音视频。密钥留在会话模块，由 HTTP 入口建实例。"
+      },
+      {
+        "id": "side-modules",
+        "label": "帧、补槽与记录",
+        "focus": ["http", "frames", "turn", "resolve", "store"],
+        "note": "帧分类和补槽都不直接打设备。审计与卡片落在本地文件。"
+      }
+    ]
+  },
+  "layout": {
+    "mode": "grid",
+    "origin": [48, 72],
+    "cols": 5,
+    "gapX": 44,
+    "gapY": 88,
+    "cellW": 156,
+    "cellH": 72
+  },
+  "components": [
+    { "id": "brtc", "type": "cloud", "label": "BRTC 房间", "sublabel": "语音 · ASR · TTS", "row": 0, "col": 0 },
+    { "id": "session", "type": "backend", "label": "会话与授权", "sublabel": "session · aiagent", "row": 0, "col": 1 },
+    { "id": "store", "type": "database", "label": "本地记录", "sublabel": "state · audit · cards", "row": 0, "col": 2 },
+    { "id": "page", "type": "frontend", "label": "通话页面", "sublabel": "app.js · turn-gate.js", "row": 1, "col": 0 },
+    { "id": "http", "type": "backend", "label": "HTTP 入口", "sublabel": "server.mjs · topic.mjs", "row": 1, "col": 1 },
+    { "id": "turn", "type": "backend", "label": "下发执行", "sublabel": "turn.mjs", "row": 1, "col": 2 },
+    { "id": "gate", "type": "security", "label": "安全闸门", "sublabel": "policy.mjs", "row": 1, "col": 3 },
+    { "id": "iot", "type": "backend", "label": "IoT 客户端", "sublabel": "iot-client.mjs", "row": 1, "col": 4 },
+    { "id": "arrow", "type": "external", "label": "箭牌 IoT", "sublabel": "列表 · 控制 · 场景", "row": 2, "col": 4 },
+    { "id": "frames", "type": "backend", "label": "帧分类", "sublabel": "frames.mjs", "row": 2, "col": 1 },
+    { "id": "resolve", "type": "backend", "label": "补槽与选设备", "sublabel": "resolve.mjs", "row": 2, "col": 2 }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "浏览器", "wraps": ["page"] },
+    { "kind": "region", "label": "Node 编排进程", "wraps": ["session", "http", "frames", "store", "turn", "resolve", "gate", "iot"] },
+    { "kind": "region", "label": "BRTC", "wraps": ["brtc"] },
+    { "kind": "region", "label": "箭牌平台", "wraps": ["arrow"] }
+  ],
+  "connections": [
+    { "id": "page-http", "from": "page", "to": "http", "label": "/api", "variant": "emphasis" },
+    { "id": "http-turn", "from": "http", "to": "turn", "label": "意图与帧", "variant": "emphasis" },
+    { "id": "turn-gate", "from": "turn", "to": "gate", "label": "判定", "variant": "emphasis" },
+    { "id": "gate-iot", "from": "gate", "to": "iot", "label": "放行", "variant": "emphasis" },
+    { "id": "iot-arrow", "from": "iot", "to": "arrow", "label": "三个接口", "variant": "emphasis", "labelDy": 24 },
+    { "id": "page-brtc", "from": "page", "to": "brtc", "label": "音视频字幕" },
+    { "id": "http-session", "from": "http", "to": "session", "label": "建实例" },
+    { "id": "session-brtc", "from": "session", "to": "brtc", "label": "签名调用" },
+    { "id": "http-frames", "from": "http", "to": "frames", "label": "分类", "labelDy": 24 },
+    { "id": "turn-resolve", "from": "turn", "to": "resolve", "label": "补槽", "labelDy": 24 },
+    { "id": "turn-store", "from": "turn", "to": "store", "label": "审计" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "浏览器", "items": ["sendText 分成统计、报修、设备、进房间", "回合代号在 turn-gate.js"] },
+    { "dot": "emerald", "title": "编排进程", "items": ["密钥只在会话模块", "未放行时 IoT 客户端不出站"] },
+    { "dot": "amber", "title": "外部与旁路", "items": ["BRTC 负责听和说", "统计由 topic.mjs 直连适配层，不进闸门"] }
+  ]
+}

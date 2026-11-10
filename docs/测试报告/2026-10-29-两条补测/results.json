@@ -1,0 +1,34 @@
+{
+  "file": "/tmp/kb-two.jsonl",
+  "at": "2026-10-29T09:34:02.112Z",
+  "results": [
+    {
+      "id": "W31",
+      "style": "口语",
+      "brand": "箭牌",
+      "category": "功能",
+      "question": "箭牌1357还没激活的时候，屏幕上写什么",
+      "answer": "激活前的屏幕显示啊.还没激活时，屏幕上显示LOC。",
+      "ms": 3913,
+      "note": "三位屏LOC",
+      "pass": true,
+      "missing": [],
+      "banned": [],
+      "anyHit": []
+    },
+    {
+      "id": "W27",
+      "style": "口语",
+      "brand": "安华",
+      "category": "参数",
+      "question": "安华NiL125进的水最低不能低于多少度",
+      "answer": "水温要求啊进的水最低不能低于1°C，范围是1到30°C。",
+      "ms": 3767,
+      "note": "进水1到30°C",
+      "pass": true,
+      "missing": [],
+      "banned": [],
+      "anyHit": []
+    }
+  ]
+}

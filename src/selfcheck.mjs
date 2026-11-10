@@ -1,0 +1,287 @@
+// 不连 BRTC、不连真实 IoT 的模块自测。验闸门、字幕摘动作、授权帧拼接。
+import assert from 'node:assert/strict';
+import { SCENARIO, DEVICES } from '../scenario.mjs';
+import { createGate } from './policy.mjs';
+import { actionFromCall, asrUtterance, extractAction, classifyFrame, functionResultFrame, parseFunction, visibleAgent } from './frames.mjs';
+import { topicImage, topicModel, topicView } from './topic.mjs';
+import { buildRole, userEcho, visibleReply } from './roster.mjs';
+import { completeItem, fillTargets, narrowDevices, trustedName } from './resolve.mjs';
+import { agentConfig, licActiveFrame } from './aiagent.mjs';
+import { createTurn } from './turn.mjs';
+
+const gate = createGate({ scenario: SCENARIO, devices: DEVICES.devices });
+
+const night = gate.evaluate({
+  action: 'device.control',
+  targets: [{ deviceName: 'ARROW0617696743520408', cmd: 'switch_night_light', param: 'switch', value: 'on' }],
+});
+assert.equal(night.decision, 'allow');
+assert.equal(night.level, 'M');
+
+const valve = gate.evaluate({
+  action: 'device.control',
+  targets: [{ deviceName: 'ARROW0417663939524510', cmd: 'switch_water_in', param: 'switch', value: 'on' }],
+}, { dryRun: true });
+assert.equal(valve.decision, 'confirm');
+assert.equal(valve.level, 'H');
+
+const unknown = gate.evaluate({ action: 'device.delete', targets: [] });
+assert.equal(unknown.decision, 'deny');
+
+const sample = '好，准备打开夜灯。\n```iot\n{"action":"device.control","targets":[{"deviceName":"ARROW0617696743520408","cmd":"switch_night_light","param":"switch","value":"on"}],"say":"打开夜灯"}\n```';
+const picked = extractAction(sample);
+assert.equal(picked.action.action, 'device.control');
+assert.equal(picked.clean.includes('iot'), false);
+
+const bare = extractAction('请确认。\n{"action":"device.control","targets":[{"deviceName":"ARROW01179421020631","cmd":"switch_watering","param":"switch","value":"on"}],"say":"准备冲水"}');
+assert.equal(bare.action.targets[0].deviceName, 'ARROW01179421020631');
+assert.equal(bare.clean.includes('action'), false);
+assert.equal(bare.clean, '请确认。');
+
+assert.equal(classifyFrame('[E]:[LIC]:[MUST]:x').kind, 'lic-must');
+assert.equal(classifyFrame('[A]:[M]:你好').partial, true);
+assert.equal(classifyFrame('[A]:你好').kind, 'agent');
+assert.equal(asrUtterance('我没有听清，请再说一遍'), '');
+assert.equal(asrUtterance('没听清'), '');
+assert.equal(asrUtterance('把主卫镜柜的夜灯打开'), '把主卫镜柜的夜灯打开');
+assert.equal(topicModel('这个月调用了多少次'), 'iot_calls');
+assert.equal(topicModel('帮我生成检修报告'), 'iot_calls');
+assert.equal(topicModel('哪台用得最久'), 'usage_duration');
+assert.equal(topicModel('把主卫镜柜的夜灯打开'), '');
+const view = topicView('检修报告已生成。\n```html\n<!doctype html><html><body>30</body></html>\n```');
+assert.equal(view.say, '检修报告已生成。');
+assert.equal(view.html.includes('<html>'), true);
+assert.equal(topicView('只有一句结论').html, '');
+assert.equal(topicImage('图片已生成。'), true);
+assert.equal(topicImage('检修报告已生成。'), false);
+assert.equal(visibleAgent('请提供卫浴设备名称（deviceName）和执行动作（cmd）'), '');
+assert.equal(visibleAgent('请提供设备名称和具体操作（如大冲、小冲、夜灯开关等）；其余参数可选。'), '');
+assert.equal(visibleAgent('请提供设备名称和具体指令（如大冲、小冲、夜灯开关等）；其他参数可选提供。'), '');
+assert.equal(visibleAgent('请提供 device ID、name 以及 CMD 操作指令'), '');
+assert.equal(visibleAgent('请提供deviceId、name以及CMD'), '');
+assert.equal(visibleAgent('准备打开夜灯。'), '准备打开夜灯。');
+assert.equal(visibleAgent('夜灯已经为你打开。'), '夜灯已经为你打开。');
+assert.equal(visibleAgent('请告诉我是哪一间卫生间。'), '请告诉我是哪一间卫生间。');
+
+const frame = licActiveFrame({ devId: 'DEVID-ARROW-H5-0001', licKey: 'LIC-TEST', uid: '42' });
+assert.equal(frame.startsWith('[E]:[LIC]:[ACTIVE]:'), true);
+const body = JSON.parse(frame.slice('[E]:[LIC]:[ACTIVE]:'.length));
+assert.equal(body.devId, 'DEVID-ARROW-H5-0001');
+assert.equal(body.licKey, 'LIC-TEST');
+assert.equal(body.uId, '42');
+
+const calls = [];
+const turn = createTurn({
+  scenario: SCENARIO,
+  devices: DEVICES.devices,
+  gate,
+  iot: { control: async (_home, cmdList) => { calls.push(cmdList); return { ok: true, httpStatus: 200, ms: 3, request: { body: cmdList }, response: { code: 200, success: true } }; } },
+  audit: { append: async () => {} },
+});
+const done = await turn.finish({
+  sessionId: 'hs_test',
+  action: picked.action,
+});
+assert.equal(done.cards[0].event, 'demo.gate');
+assert.equal(done.cards[1].event, 'demo.result');
+assert.equal(calls.length, 1);
+assert.equal(calls[0][0].cmd, 'switch_night_light');
+
+const role = buildRole({
+  scenario: SCENARIO,
+  devices: DEVICES.devices,
+  live: { ok: true, rows: [{ deviceName: 'ARROW0617696743520408', deviceTagName: 'QN-PRO智能镜柜', categoryCode: '06', onlineStatus: 1 }] },
+});
+assert.equal(role.includes('ARROW0617696743520408'), true);
+assert.equal(role.includes('主卫'), true);
+assert.equal(role.includes('switch_night_light'), true);
+assert.equal(role.includes('【家庭设备】'), true);
+assert.equal(role.includes('不要把这段清单'), true);
+const echoed = '把主卫的浴缸进水打开\n【家庭设备】deviceName、cmd、param、value 必须逐字使用。\n- 客卫 马桶 离线\nswitch_watering,switch_night_light';
+assert.equal(visibleReply(echoed, '把主卫的浴缸进水打开'), '');
+assert.equal(visibleReply('把主卫的浴缸进水打开 【家庭', '把主卫的浴缸进水打开'), '把主卫的浴缸进水打开 【家庭');
+assert.equal(
+  visibleReply('主卫没有在线的浴缸，这一次没有下发。\n【家庭设备】后面是清单', '把主卫的浴缸进水打开'),
+  '主卫没有在线的浴缸，这一次没有下发。',
+);
+assert.equal(visibleReply('好，准备打开夜灯。', '把夜灯打开'), '好，准备打开夜灯。');
+
+const replay = '把主卫的浴缸进水打开\n【家庭设备】下面是本轮设备事实。\n- 客卫 马桶 ARROWToilet17332949200780 离线\nswitch_watering,switch_night_light';
+const matched = userEcho(replay, '把主卫的浴缸进水打开');
+assert.equal(matched.echo, true);
+assert.equal(matched.text, '把主卫的浴缸进水打开');
+assert.equal(matched.text.includes('ARROWToilet'), false);
+assert.equal(userEcho('把灯打开', '把主卫的浴缸进水打开').echo, false);
+assert.equal(userEcho('用户：把主卫的浴缸进水打开', '把主卫的浴缸进水打开').echo, true);
+assert.equal(userEcho('把主卫的浴', '把主卫的浴缸进水打开').echo, true);
+assert.equal(userEcho('把主卫的夜灯打开', '夜灯打开').echo, false);
+assert.equal(userEcho(replay, '').text, '把主卫的浴缸进水打开');
+const blind = buildRole({ scenario: SCENARIO, devices: DEVICES.devices, live: { ok: false, error: '鉴权失败' } });
+assert.equal(blind.includes('不要编造设备'), true);
+
+const toilets = narrowDevices({
+  devices: DEVICES.devices,
+  live: { rows: DEVICES.devices },
+  userText: '把主卫坐便器的大冲打开',
+  cmd: 'switch_watering',
+});
+assert.equal(toilets.length, 2);
+assert.equal(toilets.every((d) => d.room === '主卫'), true);
+const tub = narrowDevices({
+  devices: DEVICES.devices,
+  live: { rows: DEVICES.devices },
+  userText: '把主卫的浴缸进水打开',
+  cmd: 'switch_water_in',
+});
+assert.equal(tub.length, 1);
+assert.equal(tub[0].deviceName, 'ARROW0417663939524510');
+const filled = completeItem(
+  { deviceName: '', cmd: '', param: '', value: '' },
+  '把主卫的浴缸进水打开',
+  SCENARIO.commands,
+);
+assert.equal(filled.cmd, 'switch_water_in');
+assert.equal(filled.param, 'switch');
+assert.equal(filled.value, 'on');
+const vague = completeItem({ cmd: '', value: '' }, '把设备打开', SCENARIO.commands);
+assert.equal(vague.cmd, '');
+
+const cfg = agentConfig(SCENARIO);
+assert.equal(cfg.role, undefined);
+assert.equal(cfg.sceneRoleCfg, undefined);
+assert.equal(cfg.asr_long_audio_mode, true);
+assert.equal(cfg.hotwords.split(',').includes('大冲'), true);
+assert.equal(cfg.hotwords.split(',').includes('小冲'), true);
+assert.equal(cfg.hotwords.includes('，'), false);
+assert.equal(cfg.asr, undefined);
+assert.equal(role.includes('你是箭牌'), false);
+
+const f = '[F]:' + JSON.stringify({
+  session_id: '1754555833139',
+  content: JSON.stringify({
+    function_name: 'control_device',
+    parameter_list: [{
+      deviceName: 'ARROW0617696743520408',
+      cmd: 'switch_night_light',
+      param: 'switch',
+      value: 'on',
+    }],
+  }),
+});
+const call = parseFunction(f);
+assert.equal(classifyFrame(f).kind, 'function');
+assert.equal(actionFromCall(call).targets[0].cmd, 'switch_night_light');
+const echo = functionResultFrame({ sessionId: call.sessionId, result: 'ok', message: '平台已受理。', speak: '平台已受理。' });
+assert.equal(parseFunction(echo), null);
+assert.equal(echo.includes('"post_function"'), true);
+
+const offline = await turn.finish({
+  sessionId: 'hs_offline',
+  action: {
+    action: 'device.control',
+    targets: [{ deviceName: 'ARROW0617696743520408', cmd: 'switch_night_light', param: 'switch', value: 'on' }],
+  },
+});
+assert.equal(offline.cards.at(-1).data.result, 'SUCCEEDED');
+
+const failing = createTurn({
+  scenario: SCENARIO,
+  devices: DEVICES.devices,
+  gate,
+  iot: {
+    control: async () => ({
+      ok: true, httpStatus: 200, ms: 1,
+      request: {}, response: { success: false, code: 500, msg: '设备离线' },
+    }),
+  },
+  audit: { append: async () => {} },
+});
+const rejected = await failing.finish({
+  sessionId: 'hs_offline',
+  action: picked.action,
+});
+assert.equal(rejected.cards.at(-1).data.result, 'FAILED');
+assert.equal(rejected.receipt.includes('离线'), true);
+
+const progress = await turn.finish({
+  sessionId: 'hs_progress',
+  action: { action: 'repair.open', kind: 'progress' },
+});
+assert.equal(progress.cards[0].data.deeplink, 'arrowhome://repair/list?from=ai_assistant');
+assert.equal(progress.cards[0].data.kind, 'progress');
+assert.equal(progress.receipt, '已准备好进度入口。');
+const report = await turn.finish({
+  sessionId: 'hs_report',
+  action: { action: 'repair.open', kind: 'report' },
+});
+assert.equal(report.cards[0].data.deeplink, 'arrowhome://repair/create?from=ai_assistant');
+assert.equal(report.cards[0].data.kind, 'report');
+
+assert.equal(trustedName('不存在的设备', DEVICES.devices), '');
+assert.equal(trustedName('ARROWToilet17419421020631', DEVICES.devices), 'ARROWToilet17419421020631');
+const pickedToilet = await turn.finish({
+  sessionId: 'hs_pick',
+  userText: '把主卫坐便器的大冲打开',
+  action: {
+    action: 'device.control',
+    targets: [{ deviceName: '', cmd: 'switch_watering', param: 'switch', value: 'on' }],
+  },
+});
+assert.equal(pickedToilet.cards[0].event, 'demo.choose');
+assert.equal(pickedToilet.cards[0].data.choices.length, 2);
+assert.equal(pickedToilet.cards[0].data.choices.every((d) => d.room === '主卫'), true);
+const unknownName = await turn.finish({
+  sessionId: 'hs_unknown',
+  userText: '把主卫坐便器的大冲打开',
+  action: {
+    action: 'device.control',
+    targets: [{ deviceName: '请填写设备名称', cmd: 'switch_watering', param: 'switch', value: 'on' }],
+  },
+});
+assert.equal(unknownName.cards[0].event, 'demo.choose');
+const filledName = fillTargets(
+  [{ deviceName: '不存在', cmd: 'switch_watering', param: 'switch', value: 'on' }],
+  'ARROWToilet17419421020631',
+  DEVICES.devices,
+);
+assert.equal(filledName[0].deviceName, 'ARROWToilet17419421020631');
+const flushOnly = await turn.finish({
+  sessionId: 'hs_flush',
+  userText: '冲水',
+  action: { action: 'device.control', targets: [{ deviceName: '', cmd: '', param: '', value: '' }] },
+});
+assert.equal(flushOnly.cards[0].event, 'demo.choose');
+const afterPick = await turn.finish({
+  sessionId: 'hs_flush_pick',
+  userText: '冲水',
+  action: {
+    action: 'device.control',
+    targets: [{ deviceName: 'ARROWToilet17419421020631', cmd: '', param: '', value: '' }],
+  },
+});
+assert.equal(afterPick.cards.some((c) => c.event === 'demo.result' || c.data?.decision === 'allow'), true);
+assert.equal(afterPick.cards.some((c) => /缺少 value/.test(JSON.stringify(c))), false);
+
+const hungList = createTurn({
+  scenario: SCENARIO,
+  devices: DEVICES.devices,
+  gate,
+  iot: { control: async () => ({ ok: true, httpStatus: 200, ms: 1, response: { code: 200, success: true } }) },
+  audit: { append: async () => {} },
+  liveDevices: () => new Promise(() => {}),
+});
+const toiletLight = await Promise.race([
+  hungList.finish({
+    sessionId: 'hs_hang',
+    userText: '关掉马桶的夜灯。',
+    action: { action: 'device.control', targets: [{ deviceName: '', cmd: '', param: '', value: '' }] },
+  }),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('设备列表挂起后没有回退')), 9000)),
+]);
+assert.equal(toiletLight.cards[0].event, 'demo.choose');
+assert.equal(toiletLight.spoken, '有多台设备符合，选一台再下发。');
+assert.equal(toiletLight.cards[0].data.choices.every((d) => d.category === '马桶'), true);
+assert.equal(toiletLight.cards[0].data.action.targets[0].cmd, 'switch_night_light');
+assert.equal(toiletLight.cards[0].data.action.targets[0].value, 'off');
+
+console.log('selfcheck ok');

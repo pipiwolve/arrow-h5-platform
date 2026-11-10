@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "云上人设意图与 H5 注入",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "app-bind",
+        "label": "应用级绑定",
+        "focus": ["kb", "persona", "funcs", "room"],
+        "note": "人设、七条意图、三个 Function 绑在同一互动应用。建实例不覆盖它们。"
+      },
+      {
+        "id": "product-qa",
+        "label": "产品问答进房间",
+        "focus": ["page", "room", "persona", "kb"],
+        "note": "未命中本机短路的句子只发 [T] 原话。房间用已绑定的人设和知识库模板作答。"
+      },
+      {
+        "id": "function-return",
+        "label": "函数回写",
+        "focus": ["funcs", "room", "frame", "gate", "iot"],
+        "note": "三个 Function 以 SDK 消息回到 H5。闸门放行后才打箭牌 IoT。"
+      },
+      {
+        "id": "local-bypass",
+        "label": "本机短路",
+        "focus": ["page", "local", "roster", "room"],
+        "note": "统计、报修、设备操作不进房间。家庭设备清单有接口，发送路径没有附上。"
+      }
+    ]
+  },
+  "layout": {
+    "mode": "grid",
+    "origin": [48, 36],
+    "cols": 4,
+    "gapX": 72,
+    "gapY": 44,
+    "cellW": 168,
+    "cellH": 64
+  },
+  "components": [
+    { "id": "kb", "type": "cloud", "label": "知识库七意图", "sublabel": "arrow_product_kb", "row": 0, "col": 0 },
+    { "id": "persona", "type": "cloud", "label": "自定义角色人设", "sublabel": "应用级绑定", "row": 0, "col": 1 },
+    { "id": "funcs", "type": "cloud", "label": "三个 Function", "sublabel": "SDK 消息", "row": 0, "col": 2 },
+    { "id": "page", "type": "frontend", "label": "通话页面", "sublabel": "sendText", "row": 1, "col": 0 },
+    { "id": "room", "type": "cloud", "label": "BRTC 房间", "sublabel": "听 · 说 · 检索", "row": 1, "col": 1 },
+    { "id": "frame", "type": "backend", "label": "帧回写", "sublabel": "/api/frame", "row": 1, "col": 2 },
+    { "id": "gate", "type": "security", "label": "安全闸门", "sublabel": "policy.mjs", "row": 1, "col": 3 },
+    { "id": "local", "type": "backend", "label": "本机短路", "sublabel": "统计 · 报修 · 设备", "row": 2, "col": 0 },
+    { "id": "roster", "type": "backend", "label": "家庭设备清单", "sublabel": "【家庭设备】", "row": 2, "col": 1 },
+    { "id": "iot", "type": "external", "label": "箭牌 IoT", "sublabel": "control · scene", "row": 2, "col": 3 }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "百度控制台 · 同一互动应用", "wraps": ["kb", "persona", "funcs"] }
+  ],
+  "connections": [
+    { "id": "kb-persona", "from": "kb", "to": "persona", "label": "七意图同绑" },
+    { "id": "funcs-persona", "from": "funcs", "to": "persona", "label": "三函数同绑" },
+    { "id": "persona-room", "from": "persona", "to": "room", "label": "建实例不覆盖", "variant": "emphasis", "labelAt": [352, 112] },
+    { "id": "page-room", "from": "page", "to": "room", "label": "[T] 原话", "variant": "emphasis" },
+    { "id": "room-frame", "from": "room", "to": "frame", "label": "[A] 与 [F]", "variant": "emphasis" },
+    { "id": "frame-gate", "from": "frame", "to": "gate", "label": "函数槽位", "variant": "emphasis" },
+    { "id": "gate-iot", "from": "gate", "to": "iot", "label": "放行后出站", "variant": "emphasis", "labelAt": [864, 220] },
+    { "id": "page-local", "from": "page", "to": "local", "label": "命中即停", "labelAt": [108, 220] },
+    { "id": "roster-room", "from": "roster", "to": "room", "label": "发送未附上", "variant": "dashed", "labelAt": [352, 220] }
+  ],
+  "cards": [
+    {
+      "dot": "violet",
+      "title": "云上绑定",
+      "items": [
+        "人设、模板 10000101、三个 Function 绑在互动应用上",
+        "七条意图各挂一个库：三款功能、三款故障保修、对照",
+        "建实例不传 sceneRoleCfg，也不传 ragIntentTemplateId"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "当轮注入",
+      "items": [
+        "产品问答只发 [T] 加原话，说明书检索在云上完成",
+        "建实例另注入热词、开场白和长音频识别，不注入人设"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "回注与未注入",
+      "items": [
+        "[F] 进帧回写，闸门放行后才打 IoT，结果帧发回房间",
+        "统计、报修、设备操作留在本机。清单接口在，sayToRoom 未附上"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "id": "arrow-brtc-h5",
+  "brand": {
+    "product": "箭牌智能AI助手",
+    "vendor": "ARROW · BRTC H5",
+    "emptyTitle": "可以直接控制设备，也可以问产品问题",
+    "emptyDesc": "箭牌智能AI助手"
+  },
+  "iot": {
+    "homeId": 933,
+    "appPlatform": "arrow",
+    "deviceSystemPlatform": 0
+  },
+  "agent": {
+    "system": "",
+    "sayhi": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+  },
+  "starters": [
+    "把主卫的浴缸进水打开",
+    "把主卫坐便器的大冲打开",
+    "把主卫镜柜的夜灯打开",
+    "我家坐便器不出水了，要报修",
+    "AKB1357 有哪些功能"
+  ],
+  "riskRules": [
+    {
+      "when": { "cmd": "switch_water_in" },
+      "level": "H",
+      "label": "浴缸进水阀开关",
+      "basis": "打开主卫浴缸进水"
+    },
+    {
+      "when": { "param": "switch" },
+      "level": "M",
+      "label": "常规开关",
+      "basis": "官方指令集里的开关类指令，可逆"
+    }
+  ],
+  "policy": {
+    "confirmAtOrAbove": "H",
+    "denyAtOrAbove": "C",
+    "maxTargetsPerCall": 3,
+    "defaultRiskLevel": "M"
+  },
+  "commands": [
+    { "cmd": "switch_watering", "params": { "switch": ["on"] }, "desc": "马桶大冲", "appliesTo": ["01"] },
+    { "cmd": "switch_watering_small", "params": { "switch": ["on"] }, "desc": "马桶小冲", "appliesTo": ["01"] },
+    { "cmd": "switch_night_light", "params": { "switch": ["on", "off"] }, "desc": "夜灯", "appliesTo": ["01", "06"] },
+    { "cmd": "switch_auto_closing", "params": { "switch": ["on", "off"] }, "desc": "马桶自动翻盖", "appliesTo": ["01"] },
+    { "cmd": "switch_kicking", "params": { "switch": ["on", "off"] }, "desc": "马桶脚触感应", "appliesTo": ["01"] },
+    { "cmd": "switch_auto_oiling_porcelain", "params": { "switch": ["on", "off"] }, "desc": "马桶自动润瓷", "appliesTo": ["01"] },
+    { "cmd": "switch_onoff", "params": { "switch": ["on", "off"] }, "desc": "开关", "appliesTo": ["01", "04", "06"] },
+    { "cmd": "switch_water_in", "params": { "switch": ["on", "off"] }, "desc": "浴缸进水", "appliesTo": ["04"] }
+  ],
+  "repair": {
+    "deeplink": {
+      "report": "arrowhome://repair/create?from=ai_assistant",
+      "progress": "arrowhome://repair/list?from=ai_assistant"
+    },
+    "report": {
+      "note": "已准备好报修入口。",
+      "cardTitle": "报修",
+      "cardBody": "助手不创建工单。点击后进入箭牌 App 的报修页，填写设备和问题。",
+      "linkText": "打开报修页"
+    },
+    "progress": {
+      "note": "已准备好进度入口。",
+      "cardTitle": "报修进度",
+      "cardBody": "助手不查询工单。点击后进入箭牌 App 的报修记录，查看受理和派工进度。",
+      "linkText": "查看报修进度"
+    }
+  }
+}
