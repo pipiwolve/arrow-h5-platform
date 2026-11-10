@@ -84,6 +84,7 @@ const api = async (path, opts) => {
     };
   }
   if (path === '/api/config') return { ready: false, missing: [] };
+  if (path === '/api/roster') return { text: '【家庭设备】\n- 主卫 坐便器 ONLY 在线' };
   return {};
 };
 
@@ -114,7 +115,7 @@ const appSrc = fs.readFileSync(new URL('../public/app.js', import.meta.url), 'ut
   .replace("api('/api/config').then((cfg) => {", 'Promise.resolve({ ready: false, missing: [] }).then((cfg) => {');
 context.createTurnGate = null;
 vm.runInContext(gateSrc, context);
-vm.runInContext(appSrc + '\nglobalThis.__sendText = sendText;\nglobalThis.__startHold = startHold;\nglobalThis.__stopHold = stopHold;\nglobalThis.__finishDictation = finishDictation;\nglobalThis.__onAgentFrame = onAgentFrame;\nglobalThis.__session = () => { sessionId = "hs_test"; licPassed = true; };', context);
+vm.runInContext(appSrc + '\nglobalThis.__sendText = sendText;\nglobalThis.__startHold = startHold;\nglobalThis.__stopHold = stopHold;\nglobalThis.__finishDictation = finishDictation;\nglobalThis.__onAgentFrame = onAgentFrame;\nglobalThis.__setRoute = (value) => { deviceRoute = value; };\nglobalThis.__session = () => { sessionId = "hs_test"; licPassed = true; };', context);
 context.__session();
 
 function nodeText(node) {
@@ -400,5 +401,27 @@ assert.equal(sent.length, 1, sent.join(' | '));
 assert.equal(sent[0].includes('"result":"ok"'), true);
 assert.equal(sent[0].includes('post_function'), false);
 assert.equal(sent[0].includes('room-1'), true);
+
+// cloud 路由不再本机补槽。设备指令进房间，并附上家庭设备。
+el('stream').children.length = 0;
+sent.length = 0;
+apiLog.length = 0;
+context.__setRoute('cloud');
+await context.__sendText('来个大冲');
+assert.equal(apiLog.includes('/api/intent'), false, apiLog.join(','));
+assert.ok(apiLog.includes('/api/roster'), apiLog.join(','));
+assert.equal(sent.some((frame) => frame.startsWith('[T]:来个大冲\n【家庭设备】')), true, sent.join(' | '));
+assert.equal(agentLines().some((line) => line.includes('选一台')), false);
+
+el('stream').children.length = 0;
+sent.length = 0;
+await context.__sendText('帮我冲个马桶');
+assert.equal(sent.some((frame) => frame.startsWith('[T]:帮我冲个马桶\n【家庭设备】')), true, sent.join(' | '));
+
+el('stream').children.length = 0;
+sent.length = 0;
+await context.__sendText('AKB1357有哪些功能');
+assert.ok(sent.includes('[T]:AKB1357有哪些功能'), sent.join(' | '));
+assert.equal(sent.some((frame) => frame.includes('【家庭设备】')), false);
 
 console.log('send-text ok');

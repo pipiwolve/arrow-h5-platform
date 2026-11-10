@@ -56,11 +56,25 @@ const FN_ACTION = {
   open_repair: 'repair.open',
 };
 
+/** 控制台有时把每个槽位拆成 parameter_list 里的一项。合并后再读。 */
+function mergeParams(params) {
+  const list = Array.isArray(params) ? params : [params];
+  const row = {};
+  for (const item of list) {
+    if (!item || typeof item !== 'object') continue;
+    for (const [key, value] of Object.entries(item)) {
+      if (value === undefined || value === null || value === '') continue;
+      row[key] = value;
+    }
+  }
+  return row;
+}
+
 /** 把 [F] 的 parameter_list 收成闸门认识的 action。未知意图返回 null。 */
 export function actionFromCall(call) {
   const action = FN_ACTION[call?.name];
   if (!action) return null;
-  const row = call.params?.[0] && typeof call.params[0] === 'object' ? call.params[0] : {};
+  const row = mergeParams(call?.params);
   if (action === 'device.control') {
     return {
       action,

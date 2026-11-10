@@ -171,6 +171,23 @@ const f = '[F]:' + JSON.stringify({
 const call = parseFunction(f);
 assert.equal(classifyFrame(f).kind, 'function');
 assert.equal(actionFromCall(call).targets[0].cmd, 'switch_night_light');
+const split = parseFunction('[F]:' + JSON.stringify({
+  content: JSON.stringify({
+    function_name: 'control_device',
+    parameter_list: [
+      { param: 'switch' },
+      { cmd: 'switch_water_in' },
+      { deviceName: 'ARROW0417663939524510' },
+      { value: 'on' },
+      { say: '准备进水' },
+    ],
+  }),
+}));
+const splitAction = actionFromCall(split);
+assert.equal(splitAction.targets[0].cmd, 'switch_water_in');
+assert.equal(splitAction.targets[0].deviceName, 'ARROW0417663939524510');
+assert.equal(splitAction.targets[0].value, 'on');
+assert.equal(splitAction.say, '准备进水');
 const echo = functionResultFrame({ sessionId: call.sessionId, result: 'ok', message: '平台已受理。', speak: '平台已受理。' });
 assert.equal(parseFunction(echo), null);
 assert.equal(echo.includes('"post_function"'), true);

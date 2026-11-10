@@ -24,7 +24,7 @@ export function buildRole({ scenario, devices, live }) {
       const cat = CATEGORY[d.categoryCode || known.categoryCode] || '';
       const online = d.onlineStatus ? '在线' : '离线';
       const caps = Array.isArray(known.capability) ? known.capability.join(',') : '';
-      lines.push(`- ${[room, tag, cat, d.deviceName, online, caps].filter(Boolean).join(' ')}`);
+      lines.push(`- 设备号 ${d.deviceName}；${[room, tag, cat, online].filter(Boolean).join(' ')}；可执行 ${caps}`);
     }
     lines.push('同一房间有多台同型号时先问是哪一台。离线设备也可以提交，正文写准备发给平台，不要写已经执行。');
   }

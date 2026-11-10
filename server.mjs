@@ -137,6 +137,7 @@ const routes = {
       fixture: FIXTURE_NAME,
       homeId: SCENARIO.iot.homeId,
       voice: true,
+      deviceRoute: ENV.DEVICE_ROUTE === 'local' ? 'local' : 'cloud',
       topic: Boolean(ENV.TOPIC_API_KEY && ENV.TOPIC_ADAPTER_URL),
     };
   },

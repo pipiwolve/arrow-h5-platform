@@ -22,6 +22,7 @@ let lastAsk = '';
 let roomTimer = 0;
 const spokenLocal = new Set();
 let localIntentAt = 0;
+let deviceRoute = 'local';
 
 function stopSpeech() {
   const media = $('therevideo');
@@ -652,11 +653,12 @@ async function openTurn(kind) {
   return gen;
 }
 
-async function sayToRoom(value) {
+async function sayToRoom(value, appendix) {
   const gen = await openTurn('room');
   const latest = turns.waiting() ? turns.next() : value;
   if (!gen || stale(gen) || latest !== value) return;
-  window.BRTC_SendMessageToUser('[T]:' + value);
+  const extra = appendix ? `\n${appendix}` : '';
+  window.BRTC_SendMessageToUser('[T]:' + value + extra);
   sentText = value;
   lastAsk = value;
   if (userBubble && sameText(bubbleText(userBubble).textContent, value)) {
@@ -763,7 +765,7 @@ async function sendText(text) {
     if (turns.finishLocal(gen)) releaseRoom(gen);
     return;
   }
-  if (wantsDevice(value)) {
+  if (wantsDevice(value) && deviceRoute !== 'cloud') {
     rememberAsk(value);
     localIntentAt = Date.now();
     const pendingBubble = addBubble('agent', '正在确认设备…');
@@ -796,7 +798,16 @@ async function sendText(text) {
     return;
   }
   if (typeof window.BRTC_SendMessageToUser !== 'function') return;
-  await sayToRoom(value);
+  let appendix = '';
+  if (deviceRoute === 'cloud' && !PRODUCT_ASK.test(value)) {
+    try {
+      const roster = await api('/api/roster');
+      appendix = roster.text || '';
+    } catch (e) {
+      addBubble('agent', '设备清单没有取到，这一句只把原话送进房间。');
+    }
+  }
+  await sayToRoom(value, appendix);
 }
 
 $('textForm').onsubmit = (e) => {
@@ -982,7 +993,7 @@ function enableStarters() {
 }
 
 api('/api/config').then((cfg) => {
-
+  deviceRoute = cfg.deviceRoute === 'cloud' ? 'cloud' : 'local';
   $('credHint').textContent = cfg.ready ? '' : `还不能连接，缺 ${cfg.missing.join('、')}`;
   if (cfg.ready) startCall();
 }).catch((e) => { $('credHint').textContent = e.message; });
