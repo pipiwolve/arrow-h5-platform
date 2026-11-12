@@ -2,10 +2,11 @@
 // 多台都对得上就返回 choices，由页面让用户点。deviceName 只取列表里的值。
 
 const CATEGORY = { '01': '马桶', '04': '浴缸', '06': '镜柜' };
-const HINTS = [
-  [/坐便器|马桶|大冲|小冲|翻盖|脚触|润瓷/, '01'],
-  [/浴缸|进水|放水/, '04'],
-  [/镜柜|夜灯/, '06'],
+// 品类只认设备名的说法。「夜灯」是动作不是品类，放进这里会把马桶的夜灯挤掉。
+const CATEGORY_HINTS = [
+  [/坐便器|马桶/, '01'],
+  [/浴缸/, '04'],
+  [/镜柜/, '06'],
 ];
 // 客户指令集里的说法。长说法放前面，避免「小冲」被「冲水」截走。
 const COMMAND_HINTS = [
@@ -22,8 +23,9 @@ export function narrowDevices({ devices, live, userText, cmd }) {
   const rows = Array.isArray(live?.rows) && live.rows.length ? live.rows : devices;
   const text = String(userText || '');
   const room = /主卫/.test(text) ? '主卫' : /客卫/.test(text) ? '客卫' : '';
-  const hinted = HINTS.find(([re]) => re.test(text))?.[1] || '';
+  const hinted = CATEGORY_HINTS.find(([re]) => re.test(text))?.[1] || '';
   const specCategory = cmd ? categoryFor(cmd, devices) : '';
+  // 原话说了品类就用它；没说，再用指令能覆盖的唯一品类。两个都空就不按品类收窄。
   const category = hinted || specCategory;
   const capable = new Set(
     cmd ? rows.filter((row) => {
@@ -35,7 +37,8 @@ export function narrowDevices({ devices, live, userText, cmd }) {
     const known = devices.find((d) => d.deviceName === row.deviceName) || row;
     if (room && known.room && known.room !== room) return false;
     if (category && known.categoryCode && known.categoryCode !== category) return false;
-    if (cmd && capable.size && Array.isArray(known.capability) && !known.capability.includes(cmd)) return false;
+    if (cmd && (!Array.isArray(known.capability) || !known.capability.length)) return false;
+    if (cmd && capable.size && !known.capability.includes(cmd)) return false;
     return true;
   });
   return matched.map((row) => {

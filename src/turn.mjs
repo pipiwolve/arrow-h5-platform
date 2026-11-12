@@ -53,6 +53,9 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
   function receipt(card) {
     const data = card?.data || {};
     if (card?.event === 'demo.repair') return data.note || '已给出报修入口。';
+    if (card?.event === 'demo.gate' && data.decision === 'deny') {
+      return (data.reasons || []).join('；') || '这一次没有下发。';
+    }
     if (card?.event !== 'demo.result') return '';
     const body = data.iotResponse && typeof data.iotResponse === 'object' ? data.iotResponse : null;
     const msg = body?.msg || body?.message || data.error || '';
@@ -95,8 +98,36 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
       return { cards, receipt: note };
     }
 
-    const completed = completeAction(action, input.userText);
-    const chosen = await chooseDevice(completed, input.userText);
+    // fill: on = 本机补槽收窄（默认）；off = 只校验；card = 云端填的那台排第一，出卡让人点。
+    const mode = input.fill || 'on';
+    if (mode === 'card' && action.action === 'device.control') {
+      const target = (action.targets || [])[0] || {};
+      const live = await loadLive(liveDevices);
+      const choices = narrowDevices({ devices, live, userText: input.userText, cmd: target.cmd });
+      if (choices.length) {
+        const pick = trustedName(target.deviceName, devices);
+        const ordered = pick
+          ? [...choices.filter((c) => c.deviceName === pick), ...choices.filter((c) => c.deviceName !== pick)]
+          : choices;
+        const say = '点一下要把指令发给哪台设备。';
+        cards.push({
+          event: 'demo.choose',
+          data: {
+            choiceId: 'ch_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+            action: {
+              ...action,
+              targets: (action.targets || []).map((item) => ({ ...item, deviceName: '' })),
+            },
+            choices: ordered,
+            preferred: pick || '',
+            say,
+          },
+        });
+        return { cards, spoken: say };
+      }
+    }
+    const completed = mode === 'on' ? completeAction(action, input.userText) : action;
+    const chosen = mode === 'on' ? await chooseDevice(completed, input.userText) : { action: completed };
     if (chosen.none) {
       const say = '名下没有对得上的设备，这一次没有下发。';
       cards.push({ event: 'demo.gate', data: { decision: 'deny', level: 'X', reasons: [say] } });
@@ -129,7 +160,10 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
     }
     const last = cards[cards.length - 1];
     const line = (action.say || '').trim();
-    return { cards, verdict, receipt: receipt(last), spoken: line || receipt(last) };
+    const note = receipt(last);
+    // 被闸门拒绝时，模型写的那句「准备冲水」不成立，播报改成拒绝原因。
+    const spoken = verdict.decision === 'deny' ? note : (line || note);
+    return { cards, verdict, receipt: note, spoken };
   }
 
   function completeAction(action, userText) {
@@ -157,12 +191,16 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
     return Promise.race([pending, timeout]);
   }
 
+  const NAMED = /主卫|客卫|11楼|楼上|楼下|AKB|AQW|QN-|ACH/;
+
   async function chooseDevice(action, userText) {
     const lists = action.action === 'scene.create'
       ? [action.actionList]
       : action.action === 'device.control' ? [action.targets] : [];
     const known = (name) => trustedName(name, devices);
-    const needsPick = lists.flat().some((item) => item && !known(item.deviceName));
+    // 原话没点名房间或型号时，模型猜的哪一台都不算数，一律按原话收窄。
+    const unnamed = !NAMED.test(String(userText || ''));
+    const needsPick = unnamed || lists.flat().some((item) => item && !known(item.deviceName));
     if (!needsPick) return { action };
     const live = await loadLive(liveDevices);
     const cmd = lists.flat().find((item) => item?.cmd)?.cmd || '';

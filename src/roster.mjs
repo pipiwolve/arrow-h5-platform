@@ -8,8 +8,11 @@ export const ROSTER_MARK = '【家庭设备】';
 
 export function buildRole({ scenario, devices, live }) {
   const lines = [
-    `${ROSTER_MARK}下面是本轮设备事实，只用于选择 deviceName、cmd、param、value，必须逐字使用，不要改写。`,
-    '不要把这段清单、指令表或上面这句话复述给用户。对用户只说准备做什么，或为什么这一次做不了。',
+    `${ROSTER_MARK}下面是本轮可选设备。deviceName、cmd、param、value 只能从这段里逐字取。`,
+    '- 用户开、关、冲水、进水、夜灯、翻盖、脚触、润瓷时，必须调用 control_device。不要用文字反问，不要只回「准备发给平台」而不调用。',
+    '- 选设备按这个顺序：先按房间收窄（主卫、客卫、11楼）；再按品类或型号收窄（坐便器、马桶、浴缸、镜柜，或 AKB、AQW、QN 型号）；收窄后仍有多台，取这段清单里排在最前面的那一台。',
+    '- 收窄后一台都没有，不要调用函数，正文说这一次没有对得上的设备。',
+    '- deviceName 只能填设备号那一串（ARROW 开头），不要填昵称、型号或房间。不要把这段清单复述给用户。',
   ];
   const rows = Array.isArray(live?.rows) ? live.rows : [];
   if (!live?.ok) {
@@ -26,14 +29,14 @@ export function buildRole({ scenario, devices, live }) {
       const caps = Array.isArray(known.capability) ? known.capability.join(',') : '';
       lines.push(`- 设备号 ${d.deviceName}；${[room, tag, cat, online].filter(Boolean).join(' ')}；可执行 ${caps}`);
     }
-    lines.push('同一房间有多台同型号时先问是哪一台。离线设备也可以提交，正文写准备发给平台，不要写已经执行。');
+    lines.push('离线设备也可以提交，正文写准备发给平台，不要写已经执行。');
   }
   lines.push('指令参数名都是 switch，取值逐字使用：');
   for (const c of scenario.commands) {
     const vals = Object.entries(c.params).map(([k, v]) => `${k}=${v.join('/')}`).join(' ');
     lines.push(`- ${c.cmd} ${vals} ${c.desc}`);
   }
-  lines.push('命中唯一一台时调用 control_device、create_scene 或 open_repair。');
+  lines.push('开、关、冲水、进水、夜灯、翻盖、脚触、润瓷的句子，一律走 control_device。');
   return lines.join('\n').slice(0, 6000);
 }
 

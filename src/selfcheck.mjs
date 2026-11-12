@@ -81,11 +81,21 @@ const turn = createTurn({
 const done = await turn.finish({
   sessionId: 'hs_test',
   action: picked.action,
+  userText: '把主卫的镜柜夜灯打开',
 });
 assert.equal(done.cards[0].event, 'demo.gate');
 assert.equal(done.cards[1].event, 'demo.result');
 assert.equal(calls.length, 1);
 assert.equal(calls[0][0].cmd, 'switch_night_light');
+
+// 原话没点名房间或型号时，模型填的那台不算数，先收窄。
+const unnamedTurn = await turn.finish({
+  sessionId: 'hs_test',
+  action: picked.action,
+  userText: '关掉夜灯',
+});
+assert.equal(unnamedTurn.cards[0].event, 'demo.choose');
+assert.equal(calls.length, 1);
 
 const role = buildRole({
   scenario: SCENARIO,
@@ -194,6 +204,7 @@ assert.equal(echo.includes('"post_function"'), true);
 
 const offline = await turn.finish({
   sessionId: 'hs_offline',
+  userText: '把主卫的镜柜夜灯打开',
   action: {
     action: 'device.control',
     targets: [{ deviceName: 'ARROW0617696743520408', cmd: 'switch_night_light', param: 'switch', value: 'on' }],
@@ -215,6 +226,7 @@ const failing = createTurn({
 });
 const rejected = await failing.finish({
   sessionId: 'hs_offline',
+  userText: '把主卫的镜柜夜灯打开',
   action: picked.action,
 });
 assert.equal(rejected.cards.at(-1).data.result, 'FAILED');
@@ -270,7 +282,7 @@ const flushOnly = await turn.finish({
 assert.equal(flushOnly.cards[0].event, 'demo.choose');
 const afterPick = await turn.finish({
   sessionId: 'hs_flush_pick',
-  userText: '冲水',
+  userText: '客卫冲一下',
   action: {
     action: 'device.control',
     targets: [{ deviceName: 'ARROWToilet17419421020631', cmd: '', param: '', value: '' }],
@@ -278,6 +290,16 @@ const afterPick = await turn.finish({
 });
 assert.equal(afterPick.cards.some((c) => c.event === 'demo.result' || c.data?.decision === 'allow'), true);
 assert.equal(afterPick.cards.some((c) => /缺少 value/.test(JSON.stringify(c))), false);
+// 原话没点名房间时，模型填的设备号也不直接执行，先收窄。
+const unnamedPick = await turn.finish({
+  sessionId: 'hs_flush_pick',
+  userText: '冲一下',
+  action: {
+    action: 'device.control',
+    targets: [{ deviceName: 'ARROWToilet17419421020631', cmd: 'switch_watering', param: 'switch', value: 'on' }],
+  },
+});
+assert.equal(unnamedPick.cards[0].event, 'demo.choose');
 
 const hungList = createTurn({
   scenario: SCENARIO,

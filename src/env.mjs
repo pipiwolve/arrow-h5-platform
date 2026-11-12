@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ALWAYS_FROM_PROCESS = ['IOT_FIXTURE', 'BRTC_DIRECT'];
+const ALWAYS_FROM_PROCESS = ['IOT_FIXTURE', 'BRTC_DIRECT', 'DEVICE_FILL'];
 
 export function loadEnv(root) {
   const p = path.join(root, '.env');

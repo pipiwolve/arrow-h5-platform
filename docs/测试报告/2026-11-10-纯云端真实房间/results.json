@@ -1,0 +1,1726 @@
+[
+  {
+    "group": "自动翻盖打开",
+    "text": "打开自动翻盖",
+    "cmd": "switch_auto_closing",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "打开自动翻盖"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/01-switch_auto_closing-on.png"
+  },
+  {
+    "group": "自动翻盖打开",
+    "text": "开启自动翻盖",
+    "cmd": "switch_auto_closing",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开启自动翻盖"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/02-switch_auto_closing-on.png"
+  },
+  {
+    "group": "自动翻盖打开",
+    "text": "自动翻盖打开",
+    "cmd": "switch_auto_closing",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "自动翻盖打开"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/03-switch_auto_closing-on.png"
+  },
+  {
+    "group": "自动翻盖打开",
+    "text": "把自动翻盖打开",
+    "cmd": "switch_auto_closing",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把自动翻盖打开"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/04-switch_auto_closing-on.png"
+  },
+  {
+    "group": "自动翻盖打开",
+    "text": "开自动翻盖",
+    "cmd": "switch_auto_closing",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开自动翻盖"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/05-switch_auto_closing-on.png"
+  },
+  {
+    "group": "自动翻盖打开",
+    "text": "启用自动翻盖",
+    "cmd": "switch_auto_closing",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "启用自动翻盖"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/06-switch_auto_closing-on.png"
+  },
+  {
+    "group": "自动翻盖打开",
+    "text": "自动翻盖开一下",
+    "cmd": "switch_auto_closing",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "自动翻盖开一下"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/07-switch_auto_closing-on.png"
+  },
+  {
+    "group": "自动翻盖关闭",
+    "text": "关闭自动翻盖",
+    "cmd": "switch_auto_closing",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble user",
+        "text": "关闭自动翻盖"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/08-switch_auto_closing-off.png"
+  },
+  {
+    "group": "自动翻盖关闭",
+    "text": "关掉自动翻盖",
+    "cmd": "switch_auto_closing",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关掉自动翻盖"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/09-switch_auto_closing-off.png"
+  },
+  {
+    "group": "自动翻盖关闭",
+    "text": "自动翻盖关了",
+    "cmd": "switch_auto_closing",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "自动翻盖关了"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备将客卫 AKB1621-4G 智能坐便器的自动翻盖关闭。\n因同一房间有多台同型号设备，需确认您指的是哪一台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/10-switch_auto_closing-off.png"
+  },
+  {
+    "group": "自动翻盖关闭",
+    "text": "把自动翻盖关掉",
+    "cmd": "switch_auto_closing",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把自动翻盖关掉"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/11-switch_auto_closing-off.png"
+  },
+  {
+    "group": "自动翻盖关闭",
+    "text": "停用自动翻盖",
+    "cmd": "switch_auto_closing",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "停用自动翻盖"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/12-switch_auto_closing-off.png"
+  },
+  {
+    "group": "自动翻盖关闭",
+    "text": "关闭自动翻盖功能",
+    "cmd": "switch_auto_closing",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关闭自动翻盖功能"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/13-switch_auto_closing-off.png"
+  },
+  {
+    "group": "自动翻盖关闭",
+    "text": "别自动翻盖了",
+    "cmd": "switch_auto_closing",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "别自动翻盖了"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/14-switch_auto_closing-off.png"
+  },
+  {
+    "group": "脚触打开",
+    "text": "打开脚触感应",
+    "cmd": "switch_kicking",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "打开脚触感应"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/15-switch_kicking-on.png"
+  },
+  {
+    "group": "脚触打开",
+    "text": "开启脚触感应",
+    "cmd": "switch_kicking",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开启脚触感应"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/16-switch_kicking-on.png"
+  },
+  {
+    "group": "脚触打开",
+    "text": "脚触感应打开",
+    "cmd": "switch_kicking",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "脚触感应打开"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/17-switch_kicking-on.png"
+  },
+  {
+    "group": "脚触打开",
+    "text": "把脚触感应打开",
+    "cmd": "switch_kicking",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把脚触感应打开"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/18-switch_kicking-on.png"
+  },
+  {
+    "group": "脚触打开",
+    "text": "开脚触感应",
+    "cmd": "switch_kicking",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开脚触感应"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/19-switch_kicking-on.png"
+  },
+  {
+    "group": "脚触打开",
+    "text": "启用脚触感应",
+    "cmd": "switch_kicking",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "启用脚触感应"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/20-switch_kicking-on.png"
+  },
+  {
+    "group": "脚触打开",
+    "text": "脚触感应开一下",
+    "cmd": "switch_kicking",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "脚触感应开一下"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/21-switch_kicking-on.png"
+  },
+  {
+    "group": "脚触关闭",
+    "text": "关闭脚触感应",
+    "cmd": "switch_kicking",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关闭脚触感应"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/22-switch_kicking-off.png"
+  },
+  {
+    "group": "脚触关闭",
+    "text": "关掉脚触感应",
+    "cmd": "switch_kicking",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关掉脚触感应"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/23-switch_kicking-off.png"
+  },
+  {
+    "group": "脚触关闭",
+    "text": "脚触感应关了",
+    "cmd": "switch_kicking",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "脚触感应关了"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/24-switch_kicking-off.png"
+  },
+  {
+    "group": "脚触关闭",
+    "text": "把脚触感应关掉",
+    "cmd": "switch_kicking",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把脚触感应关掉"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/25-switch_kicking-off.png"
+  },
+  {
+    "group": "脚触关闭",
+    "text": "停用脚触感应",
+    "cmd": "switch_kicking",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "停用脚触感应"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/26-switch_kicking-off.png"
+  },
+  {
+    "group": "脚触关闭",
+    "text": "关闭脚触感应功能",
+    "cmd": "switch_kicking",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关闭脚触感应功能"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/27-switch_kicking-off.png"
+  },
+  {
+    "group": "脚触关闭",
+    "text": "别脚触感应了",
+    "cmd": "switch_kicking",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "别脚触感应了"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/28-switch_kicking-off.png"
+  },
+  {
+    "group": "大冲",
+    "text": "打开大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "打开大冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/29-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "开启大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开启大冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/30-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "开始大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开始大冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/31-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "大冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/32-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "来个大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "来个大冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台，执行大冲操作。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/33-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "帮我大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "帮我大冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/34-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "我要大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "我要大冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台，执行大冲。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/35-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "启动大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "启动大冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/36-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "开大冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开大冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/37-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "冲一下",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "冲一下"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/38-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "冲水",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "冲水"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/39-switch_watering-on.png"
+  },
+  {
+    "group": "大冲",
+    "text": "冲",
+    "cmd": "switch_watering",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/40-switch_watering-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "打开小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "打开小冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/41-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "开启小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开启小冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/42-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "开始小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开始小冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/43-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "小冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/44-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "来个小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "来个小冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/45-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "帮我小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "帮我小冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台：主卫 AKB1357智能坐便器 小冲。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/46-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "我要小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "我要小冲"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/47-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "启动小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "启动小冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台：启动小冲。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/48-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "开小冲",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开小冲"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/49-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "小便冲水",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "小便冲水"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/50-switch_watering_small-on.png"
+  },
+  {
+    "group": "小冲",
+    "text": "冲小",
+    "cmd": "switch_watering_small",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "冲小"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/51-switch_watering_small-on.png"
+  },
+  {
+    "group": "润瓷打开",
+    "text": "打开自动润瓷",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "打开自动润瓷"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/52-switch_auto_oiling_porcelain-on.png"
+  },
+  {
+    "group": "润瓷打开",
+    "text": "开启自动润瓷",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开启自动润瓷"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/53-switch_auto_oiling_porcelain-on.png"
+  },
+  {
+    "group": "润瓷打开",
+    "text": "自动润瓷打开",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "自动润瓷打开"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/54-switch_auto_oiling_porcelain-on.png"
+  },
+  {
+    "group": "润瓷打开",
+    "text": "把自动润瓷打开",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把自动润瓷打开"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/55-switch_auto_oiling_porcelain-on.png"
+  },
+  {
+    "group": "润瓷打开",
+    "text": "开自动润瓷",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开自动润瓷"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/56-switch_auto_oiling_porcelain-on.png"
+  },
+  {
+    "group": "润瓷打开",
+    "text": "启用自动润瓷",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "启用自动润瓷"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/57-switch_auto_oiling_porcelain-on.png"
+  },
+  {
+    "group": "润瓷打开",
+    "text": "自动润瓷开一下",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "自动润瓷开一下"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/58-switch_auto_oiling_porcelain-on.png"
+  },
+  {
+    "group": "润瓷关闭",
+    "text": "关闭自动润瓷",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关闭自动润瓷"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/59-switch_auto_oiling_porcelain-off.png"
+  },
+  {
+    "group": "润瓷关闭",
+    "text": "关掉自动润瓷",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关掉自动润瓷"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台：关闭自动润瓷。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/60-switch_auto_oiling_porcelain-off.png"
+  },
+  {
+    "group": "润瓷关闭",
+    "text": "自动润瓷关了",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "自动润瓷关了"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/61-switch_auto_oiling_porcelain-off.png"
+  },
+  {
+    "group": "润瓷关闭",
+    "text": "把自动润瓷关掉",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把自动润瓷关掉"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/62-switch_auto_oiling_porcelain-off.png"
+  },
+  {
+    "group": "润瓷关闭",
+    "text": "停用自动润瓷",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "停用自动润瓷"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/63-switch_auto_oiling_porcelain-off.png"
+  },
+  {
+    "group": "润瓷关闭",
+    "text": "关闭自动润瓷功能",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关闭自动润瓷功能"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/64-switch_auto_oiling_porcelain-off.png"
+  },
+  {
+    "group": "润瓷关闭",
+    "text": "别自动润瓷了",
+    "cmd": "switch_auto_oiling_porcelain",
+    "value": "off",
+    "error": "ProtocolError: Runtime.callFunctionOn timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed."
+  },
+  {
+    "group": "夜灯打开",
+    "text": "打开夜灯",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "打开夜灯"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/66-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯打开",
+    "text": "开启夜灯",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开启夜灯"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/67-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯打开",
+    "text": "夜灯打开",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "夜灯打开"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/68-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯打开",
+    "text": "把夜灯打开",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把夜灯打开"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/69-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯打开",
+    "text": "开夜灯",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开夜灯"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/70-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯打开",
+    "text": "启用夜灯",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "启用夜灯"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/71-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯打开",
+    "text": "夜灯开一下",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "夜灯开一下"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/72-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯打开",
+    "text": "开启夜灯功能",
+    "cmd": "switch_night_light",
+    "value": "on",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "开启夜灯功能"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台，开启夜灯功能。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/73-switch_night_light-on.png"
+  },
+  {
+    "group": "夜灯关闭",
+    "text": "关闭夜灯",
+    "cmd": "switch_night_light",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关闭夜灯"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/74-switch_night_light-off.png"
+  },
+  {
+    "group": "夜灯关闭",
+    "text": "关掉夜灯",
+    "cmd": "switch_night_light",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关掉夜灯"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/75-switch_night_light-off.png"
+  },
+  {
+    "group": "夜灯关闭",
+    "text": "夜灯关了",
+    "cmd": "switch_night_light",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "夜灯关了"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/76-switch_night_light-off.png"
+  },
+  {
+    "group": "夜灯关闭",
+    "text": "把夜灯关掉",
+    "cmd": "switch_night_light",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "把夜灯关掉"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/77-switch_night_light-off.png"
+  },
+  {
+    "group": "夜灯关闭",
+    "text": "停用夜灯",
+    "cmd": "switch_night_light",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "停用夜灯"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/78-switch_night_light-off.png"
+  },
+  {
+    "group": "夜灯关闭",
+    "text": "关闭夜灯功能",
+    "cmd": "switch_night_light",
+    "value": "off",
+    "attempt": 1,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "关闭夜灯功能"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/79-switch_night_light-off.png"
+  },
+  {
+    "group": "夜灯关闭",
+    "text": "别夜灯了",
+    "cmd": "switch_night_light",
+    "value": "off",
+    "attempt": 2,
+    "nodes": [
+      {
+        "cls": "bubble agent",
+        "text": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
+      },
+      {
+        "cls": "bubble user",
+        "text": "别夜灯了"
+      },
+      {
+        "cls": "bubble agent",
+        "text": "准备发给平台：关闭夜灯。"
+      }
+    ],
+    "audits": [],
+    "shot": "/Users/chenpengjian/Documents/百度项目管理/baidu/20_客户项目/DumateApi接入/箭牌h5平台/docs/测试报告/2026-11-10-纯云端真实房间/截图/80-switch_night_light-off.png"
+  }
+]

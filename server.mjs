@@ -26,6 +26,8 @@ const ENV = loadEnv(ROOT);
 const PORT = Number(ENV.PORT || 8900);
 const IOT_MODE = ENV.IOT_MODE || 'mock';
 const IOT_PORT = Number(ENV.IOT_PORT || 18901);
+// on = 本机补槽收窄（默认）；off = 纯云端，只校验；card = 云端填的那台排第一，出卡让人点。
+const FILL_MODE = ['off', 'card'].includes(ENV.DEVICE_FILL) ? ENV.DEVICE_FILL : 'on';
 const PUBLIC_DIR = path.join(ROOT, 'public');
 
 const brtc = {
@@ -138,6 +140,8 @@ const routes = {
       homeId: SCENARIO.iot.homeId,
       voice: true,
       deviceRoute: ENV.DEVICE_ROUTE === 'local' ? 'local' : 'cloud',
+      deviceFill: FILL_MODE,
+      deviceCard: FILL_MODE === 'card',
       topic: Boolean(ENV.TOPIC_API_KEY && ENV.TOPIC_ADAPTER_URL),
     };
   },
@@ -206,7 +210,7 @@ const routes = {
       }
       const spoken = String(userText || sessions.get(sessionId)?.lastUserText || '').trim();
       const turnGen = Number.isFinite(Number(bodyTurn)) ? Number(bodyTurn) : sessions.currentTurn(sessionId);
-      const finished = await turn.finish({ sessionId, action, userText: spoken });
+      const finished = await turn.finish({ sessionId, action, userText: spoken, fill: FILL_MODE });
       if (turnGen && sessions.currentTurn(sessionId) !== turnGen) {
         return { parsed: { kind: 'function', name: parsed.call.name }, superseded: true, cards: [] };
       }
@@ -221,10 +225,10 @@ const routes = {
       const reply = functionResultFrame({
         sessionId: parsed.call.sessionId,
         result: accepted ? 'ok' : 'error',
-        message: finished.receipt || (finished.verdict?.reasons || []).join('；'),
+        message: finished.receipt || finished.spoken || (finished.verdict?.reasons || []).join('；'),
         speak: decision === 'confirm'
           ? '这一步需要你在页面上确认后才会发给平台。'
-          : (finished.receipt || (accepted ? '' : (finished.verdict?.reasons || []).join('；'))),
+          : (finished.receipt || finished.spoken || (accepted ? '' : (finished.verdict?.reasons || []).join('；'))),
       });
       return redact({
         parsed: { kind: 'function', name: parsed.call.name },
@@ -240,7 +244,7 @@ const routes = {
     const asked = String(userText || '').trim();
     if (asked) sessions.noteUserText(sessionId, asked);
     const turnGen = Number.isFinite(Number(bodyTurn)) ? Number(bodyTurn) : sessions.currentTurn(sessionId);
-    const finished = await turn.finish({ sessionId, action, userText: asked });
+    const finished = await turn.finish({ sessionId, action, userText: asked, fill: FILL_MODE });
     if (turnGen && sessions.currentTurn(sessionId) !== turnGen) {
       return { parsed: { kind: 'agent', text: '', partial: false }, superseded: true, cards: [] };
     }
@@ -299,7 +303,7 @@ const routes = {
       action: 'device.control',
       targets: [{ deviceName: '', cmd: '', param: '', value: '' }],
     };
-    const finished = await turn.finish({ sessionId, action, userText });
+    const finished = await turn.finish({ sessionId, action, userText, fill: FILL_MODE });
     const superseded = !!(turnGen && sessions.currentTurn(sessionId) !== turnGen);
     if (finished.cards?.length) {
       await journal.appendTurn({ sessionId, turnId: 't_' + Date.now(), cards: finished.cards });
@@ -327,7 +331,8 @@ const routes = {
       targets: (action?.targets || []).map((item) => ({ ...item, deviceName: item.deviceName || name })),
       actionList: (action?.actionList || []).map((item) => ({ ...item, deviceName: item.deviceName || name })),
     };
-    return turn.finish({ sessionId, action: filled, userText: userText || name });
+    // 用户已经点过设备，直接过闸，不再走补槽和收窄，否则会二次出卡。
+    return turn.finish({ sessionId, action: filled, userText: userText || name, fill: 'off' });
   },
 
   async 'POST /api/confirm'(req) {
