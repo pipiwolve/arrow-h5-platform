@@ -47,7 +47,7 @@ async function pick(finished, text) {
     ...card.data.action,
     targets: card.data.action.targets.map((item) => ({ ...item, deviceName: name })),
   };
-  return turn.finish({ sessionId: 'hs_accept', userText: text, action: filled });
+  return turn.finish({ sessionId: 'hs_accept', userText: text, action: filled, fill: 'off' });
 }
 
 function cmdOf(finished) {
@@ -63,18 +63,19 @@ const repair = '我家坐便器不出水了，要报修';
 record('报修', repair, /报修|维修/.test(repair) && topicModel(repair) === '', '页面本地出报修卡，不进房间');
 
 const operate = [
-  ['大冲', '来个大冲', '01', 'switch_watering/on'],
-  ['小冲', '帮我小冲', '01', 'switch_watering_small/on'],
-  ['关闭翻盖', '把自动翻盖关掉', '01', 'switch_auto_closing/off'],
-  ['关闭夜灯', '别夜灯了', '06', 'switch_night_light/off'],
-  ['进水', '进水', '04', 'switch_water_in/on'],
+  ['大冲', '来个大冲', ['01'], 'switch_watering/on'],
+  ['开关', '把主卫马桶关掉', ['01'], 'switch_onoff/off'],
+  ['关闭翻盖', '把自动翻盖关掉', ['01'], 'switch_auto_closing/off'],
+  ['关闭夜灯', '别夜灯了', ['01', '06'], 'switch_night_light/off'],
+  ['进水', '进水', ['04'], 'switch_water_in/on'],
 ];
 
 for (const [kind, input, category, expect] of operate) {
   const first = await ask(input);
   const choose = first.cards.find((c) => c.event === 'demo.choose');
-  const rooms = new Set((choose?.data.choices || []).map((c) => c.category));
-  const only = rooms.size === 1 && [...rooms][0] === { '01': '马桶', '04': '浴缸', '06': '镜柜' }[category];
+  const categories = new Set((choose?.data.choices || []).map((c) => c.category));
+  const labels = { '01': '马桶', '04': '浴缸', '06': '镜柜' };
+  const only = categories.size === category.length && category.every((code) => categories.has(labels[code]));
   const after = await pick(first, input);
   if (kind === '进水') {
     const gate = after.cards.find((c) => c.event === 'demo.gate');
@@ -83,6 +84,18 @@ for (const [kind, input, category, expect] of operate) {
   }
   record(kind, input, only && cmdOf(after) === expect && after.cards.some((c) => c.event === 'demo.result' && c.data.result === 'SUCCEEDED'), `${cmdOf(after)}，候选 ${choose.data.choices.length} 台`);
 }
+
+const beforeSmall = calls.length;
+const small = await ask('帮我小冲');
+record(
+  '小冲',
+  '帮我小冲',
+  small.cards[0]?.event === 'demo.gate'
+    && small.cards[0].data.decision === 'deny'
+    && /平台暂不支持小冲/.test(small.cards[0].data.reasons?.[0] || '')
+    && calls.length === beforeSmall,
+  small.cards[0]?.data?.reasons?.[0] || '没有拒绝',
+);
 
 const chat = '你好';
 record('闲聊', chat, topicModel(chat) === '' && !/打开|关闭|冲|夜灯|翻盖|进水|报修/.test(chat), '留给房间，不进本地指令');

@@ -5,7 +5,8 @@ import { createGate } from './policy.mjs';
 import { actionFromCall, asrUtterance, extractAction, classifyFrame, functionResultFrame, parseFunction, visibleAgent } from './frames.mjs';
 import { topicImage, topicModel, topicView } from './topic.mjs';
 import { buildRole, userEcho, visibleReply } from './roster.mjs';
-import { completeItem, fillTargets, narrowDevices, trustedName } from './resolve.mjs';
+import { completeItem, commandFromText, fillTargets, narrowDevices, retiredCommandReason, trustedName } from './resolve.mjs';
+import { redact } from './audit.mjs';
 import { agentConfig, licActiveFrame } from './aiagent.mjs';
 import { createTurn } from './turn.mjs';
 
@@ -154,7 +155,26 @@ assert.equal(filled.cmd, 'switch_water_in');
 assert.equal(filled.param, 'switch');
 assert.equal(filled.value, 'on');
 const vague = completeItem({ cmd: '', value: '' }, '把设备打开', SCENARIO.commands);
-assert.equal(vague.cmd, '');
+assert.equal(vague.cmd, 'switch_onoff');
+assert.equal(commandFromText('把主卫马桶关掉', SCENARIO.commands), 'switch_onoff');
+assert.equal(commandFromText('把自动翻盖关掉', SCENARIO.commands), 'switch_auto_closing');
+assert.equal(commandFromText('关掉马桶的夜灯', SCENARIO.commands), 'switch_night_light');
+assert.equal(commandFromText('帮我小冲', SCENARIO.commands), '');
+assert.equal(SCENARIO.commands.some((c) => c.cmd === 'switch_watering_small'), false);
+assert.equal(
+  retiredCommandReason({ action: 'device.control', targets: [{ cmd: '' }] }, '帮我小冲'),
+  '平台暂不支持小冲，可以说“大冲”或“冲水”。',
+);
+const dirty = redact({
+  cards: [{
+    data: {
+      iotRequest: { headers: { Authorization: 'bearer test-token' } },
+      msg: 'bearer test-token',
+    },
+  }],
+});
+assert.equal(dirty.cards[0].data.iotRequest.headers.Authorization, '***');
+assert.equal(dirty.cards[0].data.msg, 'bearer ***');
 
 const cfg = agentConfig(SCENARIO);
 assert.equal(cfg.role, undefined);

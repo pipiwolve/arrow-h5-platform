@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "新增一条设备指令的接入流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "docs/架构图/04-新增指令接入流程.html",
+    "views": [
+      { "id": "define-and-land", "label": "定口径并落表", "focus": ["spec", "table"], "note": "指令名、参数值域和适用品类先定死，再落到指令表。" },
+      { "id": "sync-runtime", "label": "同步运行时词表", "focus": ["table", "phrases", "fans"], "note": "说法、入口词、热词、提示词，漏一处就分叉。" },
+      { "id": "platform-and-accept", "label": "平台与验收", "focus": ["capability", "console", "tests"], "note": "仓库外两步无法由配置消除。" }
+    ]
+  },
+  "lanes": [
+    { "id": "need", "label": "需求与口径" },
+    { "id": "config", "label": "配置面" },
+    { "id": "code", "label": "本机运行时" },
+    { "id": "external", "label": "仓库外与平台侧" },
+    { "id": "accept", "label": "验收" }
+  ],
+  "phases": [
+    { "id": "define", "label": "定口径与落表", "fromCol": 0, "toCol": 1 },
+    { "id": "runtime", "label": "同步词表", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "platform", "label": "平台与验收", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["spec", "table", "phrases", "fans", "capability", "console", "tests"],
+  "nodes": [
+    { "id": "spec", "lane": "need", "col": 0, "type": "external", "label": "定指令口径", "sublabel": "cmd · 参数 · 品类" },
+    { "id": "table", "lane": "config", "col": 1, "type": "database", "label": "指令表", "sublabel": "配置表" },
+    { "id": "phrases", "lane": "code", "col": 2, "type": "backend", "label": "说法与极性", "sublabel": "两处正则" },
+    { "id": "fans", "lane": "code", "col": 3, "type": "backend", "label": "三处词表", "sublabel": "三个文件" },
+    { "id": "capability", "lane": "external", "col": 4, "type": "external", "label": "设备能力", "sublabel": "清单 + 真机" },
+    { "id": "console", "lane": "external", "col": 5, "type": "cloud", "label": "百度控制台", "sublabel": "函数 · 参数" },
+    { "id": "tests", "lane": "accept", "col": 5, "type": "security", "label": "用例与复跑", "sublabel": "80 句" }
+  ],
+  "edges": [
+    { "from": "spec", "to": "table", "label": "落表", "variant": "emphasis", "role": "main", "route": "drop" },
+    { "from": "table", "to": "phrases", "label": "说法", "variant": "emphasis", "role": "main", "fromSide": "bottom", "toSide": "top" },
+    { "from": "phrases", "to": "fans", "variant": "emphasis", "role": "main", "route": "bottom-channel" },
+    { "from": "fans", "to": "capability", "label": "能力", "variant": "dashed", "role": "branch", "route": "drop" },
+    { "from": "capability", "to": "console", "variant": "dashed", "role": "branch", "route": "bottom-channel" },
+    { "from": "console", "to": "tests", "label": "复跑", "variant": "emphasis", "role": "main", "route": "drop" }
+  ],
+  "cards": [
+    { "dot": "amber", "title": "一条指令 6 个文件 8 处", "items": ["配置面：scenario.json 加一条", "说法与极性：resolve.mjs 两处", "页面入口：app.js:591", "ASR 热词：aiagent.mjs:18-21", "提示词：roster.mjs:12 与 :39", "测试：accept.check.mjs 补用例"] },
+    { "dot": "emerald", "title": "闸门不用改", "items": ["policy.mjs 按指令表与 appliesTo 校验", "新增指令只要落表，闸门自动覆盖", "风险等级在 scenario.json 的 riskRules 配", "未配则落 defaultRiskLevel，默认 M"] },
+    { "dot": "rose", "title": "仓库外两件", "items": ["百度控制台的函数描述、参数与例句要人工同步", "设备真实能力要逐条发平台探测", "平台不认的指令要在指令表与控制台同时摘掉"] }
+  ]
+}

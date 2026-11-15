@@ -278,12 +278,20 @@ async function onAgentFrame(msg) {
     return;
   }
   if (data.startsWith('[E]:[LIC]:[RES]:')) {
-    const out = await api('/api/session/lic-result', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessionId, frame: data }),
-    });
-    const passed = data.includes('[PASS]');
+    let passed = data.includes('[PASS]');
+    try {
+      const out = await api('/api/session/lic-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, frame: data }),
+      });
+      if (typeof out.passed === 'boolean') passed = out.passed;
+    } catch {
+      licPassed = false;
+      setStatus('授权校验失败');
+      $('booting').hidden = true;
+      return;
+    }
     licPassed = passed;
     setStatus(passed ? '已连接' : '授权未通过');
     if (passed) {

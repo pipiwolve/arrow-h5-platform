@@ -33,6 +33,19 @@ server.mjs              HTTP
 public/                 通话、设备、审计三个视图
 ```
 
+## 本地 / 云端两种模式
+
+| 模式 | 启动 | 设备句怎么走 |
+| --- | --- | --- |
+| 本地 | `DEVICE_ROUTE=local npm start` | 页面 `POST /api/intent`，本机补槽、收窄、过闸后下发 |
+| 云端控制台 | `DEVICE_ROUTE=cloud DEVICE_FILL=card npm start` | 先取 `/api/roster` 附进 `[T]`，房间 Function Call 的 `[F]` 回 `POST /api/frame`，本机二次补槽、过闸后下发 |
+
+两个发布分支的默认值不同：`release/local` 不写 `DEVICE_ROUTE` 时按 `local`，`release/cloud-console` 不写时按 `cloud`。命令行写 `DEVICE_ROUTE=...` 永远优先于 `.env`。
+
+`DEVICE_FILL` 只对云端生效：`on` 本机补槽（默认）、`off` 只校验、`card` 出选择卡。起服务后看 `/api/config` 的 `deviceRoute`、`deviceFill`、`deviceCard` 确认模式。
+
+控制台配置以 `产品文档/云端意图配置-新应用.md` 为准，较早的一版在 `产品文档/后台控制台交付配置.md`。平台实测不认 `switch_watering_small`（小冲），两份文档都已移除。
+
 ## 鉴权怎么走
 
 1. `POST /api/session` 在服务端调用 `https://rtc-aiagent.baidubce.com` 的 `generateAIAgentCall`，用 AK/SK 做 BCE v3 签名。示例网关 `ai.agent.kaywang.cn` 对这个 AppID 会回 `No such app`。
@@ -58,11 +71,11 @@ public/                 通话、设备、审计三个视图
 
 页面发出的文字和快捷句只画一次。房间把同一句作为 `[Q]` 送回来时，更新这一条，不再追加。流式 `[A]:[M]` 也写在同一条助手气泡上。开场白只保留 `tts_sayhi` 推回的那一条，页面不再预写同一句。
 
-设备清单仍附在操作类 `[T]` 后面，供模型逐字选用 deviceName 和指令。房间会把整段 `[T]` 以 `[Q]` 回放。清单从「【家庭设备】」起不是用户说的话，用户气泡在这一标记处截断；已经按原话画过的那一条只更新，不再追加。模型若把清单照抄进 `[A]`，助手气泡同样从这一标记截断；截完只剩用户原话时，这一条助手气泡不显示。
+云端模式下，设备清单附在操作类 `[T]` 后面，供模型逐字选用 deviceName 和指令。房间会把整段 `[T]` 以 `[Q]` 回放。清单从「【家庭设备】」起不是用户说的话，用户气泡在这一标记处截断；已经按原话画过的那一条只更新，不再追加。模型若把清单照抄进 `[A]`，助手气泡同样从这一标记截断；截完只剩用户原话时，这一条助手气泡不显示。
 
 按住说话走 BRTC 按键模式，不另接短语音，也不读取演示项目的 `ASR_API_KEY`。建实例时 `asr_long_audio_mode` 为 true。平时麦克风静音。按住时打开麦克风并发送 `[E]:[CMD]:[ASR_START_LONGTEXT_REC]`，松开时静音并发送 `[E]:[CMD]:[ASR_STOP_LONGTEXT_REC]`。识别中间结果先画用户气泡，最终 `[Q]` 再替换成完整原话并进入本机确认。本机接手后的 60 秒内，房间同一次 `control_device` 回一个不播报的函数结果，不再丢弃后让模型反复追问。
 
-IoT 下发优先走控制台意图，`callMode` 选 SDK 消息。需要三个：`control_device`（deviceName、cmd、param、value）、`create_scene`（conditionList、actionList，内容是 JSON 字符串）、`open_repair`（kind 取 report 或 progress）。意图没配上时，人设仍要求回答末尾给一个 `iot` 代码块。块进不了闸门就不会下发。
+云端模式下 IoT 下发优先走控制台意图，`callMode` 选 SDK 消息。需要三个：`control_device`（deviceName、cmd、param、value）、`create_scene`（conditionList、actionList，内容是 JSON 字符串）、`open_repair`（kind 取 report 或 progress）。本地模式走 `/api/intent`，不依赖控制台意图。意图没配上时，人设仍要求回答末尾给一个 `iot` 代码块。块进不了闸门就不会下发。
 
 平台 HTTP 200 且 body 为「设备离线」时，审计记 FAILED。设备没有执行。
 
@@ -84,9 +97,9 @@ IoT 默认 `real`，打箭牌 UAT `https://api-uatiot.arrowgroup.com.cn`，凭�
 ## 这一版还没接上的
 
 - 真实 BRTC 房间的端到端联调。四件套到位后才能验进房和 LIC PASS。
-- 控制台意图。三个 Function 要在「大模型实时互动」里建好并绑到这个 AppID，否则模型只能靠回答末尾的 iot 代码块。
+- 控制台意图。云端模式要在「大模型实时互动」里建好三个 Function 并绑到这个 AppID，否则模型只能靠回答末尾的 iot 代码块；本地模式不依赖。
 - 产品百科走控制台知识库意图模板。本地不挂知识文件。开场 5 条示例写在页面里，刷新即可看到，不等配置接口。最后一条是知识库问答「AKB1357 有哪些功能」。回答仍由控制台知识库给出。
 - 句子里出现「报修」或「维修」，且不是在问进度时，页面画出新建报修卡片，指向 `arrowhome://repair/create`。句子里出现「进度」「到哪」「派工」或「受理」时，画出进度卡片，指向 `arrowhome://repair/list`。两句都不送进房间，也不创建工单。
-- 打开、关闭、冲水、进水、夜灯这类设备指令走 `POST /api/intent`，由本机按原话补齐指令并选择设备。对上多台时出选择卡，高风险出确认卡，唯一一台且可放行时直接下发。房间随后交来的同一次 `control_device` 在 60 秒内回一个不播报的函数结果，避免模型反复追问设备。
+- 本地模式下，打开、关闭、冲水、进水、夜灯这类设备指令走 `POST /api/intent`，由本机按原话补齐指令并选择设备。对上多台时出选择卡，高风险出确认卡，唯一一台且可放行时直接下发。房间随后交来的同一次 `control_device` 在 60 秒内回一个不播报的函数结果，避免模型反复追问设备。
 - 产品问答和闲聊以 `[T]` 送进房间。新的一句先把用户原话画进对话，再发 `[B]` 停掉上一句的 TTS，并向编排层领取新的回合代号。上一句还在领代号或等房间回复时，只保留最后一句继续处理；已经画出的设备选择卡留在页面上。上一句还没回来的字幕和播报按代号丢弃。20 秒内没有最终回复时，这一句的等待自行结束。同名设备在选择卡上按 1、2 区分。
 - 场景查询。平台没有查场景接口，设备页目前只列设备。

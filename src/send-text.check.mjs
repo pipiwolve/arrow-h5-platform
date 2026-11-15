@@ -424,4 +424,26 @@ await context.__sendText('AKB1357有哪些功能');
 assert.ok(sent.includes('[T]:AKB1357有哪些功能'), sent.join(' | '));
 assert.equal(sent.some((frame) => frame.includes('【家庭设备】')), false);
 
+// 授权失败要显示原因并收起启动遮罩；服务端返回 200 + passed:false，不抛错。
+el('booting').hidden = false;
+const savedLicApi = context.__api;
+context.__api = async (path) => {
+  if (path === '/api/session/lic-result') return { session: {}, passed: false };
+  return savedLicApi(path);
+};
+await context.__onAgentFrame({ data: '[E]:[LIC]:[RES]:[FAILED]' });
+assert.equal(el('status').textContent, '授权未通过');
+assert.equal(el('booting').hidden, true);
+
+// 授权结果没送到服务端时，也要退出启动遮罩，不能一直转圈。
+el('booting').hidden = false;
+context.__api = async (path) => {
+  if (path === '/api/session/lic-result') throw new Error('授权结果没有送到服务端');
+  return savedLicApi(path);
+};
+await context.__onAgentFrame({ data: '[E]:[LIC]:[RES]:[PASS]' });
+assert.equal(el('status').textContent, '授权校验失败');
+assert.equal(el('booting').hidden, true);
+context.__api = savedLicApi;
+
 console.log('send-text ok');

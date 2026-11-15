@@ -139,7 +139,7 @@ const routes = {
       fixture: FIXTURE_NAME,
       homeId: SCENARIO.iot.homeId,
       voice: true,
-      deviceRoute: ENV.DEVICE_ROUTE === 'local' ? 'local' : 'cloud',
+      deviceRoute: ENV.DEVICE_ROUTE === 'cloud' ? 'cloud' : 'local',
       deviceFill: FILL_MODE,
       deviceCard: FILL_MODE === 'card',
       topic: Boolean(ENV.TOPIC_API_KEY && ENV.TOPIC_ADAPTER_URL),
@@ -183,8 +183,13 @@ const routes = {
   async 'POST /api/session/lic-result'(req) {
     const { sessionId, frame } = await readBody(req);
     const kind = classifyFrame(frame).kind;
-    if (kind === 'lic-pass') return { session: await sessions.markLic(sessionId, 'pass') };
-    if (kind === 'lic-fail') return { status: 403, body: { session: await sessions.markLic(sessionId, 'fail'), error: frame } };
+    if (kind === 'lic-pass') {
+      const session = await sessions.markLic(sessionId, 'pass');
+      return session
+        ? { session, passed: true }
+        : { status: 404, body: { error: '会话不存在或已结束', passed: false } };
+    }
+    if (kind === 'lic-fail') return { session: await sessions.markLic(sessionId, 'fail'), passed: false, error: frame };
     return { status: 400, body: { error: '不是授权结果帧' } };
   },
 
@@ -314,7 +319,7 @@ const routes = {
       : card?.event === 'demo.gate' && card.data?.decision === 'confirm'
         ? '这一步需要你在页面上确认后才会发给平台。'
         : (finished.spoken || finished.receipt || '');
-    return { superseded, cards: finished.cards || [], say };
+    return redact({ superseded, cards: finished.cards || [], say });
   },
 
   async 'POST /api/choose'(req) {
@@ -332,7 +337,7 @@ const routes = {
       actionList: (action?.actionList || []).map((item) => ({ ...item, deviceName: item.deviceName || name })),
     };
     // 用户已经点过设备，直接过闸，不再走补槽和收窄，否则会二次出卡。
-    return turn.finish({ sessionId, action: filled, userText: userText || name, fill: 'off' });
+    return redact(await turn.finish({ sessionId, action: filled, userText: userText || name, fill: 'off' }));
   },
 
   async 'POST /api/confirm'(req) {

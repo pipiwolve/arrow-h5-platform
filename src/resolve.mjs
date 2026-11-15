@@ -8,16 +8,35 @@ const CATEGORY_HINTS = [
   [/浴缸/, '04'],
   [/镜柜/, '06'],
 ];
-// 客户指令集里的说法。长说法放前面，避免「小冲」被「冲水」截走。
+// 客户指令集里的说法。具体指令放前面，兜底的开关放最后，
+// 避免「关掉夜灯」被 switch_onoff 截走。
 const COMMAND_HINTS = [
-  [/小冲|小便冲水|冲小/, 'switch_watering_small'],
   [/大冲|冲水|冲一下|^冲$/, 'switch_watering'],
   [/自动翻盖|翻盖/, 'switch_auto_closing'],
   [/脚触感应|脚触/, 'switch_kicking'],
   [/自动润瓷|润瓷/, 'switch_auto_oiling_porcelain'],
   [/夜灯/, 'switch_night_light'],
   [/进水|放水/, 'switch_water_in'],
+  [/打开|开启|开一下|启动|启用|开始|关闭|关掉|关上|关了|关一下|停用|取消/, 'switch_onoff'],
 ];
+
+// 平台不认的指令。保留说法识别，不下发，给出可读原因。
+export const RETIRED_COMMANDS = {
+  switch_watering_small: '平台暂不支持小冲，可以说“大冲”或“冲水”。',
+};
+const RETIRED_HINTS = [/小冲|小便冲水|冲小/];
+
+export function retiredCommandReason(action, userText) {
+  const items = action?.action === 'scene.create'
+    ? [...(action.conditionList || []), ...(action.actionList || [])]
+    : action?.action === 'device.control' ? action.targets || [] : [];
+  const hit = items.find((item) => item && RETIRED_COMMANDS[item.cmd])?.cmd;
+  if (hit) return RETIRED_COMMANDS[hit];
+  const blank = items.some((item) => item && !item.cmd);
+  return blank && RETIRED_HINTS.some((re) => re.test(String(userText || '')))
+    ? RETIRED_COMMANDS.switch_watering_small
+    : '';
+}
 
 export function narrowDevices({ devices, live, userText, cmd }) {
   const rows = Array.isArray(live?.rows) && live.rows.length ? live.rows : devices;
@@ -81,7 +100,7 @@ export function commandFromText(text, commands) {
 
 export function valueFromText(text) {
   const src = String(text || '');
-  if (/关闭|关掉|关上|关了|停用|别/.test(src)) return 'off';
+  if (/关闭|关掉|关上|关了|关一下|停用|取消|不要|别/.test(src)) return 'off';
   if (/大冲|小冲|冲水|冲一下|^冲$|冲小|翻盖|脚触|润瓷|夜灯|进水|放水|打开|开启|开一下|启动|启用|开始/.test(src)) return 'on';
   return '';
 }

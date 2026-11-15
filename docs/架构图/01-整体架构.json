@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "箭牌 AI 助手全链路架构",
+    "subtitle": "浏览器 · 本机编排 · 百度云 · 箭牌平台",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "docs/架构图/01-整体架构.html",
+    "views": [
+      {
+        "id": "boundary",
+        "label": "边界与密钥",
+        "focus": ["user", "page", "sdk", "routes", "session", "rtcapi", "room", "console"],
+        "note": "AK/SK 与 token 只留在 Node 进程，页面只拿本次通话的进房参数。"
+      },
+      {
+        "id": "device-path",
+        "label": "设备通道",
+        "focus": ["page", "routes", "frames", "turn", "policy", "iot", "gateway", "devices"],
+        "note": "本机意图与云端函数调用汇到同一个闸门，再发往箭牌网关。"
+      },
+      {
+        "id": "side-paths",
+        "label": "旁路与状态",
+        "focus": ["routes", "adapter", "stores", "config"],
+        "note": "统计报告走独立适配器；状态与审计全在本地文件。"
+      }
+    ]
+  },
+  "components": [
+    { "id": "user", "type": "external", "label": "用户", "sublabel": "语音 · 文字", "pos": [40, 95], "size": [90, 50] },
+    { "id": "page", "type": "frontend", "label": "H5 页面", "sublabel": "分流 · 卡片", "pos": [180, 90], "size": [130, 60] },
+    { "id": "sdk", "type": "frontend", "label": "RTC H5 SDK", "sublabel": "v1.2.18", "pos": [350, 90], "size": [130, 60] },
+    { "id": "adapter", "type": "cloud", "label": "统计适配器", "sublabel": "/api/topic → 报告", "pos": [170, 700], "size": [170, 55] },
+    { "id": "routes", "type": "backend", "label": "HTTP 入口", "sublabel": "16 路由 · 静态", "pos": [170, 270], "size": [150, 55] },
+    { "id": "session", "type": "backend", "label": "会话与建实例", "sublabel": "session · aiagent", "pos": [170, 380], "size": [150, 55] },
+    { "id": "frames", "type": "backend", "label": "帧与动作", "sublabel": "frames", "pos": [370, 270], "size": [140, 55] },
+    { "id": "turn", "type": "backend", "label": "轮次与补槽", "sublabel": "turn · resolve", "pos": [370, 380], "size": [140, 55] },
+    { "id": "policy", "type": "security", "label": "安全闸门", "sublabel": "policy", "pos": [560, 380], "size": [140, 55] },
+    { "id": "iot", "type": "backend", "label": "IoT 客户端", "sublabel": "iot-client", "pos": [530, 270], "size": [140, 55] },
+    { "id": "stores", "type": "database", "label": "本地状态", "sublabel": "audit · cards · state", "pos": [170, 490], "size": [140, 55] },
+    { "id": "config", "type": "database", "label": "配置与清单", "sublabel": "scenario · .env", "pos": [360, 490], "size": [140, 55] },
+    { "id": "rtcapi", "type": "cloud", "label": "RTC 控制面", "sublabel": "建 / 停实例", "pos": [970, 80], "size": [150, 50] },
+    { "id": "room", "type": "cloud", "label": "BRTC 互动房间", "sublabel": "ASR · TTS · 函数调用", "pos": [960, 155], "size": [170, 70] },
+    { "id": "console", "type": "external", "label": "百度控制台", "sublabel": "人设 · 函数 · 知识库", "pos": [965, 265], "size": [160, 55] },
+    { "id": "gateway", "type": "external", "label": "箭牌 IoT 网关", "sublabel": "UAT · 三条接口", "pos": [960, 430], "size": [160, 55] },
+    { "id": "devices", "type": "external", "label": "真机设备", "sublabel": "马桶 · 浴缸 · 镜柜", "pos": [960, 520], "size": [160, 55] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "浏览器（无密钥）", "wraps": ["page", "sdk"] },
+    { "kind": "region", "label": "本机 Node 服务 :8900", "wraps": ["routes", "session", "frames", "turn", "policy", "iot", "stores", "config"] },
+    { "kind": "region", "label": "百度智能云", "wraps": ["rtcapi", "room", "console"] },
+    { "kind": "region", "label": "箭牌平台", "wraps": ["gateway", "devices"] },
+    { "kind": "region", "label": "统计旁路", "wraps": ["adapter"] }
+  ],
+  "connections": [
+    { "id": "user-page", "from": "user", "to": "page", "label": "语音", "fromSide": "right", "toSide": "left", "labelAt": [155, 108] },
+    { "id": "page-sdk", "from": "page", "to": "sdk", "label": "调用", "fromSide": "right", "toSide": "left", "labelAt": [330, 108] },
+    { "id": "page-routes", "from": "page", "to": "routes", "label": "HTTP /api", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "labelAt": [280, 210] },
+    { "id": "sdk-room", "from": "sdk", "to": "room", "label": "音频 + 数据帧", "variant": "emphasis", "fromSide": "right", "toSide": "left", "via": [[900, 120], [900, 190]], "labelAt": [660, 100] },
+    { "id": "session-rtcapi", "from": "session", "to": "rtcapi", "label": "BCE v3 签名", "variant": "security", "fromSide": "left", "toSide": "top", "via": [[20, 407.5], [20, 48], [1045, 48]], "labelAt": [600, 32] },
+    { "id": "rtcapi-room", "from": "rtcapi", "to": "room", "label": "生成房间", "fromSide": "bottom", "toSide": "top", "labelAt": [1095, 142] },
+    { "id": "console-room", "from": "console", "to": "room", "label": "人设", "variant": "dashed", "fromSide": "top", "toSide": "bottom", "labelAt": [1095, 245] },
+    { "id": "routes-frames", "from": "routes", "to": "frames", "label": "帧", "fromSide": "right", "toSide": "left", "labelAt": [345, 283] },
+    { "id": "routes-session", "from": "routes", "to": "session", "label": "建会话", "fromSide": "bottom", "toSide": "top", "labelAt": [290, 352] },
+    { "id": "frames-turn", "from": "frames", "to": "turn", "label": "动作", "fromSide": "bottom", "toSide": "top", "labelAt": [470, 355] },
+    { "id": "turn-policy", "from": "turn", "to": "policy", "label": "闸门", "fromSide": "right", "toSide": "left", "labelAt": [535, 394] },
+    { "id": "turn-iot", "from": "turn", "to": "iot", "label": "放行", "fromSide": "top", "toSide": "bottom", "via": [[440, 340], [600, 340]], "labelAt": [525, 352] },
+    { "id": "turn-stores", "from": "turn", "to": "stores", "label": "审计", "variant": "dashed", "fromSide": "left", "toSide": "right", "via": [[340, 407.5], [340, 517.5]], "labelAt": [322, 462] },
+    { "id": "iot-gateway", "from": "iot", "to": "gateway", "label": "ext/v3/ai", "variant": "emphasis", "fromSide": "right", "toSide": "left", "via": [[910, 297.5], [910, 457.5]], "labelAt": [842, 377] },
+    { "id": "gateway-devices", "from": "gateway", "to": "devices", "label": "下发", "fromSide": "bottom", "toSide": "top", "labelAt": [1085, 502] }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "边界与密钥",
+      "items": [
+        "AK/SK/lickey/IoT token 只进 Node，页面只拿 join token",
+        "所有 /api/* 没有鉴权，靠部署层挡",
+        "房间、本地会话、[F] session_id 是三套编号，未打通"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "设备通道",
+      "items": [
+        "local：页面 /api/intent → 本机补槽 → 闸门 → IoT",
+        "cloud：房间 Function Call → /api/frame → 同一闸门",
+        "cloud 默认 DEVICE_FILL=on，仍跑本机二次补槽"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "旁路与仓库外",
+      "items": [
+        "统计：/api/topic → 适配器 8911 → DuMate",
+        "控制台：人设、函数参数、例句、知识库",
+        "设备 room 来自 fixture，能力靠真机探测"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 // 一轮字幕收尾：从回答里取动作，过闸门，放行的才打到 IoT。
 // 高危动作停在待确认，等 /api/confirm。
 
-import { completeList, fillTargets, narrowDevices, trustedName } from './resolve.mjs';
+import { completeList, fillTargets, narrowDevices, retiredCommandReason, trustedName } from './resolve.mjs';
 
 export function createTurn({ scenario, devices, gate, iot, audit, liveDevices }) {
   function execControl(rec) {
@@ -96,6 +96,12 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
         },
       });
       return { cards, receipt: note };
+    }
+
+    const retired = retiredCommandReason(action, input.userText);
+    if (retired) {
+      cards.push({ event: 'demo.gate', data: { decision: 'deny', level: 'X', reasons: [retired] } });
+      return { cards, spoken: retired, receipt: retired };
     }
 
     // fill: on = 本机补槽收窄（默认）；off = 只校验；card = 云端填的那台排第一，出卡让人点。

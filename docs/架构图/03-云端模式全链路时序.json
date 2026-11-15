@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "云端模式全链路时序",
+    "subtitle": "DEVICE_ROUTE=cloud：房间判意图，本机补槽、过闸、下发",
+    "locale": "zh-CN",
+    "output": "docs/架构图/03-云端模式全链路时序.html",
+    "viewBox": [
+      920,
+      920
+    ],
+    "animation": "trace",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "feed",
+        "label": "听与前送",
+        "focus": [
+          "user",
+          "room",
+          "page",
+          "node"
+        ],
+        "note": "设备句连同本机设备清单一起送进房间，模型才知道家里有什么。"
+      },
+      {
+        "id": "function",
+        "label": "函数调用与本机二次补槽",
+        "focus": [
+          "room",
+          "page",
+          "node",
+          "gate"
+        ],
+        "note": "[F] 回到本机后仍走完整补槽与四道闸门，不直接信任模型参数。"
+      },
+      {
+        "id": "ack",
+        "label": "下发与回执",
+        "focus": [
+          "node",
+          "gateway",
+          "devices",
+          "audit",
+          "page",
+          "room",
+          "user"
+        ],
+        "note": "网关异步下发，结果写审计后作为函数结果帧回房间播报。"
+      }
+    ]
+  },
+  "participants": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "用户",
+      "sublabel": "语音"
+    },
+    {
+      "id": "room",
+      "type": "cloud",
+      "label": "BRTC 房间",
+      "sublabel": "DuMate · 函数调用"
+    },
+    {
+      "id": "page",
+      "type": "frontend",
+      "label": "H5 页面",
+      "sublabel": "前送 · 回帧"
+    },
+    {
+      "id": "node",
+      "type": "backend",
+      "label": "本机 /api",
+      "sublabel": "frame · roster"
+    },
+    {
+      "id": "gate",
+      "type": "security",
+      "label": "补槽 + 闸门",
+      "sublabel": "fill · policy"
+    },
+    {
+      "id": "gateway",
+      "type": "external",
+      "label": "箭牌网关",
+      "sublabel": "ext/v3/ai"
+    },
+    {
+      "id": "devices",
+      "type": "external",
+      "label": "真机设备",
+      "sublabel": "异步执行"
+    },
+    {
+      "id": "audit",
+      "type": "database",
+      "label": "本地审计",
+      "sublabel": "audit.jsonl"
+    }
+  ],
+  "segments": [
+    {
+      "from": 160,
+      "to": 380,
+      "label": "听与前送"
+    },
+    {
+      "from": 395,
+      "to": 625,
+      "label": "函数调用与本机补槽"
+    },
+    {
+      "from": 640,
+      "to": 855,
+      "label": "下发与回执"
+    }
+  ],
+  "messages": [
+    {
+      "id": "speak",
+      "from": "user",
+      "to": "room",
+      "y": 185,
+      "label": "说话（音频）",
+      "variant": "emphasis"
+    },
+    {
+      "id": "asr",
+      "from": "room",
+      "to": "page",
+      "y": 228,
+      "label": "[Q] ASR 回放",
+      "variant": "default"
+    },
+    {
+      "id": "roster",
+      "from": "page",
+      "to": "node",
+      "y": 270,
+      "label": "GET /api/roster",
+      "variant": "dashed"
+    },
+    {
+      "id": "roster-back",
+      "from": "node",
+      "to": "page",
+      "y": 312,
+      "label": "设备名 · 品类 · 房间",
+      "variant": "return"
+    },
+    {
+      "id": "say-room",
+      "from": "page",
+      "to": "room",
+      "y": 354,
+      "label": "[T] 原话 + 设备清单",
+      "variant": "emphasis"
+    },
+    {
+      "id": "function",
+      "from": "room",
+      "to": "page",
+      "y": 400,
+      "label": "[F] control_device",
+      "variant": "emphasis"
+    },
+    {
+      "id": "frame",
+      "from": "page",
+      "to": "node",
+      "y": 442,
+      "label": "POST /api/frame",
+      "variant": "emphasis"
+    },
+    {
+      "id": "fill",
+      "from": "node",
+      "to": "gate",
+      "y": 484,
+      "label": "补槽 + 四道闸门（仍跑本机 fill）",
+      "variant": "security"
+    },
+    {
+      "id": "verdict",
+      "from": "gate",
+      "to": "node",
+      "y": 526,
+      "label": "ALLOW / CONFIRM / DENY",
+      "variant": "return"
+    },
+    {
+      "id": "control",
+      "from": "node",
+      "to": "gateway",
+      "y": 568,
+      "label": "POST /ext/v3/ai/control",
+      "variant": "emphasis"
+    },
+    {
+      "id": "control-back",
+      "from": "gateway",
+      "to": "node",
+      "y": 610,
+      "label": "{success, code:200}",
+      "variant": "return"
+    },
+    {
+      "id": "audit-write",
+      "from": "node",
+      "to": "audit",
+      "y": 656,
+      "label": "append audit.jsonl",
+      "variant": "dashed"
+    },
+    {
+      "id": "result-frame",
+      "from": "node",
+      "to": "page",
+      "y": 698,
+      "label": "functionResultFrame [F]",
+      "variant": "return"
+    },
+    {
+      "id": "result-room",
+      "from": "page",
+      "to": "room",
+      "y": 740,
+      "label": "回函数结果",
+      "variant": "emphasis"
+    },
+    {
+      "id": "dispatch",
+      "from": "gateway",
+      "to": "devices",
+      "y": 782,
+      "label": "异步下发",
+      "variant": "dashed"
+    },
+    {
+      "id": "tts",
+      "from": "room",
+      "to": "user",
+      "y": 824,
+      "label": "TTS 播报",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "room",
+      "from": 180,
+      "to": 370,
+      "type": "cloud"
+    },
+    {
+      "participant": "page",
+      "from": 220,
+      "to": 740,
+      "type": "frontend"
+    },
+    {
+      "participant": "node",
+      "from": 262,
+      "to": 700,
+      "type": "backend"
+    },
+    {
+      "participant": "gate",
+      "from": 476,
+      "to": 540,
+      "type": "security"
+    },
+    {
+      "participant": "gateway",
+      "from": 560,
+      "to": 630,
+      "type": "external"
+    },
+    {
+      "participant": "devices",
+      "from": 760,
+      "to": 775,
+      "type": "external"
+    },
+    {
+      "participant": "audit",
+      "from": 650,
+      "to": 664,
+      "type": "database"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "与本地的唯一差别",
+      "items": [
+        "设备句先附上 /api/roster 的清单，再进房间",
+        "意图与参数由房间模型给出，不再是本机词表",
+        "[F] 回本机后仍要过补槽与同一套闸门"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "不信任模型参数",
+      "items": [
+        "DEVICE_FILL 默认 on，模型漏掉的设备或参数由本机补",
+        "白名单、homeId、参数、风险四级校验照跑",
+        "高危同样出 pendingId，确认后才 claim"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "回执链路",
+      "items": [
+        "控制成功与否都写审计，再拼函数结果帧",
+        "页面把结果发回房间，由房间播报",
+        "网关是异步下发，HTTP 200 不等于设备已执行"
+      ]
+    }
+  ]
+}

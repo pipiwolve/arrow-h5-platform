@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "新增一个设备品类的接入流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "docs/架构图/05-新增品类接入流程.html",
+    "views": [
+      {
+        "id": "define-and-code",
+        "label": "定品类并同步代码",
+        "focus": [
+          "spec",
+          "category",
+          "roster"
+        ],
+        "note": "品类码、中文名、型号前缀先定，再改识别代码。"
+      },
+      {
+        "id": "config-and-device",
+        "label": "配置与设备",
+        "focus": [
+          "roster",
+          "applies",
+          "device"
+        ],
+        "note": "指令覆盖与设备能力是两件事，都要落到新品类。"
+      },
+      {
+        "id": "platform-and-accept",
+        "label": "平台与验收",
+        "focus": [
+          "device",
+          "console",
+          "tests"
+        ],
+        "note": "控制台同步与真机探测无法由仓库配置消除。"
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "need",
+      "label": "需求与口径"
+    },
+    {
+      "id": "code",
+      "label": "本机识别代码"
+    },
+    {
+      "id": "config",
+      "label": "配置面"
+    },
+    {
+      "id": "external",
+      "label": "设备与平台"
+    },
+    {
+      "id": "accept",
+      "label": "验收"
+    }
+  ],
+  "phases": [
+    {
+      "id": "define",
+      "label": "定品类",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "code",
+      "label": "同步代码",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "device",
+      "label": "配置与设备",
+      "fromCol": 4,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "spec",
+    "category",
+    "roster",
+    "applies",
+    "device",
+    "console",
+    "tests"
+  ],
+  "nodes": [
+    {
+      "id": "spec",
+      "lane": "need",
+      "col": 0,
+      "type": "external",
+      "label": "定品类口径",
+      "sublabel": "码 · 名称 · 前缀",
+      "width": 92
+    },
+    {
+      "id": "category",
+      "lane": "code",
+      "col": 2,
+      "type": "backend",
+      "label": "品类与说法",
+      "sublabel": "resolve 两处",
+      "width": 92
+    },
+    {
+      "id": "roster",
+      "lane": "code",
+      "col": 3,
+      "type": "backend",
+      "label": "清单与点名",
+      "sublabel": "roster 点名",
+      "width": 92
+    },
+    {
+      "id": "applies",
+      "lane": "config",
+      "col": 4,
+      "type": "database",
+      "label": "指令覆盖",
+      "sublabel": "appliesTo",
+      "width": 92
+    },
+    {
+      "id": "device",
+      "lane": "external",
+      "col": 4,
+      "type": "external",
+      "label": "设备清单",
+      "sublabel": "码 + 能力",
+      "width": 92
+    },
+    {
+      "id": "console",
+      "lane": "external",
+      "col": 5,
+      "type": "cloud",
+      "label": "百度控制台",
+      "sublabel": "品类 · 例句",
+      "width": 92
+    },
+    {
+      "id": "tests",
+      "lane": "accept",
+      "col": 5,
+      "type": "security",
+      "label": "分组验收",
+      "sublabel": "按品类",
+      "width": 92
+    }
+  ],
+  "edges": [
+    {
+      "from": "spec",
+      "to": "category",
+      "label": "品类",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "drop"
+    },
+    {
+      "from": "category",
+      "to": "roster",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "bottom-channel"
+    },
+    {
+      "from": "roster",
+      "to": "applies",
+      "label": "覆盖",
+      "variant": "dashed",
+      "role": "branch",
+      "route": "drop"
+    },
+    {
+      "from": "applies",
+      "to": "device",
+      "variant": "dashed",
+      "role": "branch",
+      "route": "drop"
+    },
+    {
+      "from": "device",
+      "to": "console",
+      "label": "同步",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "bottom-channel"
+    },
+    {
+      "from": "console",
+      "to": "tests",
+      "label": "验收",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "drop"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "一个品类 6 个文件 8 处",
+      "items": [
+        "品类码与说法：resolve.mjs 两处",
+        "品类名与提示词：roster.mjs 两处",
+        "点名正则：turn.mjs:194",
+        "指令覆盖：scenario.json appliesTo",
+        "ASR 热词：aiagent.mjs:18-21",
+        "测试品类名：accept.check.mjs"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "能力不能只靠配置",
+      "items": [
+        "平台设备列表不返回 room 与 capability",
+        "设备码与能力写在仓库外 devices.json",
+        "真实能力要逐台发指令探测",
+        "探测结果决定哪些指令能放进 appliesTo"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "验收按品类分组",
+      "items": [
+        "不要把所有品类合成一个通过率",
+        "新品类单独列设备数与指令数",
+        "多品类共用一条指令时按用户说的品类收窄",
+        "收不窄就出选择卡，不要默认选一台"
+      ]
+    }
+  ]
+}

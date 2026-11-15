@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "本地模式全链路时序",
+    "subtitle": "DEVICE_ROUTE=local：房间只负责听与播，设备指令全部在本机闭环",
+    "locale": "zh-CN",
+    "output": "docs/架构图/02-本地模式全链路时序.html",
+    "viewBox": [820, 1120],
+    "animation": "trace",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "listen",
+        "label": "听与分流",
+        "focus": ["user", "room", "page", "node"],
+        "note": "房间把 ASR 结果回放给页面，页面按本机路由截住设备句。"
+      },
+      {
+        "id": "gate",
+        "label": "补槽与闸门",
+        "focus": ["node", "gate", "page"],
+        "note": "选设备、补参数、四道校验都在本机完成，必要时出选择卡或确认卡。"
+      },
+      {
+        "id": "dispatch",
+        "label": "下发与回执",
+        "focus": ["node", "gateway", "audit", "page", "room"],
+        "note": "闸门放行后打箭牌网关，写审计，再让房间播报结果。"
+      }
+    ]
+  },
+  "participants": [
+    { "id": "user", "type": "external", "label": "用户", "sublabel": "语音" },
+    { "id": "room", "type": "cloud", "label": "BRTC 房间", "sublabel": "ASR · TTS" },
+    { "id": "page", "type": "frontend", "label": "H5 页面", "sublabel": "分流 · 卡片" },
+    { "id": "node", "type": "backend", "label": "本机 /api", "sublabel": "intent · choose" },
+    { "id": "gate", "type": "security", "label": "补槽 + 闸门", "sublabel": "resolve · policy" },
+    { "id": "gateway", "type": "external", "label": "箭牌网关", "sublabel": "ext/v3/ai" },
+    { "id": "audit", "type": "database", "label": "本地审计", "sublabel": "audit.jsonl" }
+  ],
+  "segments": [
+    { "from": 160, "to": 285, "label": "听与分流" },
+    { "from": 300, "to": 700, "label": "补槽与闸门" },
+    { "from": 715, "to": 1075, "label": "下发与回执" }
+  ],
+  "messages": [
+    { "id": "speak", "from": "user", "to": "room", "y": 185, "label": "说话（音频）", "variant": "emphasis" },
+    { "id": "asr-echo", "from": "room", "to": "page", "y": 228, "label": "[Q] ASR 回放", "variant": "default" },
+    { "id": "intent", "from": "page", "to": "node", "y": 270, "label": "POST /api/intent", "variant": "emphasis" },
+    { "id": "fill", "from": "node", "to": "gate", "y": 315, "label": "turn.finish：补槽 + 收窄", "variant": "default" },
+    { "id": "fill-back", "from": "gate", "to": "node", "y": 358, "label": "候选设备 / 待补槽", "variant": "return" },
+    { "id": "choices", "from": "node", "to": "page", "y": 400, "label": "choices 选择卡", "variant": "dashed" },
+    { "id": "choose", "from": "page", "to": "node", "y": 442, "label": "POST /api/choose", "variant": "dashed" },
+    { "id": "gate-check", "from": "node", "to": "gate", "y": 484, "label": "四道校验：白名单 · homeId · 参数 · 风险", "variant": "security" },
+    { "id": "gate-verdict", "from": "gate", "to": "node", "y": 526, "label": "ALLOW / CONFIRM / DENY", "variant": "return" },
+    { "id": "pending", "from": "node", "to": "page", "y": 568, "label": "pendingId 确认卡", "variant": "dashed" },
+    { "id": "confirm", "from": "page", "to": "node", "y": 610, "label": "POST /api/confirm", "variant": "dashed" },
+    { "id": "claim", "from": "node", "to": "gate", "y": 652, "label": "claim：确认后放行", "variant": "security" },
+    { "id": "claim-back", "from": "gate", "to": "node", "y": 694, "label": "ALLOW", "variant": "return" },
+    { "id": "control", "from": "node", "to": "gateway", "y": 728, "label": "POST /ext/v3/ai/control", "variant": "emphasis" },
+    { "id": "control-back", "from": "gateway", "to": "node", "y": 762, "label": "{success, code:200}", "variant": "return" },
+    { "id": "audit-write", "from": "node", "to": "audit", "y": 804, "label": "append audit.jsonl", "variant": "dashed" },
+    { "id": "cards", "from": "node", "to": "page", "y": 846, "label": "{say, cards}", "variant": "return" },
+    { "id": "speak-local", "from": "page", "to": "room", "y": 888, "label": "[E]:[CMD]:[TEXT]", "variant": "emphasis" },
+    { "id": "tts", "from": "room", "to": "user", "y": 930, "label": "TTS 播报", "variant": "return" },
+    { "id": "room-fn", "from": "room", "to": "page", "y": 972, "label": "[F] control_device", "variant": "dashed" },
+    { "id": "suppress", "from": "page", "to": "room", "y": 1014, "label": "roomControlAck（60 秒抑制）", "variant": "dashed" }
+  ],
+  "activations": [
+    { "participant": "room", "from": 180, "to": 280, "type": "cloud" },
+    { "participant": "page", "from": 220, "to": 900, "type": "frontend" },
+    { "participant": "node", "from": 262, "to": 860, "type": "backend" },
+    { "participant": "gate", "from": 308, "to": 705, "type": "security" },
+    { "participant": "gateway", "from": 715, "to": 770, "type": "external" },
+    { "participant": "audit", "from": 798, "to": 812, "type": "database" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "本机闭环",
+      "items": [
+        "设备句不进房间模型，/api/intent 直接补齐设备与参数",
+        "闸门放行后才打网关，失败也会落审计",
+        "播报走 [E]:[CMD]:[TEXT]，房间只当喇叭"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "补槽两条支路",
+      "items": [
+        "多候选：choices 卡，用户点选后 /api/choose 重评",
+        "高危：pendingId 5 分钟有效，/api/confirm 后再 claim",
+        "取消确认会写 REJECTED 审计，不静默丢弃"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "双执行抑制",
+      "items": [
+        "房间自己的模型仍可能发 [F] control_device",
+        "页面在本地指令后 60 秒内回空结果帧",
+        "抑制只在页面，服务端没有这层计时"
+      ]
+    }
+  ]
+}
