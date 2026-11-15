@@ -1,6 +1,6 @@
 # 架构图索引
 
-五张图分工固定，按这个顺序看：
+六张图分工固定，按这个顺序看：
 
 | 图 | 回答的问题 | 主要读者 |
 | --- | --- | --- |
@@ -9,6 +9,7 @@
 | `03-云端模式全链路时序.html` | Function Call 回到本机后，为什么还要补槽和过闸 | 联调、百度侧 |
 | `04-新增指令接入流程.html` | 加一条指令要改哪 6 个文件 8 处 | 研发 |
 | `05-新增品类接入流程.html` | 加一个品类要改哪 6 个文件 8 处 | 研发 |
+| `06-云端意图与填槽链路.html` | 发送 SDK 消息和发送 HTTP 请求怎么分流，槽位从哪来、回执怎么回 | 联调、百度侧 |
 
 ## 一页纸边界
 
@@ -40,4 +41,4 @@ node ~/.claude/skills/archify/bin/archify.mjs validate architecture docs/架构�
 node ~/.claude/skills/archify/bin/archify.mjs deliver architecture docs/架构图/01-整体架构.json --quality showcase
 ```
 
-`02`、`03` 把 `architecture` 换成 `sequence`，`04`、`05` 换成 `workflow`。
+`02`、`03`、`06` 把 `architecture` 换成 `sequence`，`04`、`05` 换成 `workflow`。

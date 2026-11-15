@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "云端意图识别与填槽链路",
+    "output": "docs/架构图/06-云端意图与填槽链路.html",
+    "locale": "zh-CN",
+    "viewBox": [1080, 580],
+    "column_fit": "spread",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    { "id": "page", "type": "frontend", "label": "H5 页面", "sublabel": "public/app.js" },
+    { "id": "local", "type": "backend", "label": "本机 Node", "sublabel": "server.mjs + turn.mjs" },
+    { "id": "room", "type": "cloud", "label": "BRTC 房间", "sublabel": "ASR + LLM + 人设" },
+    { "id": "fn", "type": "cloud", "label": "Function Call", "sublabel": "control_device" },
+    { "id": "http", "type": "external", "label": "外部 HTTP 服务", "sublabel": "可选，公网 HTTPS" },
+    { "id": "iot", "type": "external", "label": "箭牌 IoT", "sublabel": "ext/v3/ai/control" }
+  ],
+  "segments": [
+    { "from": 220, "to": 278, "label": "云端意图" },
+    { "from": 286, "to": 372, "label": "两种回传" },
+    { "from": 380, "to": 440, "label": "补槽、过闸、下发" },
+    { "from": 448, "to": 500, "label": "回执与播报" }
+  ],
+  "messages": [
+    { "id": "roster", "from": "page", "to": "local", "y": 160, "label": "GET /api/roster", "variant": "default" },
+    { "id": "send-t", "from": "page", "to": "room", "y": 193, "label": "[T] 原话 + 清单", "variant": "emphasis" },
+    { "id": "intent", "from": "room", "to": "fn", "y": 226, "label": "LLM 调用 control_device", "variant": "emphasis" },
+    { "id": "sdk-result", "from": "fn", "to": "room", "y": 259, "label": "SDK 消息：函数结果", "variant": "return" },
+    { "id": "f-frame", "from": "room", "to": "page", "y": 292, "label": "[F] 数据通道帧", "variant": "emphasis" },
+    { "id": "http-call", "from": "fn", "to": "http", "y": 325, "label": "HTTP 回调：POST 槽位", "variant": "dashed" },
+    { "id": "post-frame", "from": "page", "to": "local", "y": 358, "label": "POST /api/frame", "variant": "emphasis" },
+    { "id": "iot-call", "from": "local", "to": "iot", "y": 391, "label": "POST /ext/v3/ai/control", "variant": "emphasis" },
+    { "id": "cards", "from": "local", "to": "page", "y": 424, "label": "选择卡 / 确认卡 / 结果卡", "variant": "return" },
+    { "id": "ack", "from": "page", "to": "room", "y": 457, "label": "[F] 回执 post_function", "variant": "dashed" },
+    { "id": "speak", "from": "room", "to": "page", "y": 490, "label": "[A] 助手播报", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "page", "from": 154, "to": 496, "type": "frontend" },
+    { "participant": "local", "from": 154, "to": 430, "type": "backend" },
+    { "participant": "room", "from": 220, "to": 496, "type": "cloud" },
+    { "participant": "fn", "from": 259, "to": 360, "type": "cloud" },
+    { "participant": "http", "from": 319, "to": 360, "type": "external" },
+    { "participant": "iot", "from": 424, "to": 460, "type": "external" }
+  ]
+}
