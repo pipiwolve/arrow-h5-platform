@@ -56,7 +56,7 @@ status: active
 | `create_scene` | `5021` | `conditionList`、`actionList`、`say`，前两个是 JSON 字符串 | 收成 `scene.create`，过闸门，放行后 `POST /ext/v3/ai/scene` |
 | `open_repair` | `5022` | `kind`（`report` 或 `progress`）、`say` | 只出 deeplink，不打 IoT |
 
-`say` 只给播报。打到箭牌的控制报文只有 `deviceName`、`cmd`、`param`、`value`。`cmd` 只允许八个：`switch_watering`、`switch_watering_small`、`switch_night_light`、`switch_auto_closing`、`switch_kicking`、`switch_auto_oiling_porcelain`、`switch_onoff`、`switch_water_in`。`param` 固定 `switch`。大冲、小冲只能 `on`。
+`say` 只给播报。打到箭牌的控制报文只有 `deviceName`、`cmd`、`param`、`value`。`cmd` 只允许七个：`switch_watering`、`switch_night_light`、`switch_auto_closing`、`switch_kicking`、`switch_auto_oiling_porcelain`、`switch_onoff`、`switch_water_in`。`param` 固定 `switch`。大冲只能 `on`。平台实测不认 `switch_watering_small`（小冲），该指令已从指令表删除。
 
 房间推来的一帧形态：
 

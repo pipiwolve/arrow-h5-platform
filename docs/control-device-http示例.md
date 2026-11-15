@@ -29,11 +29,13 @@ control_device 两种出口
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 | --- | --- | --- | --- |
-| deviceName | String | 是 | 从用户这句话和【家庭设备】里选定唯一一台，逐字复制 deviceName。多台都可能命中时不要调用，先问是哪一台 |
-| cmd | String | 是 | `switch_watering`、`switch_watering_small`、`switch_night_light`、`switch_auto_closing`、`switch_kicking`、`switch_auto_oiling_porcelain`、`switch_onoff`、`switch_water_in` |
+| deviceName | String | 是 | 从用户这句话和【家庭设备】里选定一台，逐字复制 deviceName。按房间、品类、清单顺序选，不要反问是哪一台 |
+| cmd | String | 是 | `switch_watering`、`switch_night_light`、`switch_auto_closing`、`switch_kicking`、`switch_auto_oiling_porcelain`、`switch_onoff`、`switch_water_in` |
 | param | String | 否 | 固定填 `switch` |
-| value | String | 是 | `on` 或 `off`。打开填 `on`，关闭、关掉、停用填 `off`。大冲和小冲只能填 `on` |
+| value | String | 是 | `on` 或 `off`。打开填 `on`，关闭、关掉、停用填 `off`。大冲只能填 `on` |
 | say | String | 否 | 用一句话告诉用户准备做什么。不要向用户索要参数名 |
+
+平台实测不认 `switch_watering_small`（小冲），该指令已从指令表删除。用户说「小冲」时本机返回可读原因，不下发。
 
 这一句填出的槽位：
 
