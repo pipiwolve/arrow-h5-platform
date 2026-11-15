@@ -5,7 +5,7 @@ import { createGate } from './policy.mjs';
 import { actionFromCall, asrUtterance, extractAction, classifyFrame, functionResultFrame, parseFunction, visibleAgent } from './frames.mjs';
 import { topicImage, topicModel, topicView } from './topic.mjs';
 import { buildRole, userEcho, visibleReply } from './roster.mjs';
-import { completeItem, commandFromText, fillTargets, narrowDevices, retiredCommandReason, trustedName } from './resolve.mjs';
+import { completeItem, commandFromText, fillTargets, narrowDevices, retiredCommandReason, trustedName, valueFromText } from './resolve.mjs';
 import { redact } from './audit.mjs';
 import { agentConfig, licActiveFrame } from './aiagent.mjs';
 import { createTurn } from './turn.mjs';
@@ -160,6 +160,11 @@ assert.equal(commandFromText('把主卫马桶关掉', SCENARIO.commands), 'switc
 assert.equal(commandFromText('把自动翻盖关掉', SCENARIO.commands), 'switch_auto_closing');
 assert.equal(commandFromText('关掉马桶的夜灯', SCENARIO.commands), 'switch_night_light');
 assert.equal(commandFromText('帮我小冲', SCENARIO.commands), '');
+assert.equal(valueFromText('关一下镜柜'), 'off');
+assert.equal(valueFromText('不要关夜灯'), 'on');
+assert.equal(valueFromText('别关'), 'on');
+assert.equal(valueFromText('不要打开'), 'off');
+assert.equal(valueFromText('别夜灯了'), 'off');
 assert.equal(SCENARIO.commands.some((c) => c.cmd === 'switch_watering_small'), false);
 assert.equal(
   retiredCommandReason({ action: 'device.control', targets: [{ cmd: '' }] }, '帮我小冲'),

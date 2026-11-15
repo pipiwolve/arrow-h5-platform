@@ -100,6 +100,10 @@ export function commandFromText(text, commands) {
 
 export function valueFromText(text) {
   const src = String(text || '');
+  // 「不要关」「别关」是否定关闭，语义是保持打开。
+  if (/(不要|别|不用|不需要)\s*(关|关闭|关掉|关上|关了|关一下|停用|取消)/.test(src)) return 'on';
+  // 「不要开」「别开」是否定打开，语义是保持关闭。
+  if (/(不要|别|不用|不需要)\s*(开|打开|开启|开一下|启动|启用|开始)/.test(src)) return 'off';
   if (/关闭|关掉|关上|关了|关一下|停用|取消|不要|别/.test(src)) return 'off';
   if (/大冲|小冲|冲水|冲一下|^冲$|冲小|翻盖|脚触|润瓷|夜灯|进水|放水|打开|开启|开一下|启动|启用|开始/.test(src)) return 'on';
   return '';
