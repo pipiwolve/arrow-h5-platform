@@ -42,7 +42,7 @@ public/                 通话、设备、审计三个视图
 
 两个发布分支的默认值不同：`release/local` 不写 `DEVICE_ROUTE` 时按 `local`，`release/cloud-console` 不写时按 `cloud`。命令行写 `DEVICE_ROUTE=...` 永远优先于 `.env`。
 
-`DEVICE_FILL` 只对云端生效：`on` 本机补槽（默认）、`off` 只校验、`card` 出选择卡。起服务后看 `/api/config` 的 `deviceRoute`、`deviceFill`、`deviceCard` 确认模式。
+`DEVICE_FILL` 对本机两条入口都生效：云端的 `[F]` 和本地的 `/api/intent` 都读它。`on` 本机补槽（默认）、`off` 只校验、`card` 出选择卡。起服务后看 `/api/config` 的 `deviceRoute`、`deviceFill`、`deviceCard` 确认模式。
 
 控制台配置以 `产品文档/云端意图配置-新应用.md` 为准，较早的一版在 `产品文档/后台控制台交付配置.md`。平台实测不认 `switch_watering_small`（小冲），两份文档都已移除。
 
@@ -75,7 +75,7 @@ public/                 通话、设备、审计三个视图
 
 按住说话走 BRTC 按键模式，不另接短语音，也不读取演示项目的 `ASR_API_KEY`。建实例时 `asr_long_audio_mode` 为 true。平时麦克风静音。按住时打开麦克风并发送 `[E]:[CMD]:[ASR_START_LONGTEXT_REC]`，松开时静音并发送 `[E]:[CMD]:[ASR_STOP_LONGTEXT_REC]`。识别中间结果先画用户气泡，最终 `[Q]` 再替换成完整原话并进入本机确认。本机接手后的 60 秒内，房间同一次 `control_device` 回一个不播报的函数结果，不再丢弃后让模型反复追问。
 
-云端模式下 IoT 下发优先走控制台意图，`callMode` 选 SDK 消息。需要三个：`control_device`（deviceName、cmd、param、value）、`create_scene`（conditionList、actionList，内容是 JSON 字符串）、`open_repair`（kind 取 report 或 progress）。本地模式走 `/api/intent`，不依赖控制台意图。意图没配上时，人设仍要求回答末尾给一个 `iot` 代码块。块进不了闸门就不会下发。
+云端模式下 IoT 下发优先走控制台意图，`callMode` 选 `SDK_MSG`（控制台叫「发送 SDK 消息」），HTTP 模式是 `HTTP_PROTOCOL` 并另填 `callUrl`。需要三个：`control_device`（deviceName、cmd、param、value）、`create_scene`（conditionList、actionList，内容是 JSON 字符串）、`open_repair`（kind 取 report 或 progress）。本地模式走 `/api/intent`，不依赖控制台意图。意图没配上时，人设仍要求回答末尾给一个 `iot` 代码块。块进不了闸门就不会下发。
 
 平台 HTTP 200 且 body 为「设备离线」时，审计记 FAILED。设备没有执行。
 

@@ -61,6 +61,10 @@ control_device 两种出口
 | 谁打箭牌 IoT | 本机 `src/iot-client.mjs` | 用户侧服务 |
 | 地址要求 | 不需要公网回调 | 必须是百度云端能访问的 HTTPS。`127.0.0.1` 和内网打不到 |
 
+服务端 Function Call 管理 API 里，这个开关叫 `callMode`：发送 SDK 消息是 `SDK_MSG`，HTTP 是 `HTTP_PROTOCOL`，HTTP 模式另填 `callUrl`。它挂在单个 function 上，三个函数可以各选各的，不是模板级开关。
+
+控制台里还有一个「HTTP 执行器」`sys_http`，是在 Function 描述或参数描述里发 HTTP 查询并回填槽位，跟这里的「请求地址」不是一回事。
+
 ## SDK 消息：当前这条
 
 模型填完槽后，房间数据通道推一帧。`content` 是字符串，本机 `parseFunction` 会再解析一次。
@@ -68,7 +72,8 @@ control_device 两种出口
 ```text
 [F]:{
   "session_id": "1754555833139",
-  "content": "{\"function_name\":\"control_device\",\"parameter_list\":[{\"deviceName\":\"ARROW01179421020631\",\"cmd\":\"switch_watering\",\"param\":\"switch\",\"value\":\"on\",\"say\":\"准备冲水\"}]}"
+  "content": "{\"function_name\":\"control_device\",\"parameter_list\":[{\"deviceName\":\"ARROW01179421020631\",\"cmd\":\"switch_watering\",\"param\":\"switch\",\"value\":\"on\",\"say\":\"准备冲水\"}]}",
+  "query": "帮我把主卫坐便器的大冲打开"
 }
 ```
 
@@ -104,9 +109,11 @@ H5 收成内部动作，再由本机打 IoT：
 
 审计记在本机 `audit.jsonl`。
 
+官方应答表只列 `session_id`、`result`、`post_function`，前两个必填；`message` 是本仓库回执附带的可读原因，官方表里没有单列。
+
 ## HTTP：同一槽位，云端直达用户侧
 
-请求地址改成 HTTP 后，百度云端 POST 下面这份内容。不进 H5，也没有 `[F]` 帧。外壳字段以控制台实际回调为准；槽位和 SDK 模式是同一份。
+请求地址改成 HTTP 后，百度云端 POST 下面这份内容。不进 H5，也没有 `[F]` 帧。槽位和 SDK 模式是同一份，`content` 仍是字符串，要再解析一次。
 
 ```http
 POST /ai/control-device HTTP/1.1
@@ -114,21 +121,15 @@ Host: 用户侧公网域名
 Content-Type: application/json
 
 {
+  "app_id": "你的 AppID",
+  "instance_id": 1234567890,
   "session_id": "1754555833139",
-  "content": {
-    "function_name": "control_device",
-    "parameter_list": [
-      {
-        "deviceName": "ARROW01179421020631",
-        "cmd": "switch_watering",
-        "param": "switch",
-        "value": "on",
-        "say": "准备冲水"
-      }
-    ]
-  }
+  "content": "{\"function_name\":\"control_device\",\"parameter_list\":[{\"deviceName\":\"ARROW01179421020631\",\"cmd\":\"switch_watering\",\"param\":\"switch\",\"value\":\"on\",\"say\":\"准备冲水\"}]}",
+  "query": "帮我把主卫坐便器的大冲打开"
 }
 ```
+
+需要鉴权或业务上下文时，用 `tp_extra_data.functionCall` 的 `headerMap`、`paramMap`、`bodyMap` 透传，不靠 URL 里带 token。
 
 用户侧自己再打箭牌 UAT。这一条和本机现在发的相同，`say` 不要放进去：
 
@@ -168,17 +169,27 @@ Content-Type: application/json
 
 `code` 为 `200` 或 `10000`，且 `success` 不为 `false`，才算受理。
 
-用户侧把结果回给百度，供模型播报：
+用户侧把结果回给百度，供模型播报。`session_id` 和 `result` 必填，`message` 不在官方应答表里，要固定播报就把话放进 `post_function`：
 
 ```json
-{ "result": "ok", "message": "平台已受理。" }
+{
+  "session_id": "1754555833139",
+  "result": "ok",
+  "post_function": [{ "type": "text", "content": "平台已受理。" }]
+}
 ```
 
 ```json
-{ "result": "error", "message": "设备当前离线，指令已送到平台，这一次没有执行。" }
+{
+  "session_id": "1754555833139",
+  "result": "error",
+  "post_function": [{ "type": "text", "content": "设备当前离线，指令已送到平台，这一次没有执行。" }]
+}
 ```
 
 这条路没有本机闸门。多台设备选择、高危确认、`audit.jsonl` 都不会发生，除非用户侧服务自己做。模型填错的 `deviceName` 或 `cmd` 会直接到达箭牌平台。
+
+本仓库没有 HTTP 回调的实测记录，三个函数仍按发送 SDK 消息交付。这段是按官方文档给的形状，接之前先用一条人工请求打回显服务，确认控制台实际发来的外壳字段。
 
 ## 对照
 

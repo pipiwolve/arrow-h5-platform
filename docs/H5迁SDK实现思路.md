@@ -61,10 +61,10 @@ status: active
 房间推来的一帧形态：
 
 ```text
-[F]:{"session_id":"...","content":"{\"function_name\":\"control_device\",\"parameter_list\":[{...}]}"}
+[F]:{"session_id":"...","content":"{\"function_name\":\"control_device\",\"parameter_list\":[{...}]}","query":"把主卫坐便器的大冲打开"}
 ```
 
-`content` 经常是字符串，要再解析一次。解析逻辑在 `src/frames.mjs` 的 `parseFunction`、`actionFromCall`。回执也是一帧 `[F]`，带 `result`、`message`，需要固定播报时加 `post_function`。
+`content` 经常是字符串，要再解析一次。解析逻辑在 `src/frames.mjs` 的 `parseFunction`、`actionFromCall`。回执也是一帧 `[F]`，带 `result`、`message`，需要固定播报时加 `post_function`；官方应答表只列 `session_id`、`result`、`post_function`，`message` 是仓库自带的可读原因。
 
 ### 2.3 知识库
 
