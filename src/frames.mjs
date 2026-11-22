@@ -40,10 +40,13 @@ export function parseFunction(data) {
     if (typeof content === 'string') content = JSON.parse(content);
     if (!content || typeof content !== 'object' || !(content.function_name || content.name)) return null;
     const params = content.parameter_list || content.parameters || [];
+    const userText = String(outer.query || content.query || '').split('【家庭设备】')[0]
+      .replace(/(?:\\+n|\s)+$/, '').trim();
     return {
       name: content.function_name || content.name || '',
       params: Array.isArray(params) ? params : [params],
       sessionId: outer.session_id || outer.sessionId || '',
+      userText,
     };
   } catch {
     return null;
@@ -52,6 +55,7 @@ export function parseFunction(data) {
 
 const FN_ACTION = {
   control_device: 'device.control',
+  prepare_device_control: 'device.control',
   create_scene: 'scene.create',
   open_repair: 'repair.open',
 };
@@ -78,6 +82,12 @@ export function actionFromCall(call) {
   if (action === 'device.control') {
     return {
       action,
+      ...(row.homeId !== undefined ? { homeId: row.homeId } : {}),
+      categoryCode: String(row.categoryCode || row.category || row.deviceType || ''),
+      feature: String(row.feature || row.function || ''),
+      operation: String(row.operation || ''),
+      room: String(row.room || ''),
+      deviceAlias: String(row.deviceAlias || ''),
       targets: [{
         deviceName: String(row.deviceName || ''),
         cmd: String(row.cmd || ''),

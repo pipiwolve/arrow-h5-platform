@@ -8,6 +8,7 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { SCENARIO, DEVICES, ROOT, FIXTURE_NAME } from './scenario.mjs';
 import { loadEnv } from './src/env.mjs';
 import { createStore } from './src/store.mjs';
@@ -17,6 +18,8 @@ import { createIotClient } from './src/iot-client.mjs';
 import { createGate } from './src/policy.mjs';
 import { createSessions } from './src/session.mjs';
 import { createTurn } from './src/turn.mjs';
+import { createDeviceController } from './src/device-controller.mjs';
+import { catalogRows, summarizeCatalog } from './src/device-catalog.mjs';
 import { actionFromCall, classifyFrame, extractAction, functionResultFrame, visibleAgent } from './src/frames.mjs';
 import { topicImage, topicModel, topicView } from './src/topic.mjs';
 import { buildRole, visibleReply } from './src/roster.mjs';
@@ -26,6 +29,7 @@ const ENV = loadEnv(ROOT);
 const PORT = Number(ENV.PORT || 8900);
 const IOT_MODE = ENV.IOT_MODE || 'mock';
 const IOT_PORT = Number(ENV.IOT_PORT || 18901);
+const DEVICE_ROUTE = ENV.DEVICE_ROUTE === 'local' ? 'local' : 'cloud';
 // on = 本机补槽收窄（默认）；off = 纯云端，只校验；card = 云端填的那台排第一，出卡让人点。
 const FILL_MODE = ['off', 'card'].includes(ENV.DEVICE_FILL) ? ENV.DEVICE_FILL : 'on';
 const PUBLIC_DIR = path.join(ROOT, 'public');
@@ -41,9 +45,11 @@ const brtc = {
   direct: ENV.BRTC_DIRECT !== '0',
 };
 
-const stateStore = createStore({ file: path.join(ROOT, 'state.json') });
-const audit = createAudit(createStore({ file: path.join(ROOT, 'audit.jsonl') }));
-const journal = createJournal(createStore({ file: path.join(ROOT, 'cards.jsonl') }));
+const STATE_DIR = ENV.STATE_DIR ? path.resolve(ROOT, ENV.STATE_DIR) : ROOT;
+fs.mkdirSync(STATE_DIR, { recursive: true });
+const stateStore = createStore({ file: path.join(STATE_DIR, 'state.json') });
+const audit = createAudit(createStore({ file: path.join(STATE_DIR, 'audit.jsonl') }));
+const journal = createJournal(createStore({ file: path.join(STATE_DIR, 'cards.jsonl') }));
 const gate = createGate({ scenario: SCENARIO, devices: DEVICES.devices });
 
 const gateway = IOT_MODE === 'mock'
@@ -65,19 +71,21 @@ const LIVE_TTL = 20_000;
 let liveCache = { at: 0, rows: null, ok: false, error: null, ms: 0 };
 
 async function liveDevices(force = false) {
-  if (!force && liveCache.rows && Date.now() - liveCache.at < LIVE_TTL) return liveCache;
+  if (!force && liveCache.homeId === SCENARIO.iot.homeId && liveCache.ok && liveCache.rows && Date.now() - liveCache.at < LIVE_TTL) return liveCache;
   const started = Date.now();
   try {
     const list = await iot.deviceList(SCENARIO.iot.homeId);
     const rows = Array.isArray(list.response?.data) ? list.response.data : [];
+    const accepted = list.ok && list.response?.success !== false
+      && [200, 10000].includes(Number(list.response?.code));
     liveCache = {
-      at: Date.now(), rows, ok: !!list.ok, error: list.error || null,
+      homeId: SCENARIO.iot.homeId, at: Date.now(), rows, ok: !!accepted,
+      error: accepted ? null : list.error || list.response?.msg || '设备列表查询未成功',
       ms: list.ms ?? (Date.now() - started),
     };
   } catch (e) {
-    if (liveCache.rows) return liveCache;
     liveCache = {
-      at: Date.now(), rows: [], ok: false,
+      homeId: SCENARIO.iot.homeId, at: Date.now(), rows: [], ok: false,
       error: String(e.message || e), ms: Date.now() - started,
     };
   }
@@ -85,6 +93,7 @@ async function liveDevices(force = false) {
 }
 
 function deviceRows(live) {
+  if (DEVICE_ROUTE === 'cloud') return catalogRows({ rows: live.rows, devices: DEVICES.devices, commands: SCENARIO.commands });
   const seen = new Set();
   const rows = [];
   const push = (d, onlineStatus) => {
@@ -107,6 +116,10 @@ function deviceRows(live) {
 const sessions = createSessions({ brtc, scenario: SCENARIO, store: stateStore });
 const turn = createTurn({
   scenario: SCENARIO, devices: DEVICES.devices, gate, iot, audit, liveDevices,
+});
+const deviceController = createDeviceController({
+  scenario: SCENARIO, devices: DEVICES.devices, gate, turn, liveDevices,
+  singleMode: ENV.DEVICE_SINGLE === 'card' ? 'card' : 'auto',
 });
 
 function sendJson(res, code, obj) {
@@ -139,7 +152,8 @@ const routes = {
       fixture: FIXTURE_NAME,
       homeId: SCENARIO.iot.homeId,
       voice: true,
-      deviceRoute: ENV.DEVICE_ROUTE === 'cloud' ? 'cloud' : 'local',
+      deviceRoute: DEVICE_ROUTE,
+      singleDeviceMode: ENV.DEVICE_SINGLE === 'card' ? 'card' : 'auto',
       deviceFill: FILL_MODE,
       deviceCard: FILL_MODE === 'card',
       topic: Boolean(ENV.TOPIC_API_KEY && ENV.TOPIC_ADAPTER_URL),
@@ -213,9 +227,20 @@ const routes = {
         });
         return { parsed: { kind: 'function', name: parsed.call.name }, reply, cards: [] };
       }
-      const spoken = String(userText || sessions.get(sessionId)?.lastUserText || '').trim();
+      const latestText = String(sessions.get(sessionId)?.lastUserText || '').trim();
+      if (parsed.call.userText && latestText && parsed.call.userText !== latestText) {
+        return { superseded: true, state: 'SUPERSEDED', cards: [] };
+      }
+      const spoken = String(parsed.call.userText || userText || latestText).trim();
       const turnGen = Number.isFinite(Number(bodyTurn)) ? Number(bodyTurn) : sessions.currentTurn(sessionId);
-      const finished = await turn.finish({ sessionId, action, userText: spoken, fill: FILL_MODE });
+      const isCurrent = () => !turnGen || sessions.currentTurn(sessionId) === turnGen;
+      if (!isCurrent()) return { superseded: true, cards: [] };
+      const finished = DEVICE_ROUTE === 'cloud' && action.action === 'device.control'
+        ? await deviceController.prepare({
+          sessionId, action, userText: spoken, turnGen, isCurrent,
+          callId: crypto.createHash('sha256').update(String(frame)).digest('hex'),
+        })
+        : await turn.finish({ sessionId, action, userText: spoken, fill: FILL_MODE });
       if (turnGen && sessions.currentTurn(sessionId) !== turnGen) {
         return { parsed: { kind: 'function', name: parsed.call.name }, superseded: true, cards: [] };
       }
@@ -226,7 +251,7 @@ const routes = {
       const executed = [...(finished.cards || [])].reverse().find((c) => c.event === 'demo.result');
       const accepted = executed
         ? executed.data?.result === 'SUCCEEDED'
-        : decision === 'confirm' || action.action === 'repair.open';
+        : finished.state === 'WAITING_SELECTION' || decision === 'confirm' || action.action === 'repair.open';
       const reply = functionResultFrame({
         sessionId: parsed.call.sessionId,
         result: accepted ? 'ok' : 'error',
@@ -237,7 +262,9 @@ const routes = {
       });
       return redact({
         parsed: { kind: 'function', name: parsed.call.name },
-        action, reply, cards: finished.cards,
+        action, reply, cards: finished.cards, state: finished.state,
+        requestId: finished.requestId, catalog: finished.catalog, spoken: finished.spoken,
+        replayed: !!finished.replayed,
       });
     }
     // 流式中间态只回分类，不进闸门。一轮结束时页面把最终 [A] 再交一次。
@@ -249,7 +276,9 @@ const routes = {
     const asked = String(userText || '').trim();
     if (asked) sessions.noteUserText(sessionId, asked);
     const turnGen = Number.isFinite(Number(bodyTurn)) ? Number(bodyTurn) : sessions.currentTurn(sessionId);
-    const finished = await turn.finish({ sessionId, action, userText: asked, fill: FILL_MODE });
+    // 云端设备控制只接受 Function Call；问答中的示例 JSON 不触发 IoT。
+    const allowedAction = DEVICE_ROUTE === 'cloud' && action?.action === 'device.control' ? null : action;
+    const finished = await turn.finish({ sessionId, action: allowedAction, userText: asked, fill: FILL_MODE });
     if (turnGen && sessions.currentTurn(sessionId) !== turnGen) {
       return { parsed: { kind: 'agent', text: '', partial: false }, superseded: true, cards: [] };
     }
@@ -294,12 +323,14 @@ const routes = {
   },
 
   async 'POST /api/turn'(req) {
-    const { sessionId } = await readBody(req);
+    const { sessionId, userText } = await readBody(req);
     if (!sessions.get(sessionId)) return { status: 404, body: { error: '会话不存在或已结束' } };
+    if (userText) sessions.noteUserText(sessionId, userText);
     return { turnGen: sessions.beginTurn(sessionId) };
   },
 
   async 'POST /api/intent'(req) {
+    if (DEVICE_ROUTE === 'cloud') return { status: 409, body: { error: '设备控制由云端 Function Call 识别，请通过 Agent 发送原句。' } };
     const { sessionId, text, turnGen: bodyTurn } = await readBody(req);
     const userText = String(text || '').trim();
     if (!userText) return { status: 400, body: { error: '没有要处理的话' } };
@@ -323,8 +354,14 @@ const routes = {
   },
 
   async 'POST /api/choose'(req) {
-    const { sessionId, action, deviceName, userText, choiceId } = await readBody(req);
+    const { sessionId, action, deviceName, userText, choiceId, requestId } = await readBody(req);
     if (!deviceName) return { status: 400, body: { error: '还没有选择设备' } };
+    if (DEVICE_ROUTE === 'cloud' || String(requestId || choiceId || '').startsWith('dc_')) {
+      const out = await deviceController.choose({ sessionId, requestId: requestId || choiceId, deviceName });
+      if (out.status) return out;
+      if (out.cards?.length) await journal.appendResolve({ sessionId, pendingId: requestId || choiceId, decision: 'select', out });
+      return redact(out);
+    }
     const id = String(choiceId || '');
     if (id) {
       if (chosenOnce.has(id)) return { status: 409, body: { error: '这张选择卡已经下发过' } };
@@ -356,6 +393,7 @@ const routes = {
       error: live.error,
       ms: live.ms,
       devices: deviceRows(live),
+      ...summarizeCatalog(deviceRows(live)),
     };
   },
 

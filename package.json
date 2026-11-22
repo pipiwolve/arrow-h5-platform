@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "node server.mjs",
-    "check": "node src/selfcheck.mjs && node src/turn-gate.check.mjs && node src/send-text.check.mjs && node src/accept.check.mjs && node src/http.check.mjs && node --check server.mjs && node --check public/app.js && node --check public/turn-gate.js"
+    "check": "node src/selfcheck.mjs && node src/turn-gate.check.mjs && node src/send-text.check.mjs && node src/accept.check.mjs && node src/http.check.mjs && node src/device-controller.check.mjs && node src/cloud-device.http.check.mjs && node --check server.mjs && node --check public/app.js && node --check public/turn-gate.js",
+    "start:validation": "node scripts/start-device-validation.mjs",
+    "check:devices": "node src/device-controller.check.mjs && node src/cloud-device.http.check.mjs"
   }
 }

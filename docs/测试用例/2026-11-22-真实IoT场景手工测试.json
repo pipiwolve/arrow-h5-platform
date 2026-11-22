@@ -1,0 +1,2819 @@
+{
+  "date": "2026-11-22",
+  "generatedAt": "2026-11-22T14:55:54.493Z",
+  "manualOnly": true,
+  "status": "NOT_RUN",
+  "baseline": {
+    "date": "2026-11-22",
+    "capturedAt": "2026-11-22T14:49:44.140Z",
+    "baseUrl": "http://127.0.0.1:8912",
+    "config": {
+      "ready": true,
+      "missing": [],
+      "iotMode": "real",
+      "iotHost": "https://api-uatiot.arrowgroup.com.cn",
+      "fixture": "real",
+      "homeId": 933,
+      "deviceRoute": "cloud",
+      "singleDeviceMode": "card",
+      "deviceFill": "card"
+    },
+    "catalog": {
+      "homeId": 933,
+      "ok": true,
+      "error": null,
+      "ms": 1035,
+      "devices": [
+        {
+          "deviceName": "ARROW0217833154885800",
+          "deviceTagName": "AQW11838-R-AM智能浴霸",
+          "categoryCode": "02",
+          "category": "浴霸",
+          "room": "",
+          "onlineStatus": 1,
+          "capability": [
+            "switch_warm_air"
+          ],
+          "capabilitySource": "category-adapter"
+        },
+        {
+          "deviceName": "ARROW0117866743127370",
+          "deviceTagName": "11楼1325马桶",
+          "categoryCode": "01",
+          "category": "马桶",
+          "room": "",
+          "onlineStatus": 1,
+          "capability": [
+            "switch_watering",
+            "switch_night_light",
+            "switch_auto_closing",
+            "switch_kicking",
+            "switch_auto_oiling_porcelain",
+            "switch_onoff"
+          ],
+          "capabilitySource": "category-adapter"
+        },
+        {
+          "deviceName": "ARROW0617918533761310",
+          "deviceTagName": "XL智能镜柜",
+          "categoryCode": "06",
+          "category": "镜柜",
+          "room": "",
+          "onlineStatus": 1,
+          "capability": [
+            "switch_night_light",
+            "switch_onoff"
+          ],
+          "capabilitySource": "category-adapter"
+        }
+      ],
+      "totalCount": 3,
+      "categories": [
+        {
+          "categoryCode": "02",
+          "category": "浴霸",
+          "count": 1,
+          "onlineCount": 1
+        },
+        {
+          "categoryCode": "01",
+          "category": "马桶",
+          "count": 1,
+          "onlineCount": 1
+        },
+        {
+          "categoryCode": "06",
+          "category": "镜柜",
+          "count": 1,
+          "onlineCount": 1
+        }
+      ]
+    },
+    "pageHttpStatus": 200,
+    "controlRequestsIssued": 0
+  },
+  "summary": {
+    "total": 74,
+    "immediatelyTestable": 69,
+    "conditional": 5,
+    "byGroup": {
+      "功能矩阵": 17,
+      "历史失败话术复测": 17,
+      "知识与状态隔离": 8,
+      "未适配与歧义边界": 10,
+      "候选筛选与指定设备": 8,
+      "多轮与语音": 5,
+      "卡片与反馈": 4,
+      "环境变化扩展": 5
+    }
+  },
+  "executionPolicy": "只生成待人工执行的用例；本文件不会下发控制，昨日模拟验收脚本拒绝 real 模式，不可直接作为真机批量控制脚本使用。",
+  "cases": [
+    {
+      "id": "C01",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开浴霸暖风"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0217833154885800"
+        ],
+        "selectedDeviceName": "ARROW0217833154885800",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_warm_air",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中浴霸的暖风模式、指示和实际运行，记录生效时间。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C02",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭浴霸暖风"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0217833154885800"
+        ],
+        "selectedDeviceName": "ARROW0217833154885800",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_warm_air",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中浴霸的暖风模式、指示和实际运行，记录生效时间。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C03",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开马桶夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C04",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭马桶夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C05",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C06",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭镜柜夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C07",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开马桶自动翻盖"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_closing",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动翻盖开关，再按产品说明的触发方式验证；分别记录功能设置和触发动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C08",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭马桶自动翻盖"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_closing",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动翻盖开关，再按产品说明的触发方式验证；分别记录功能设置和触发动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C09",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开马桶脚触感应"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_kicking",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对脚触感应开关，再按产品说明触发脚触操作；分别记录设置和响应。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C10",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭马桶脚触感应"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_kicking",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对脚触感应开关，再按产品说明触发脚触操作；分别记录设置和响应。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C11",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开马桶自动润瓷"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_oiling_porcelain",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动润瓷开关，再按产品说明的触发条件观察润瓷；分别记录设置和动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C12",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭马桶自动润瓷"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_oiling_porcelain",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动润瓷开关，再按产品说明的触发条件观察润瓷；分别记录设置和动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C13",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开马桶冲水"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_watering",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对目标马桶执行一次大冲，不替代为小冲、不重复冲水。"
+      },
+      "note": "冲水仅适配大冲 on，不适配小冲和 off；现场观察一次冲水，不能用不同冲水模式替代。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C14",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开马桶电源"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_onoff",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对电源或工作状态，刷新在线状态，必要时现场恢复后继续。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C15",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜电源"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_onoff",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对电源或工作状态，刷新在线状态，必要时现场恢复后继续。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C16",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭镜柜电源"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_onoff",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对电源或工作状态，刷新在线状态，必要时现场恢复后继续。"
+      },
+      "note": "电源关闭放在其他功能验证之后。操作后刷新在线状态；若设备离线，先在现场恢复电源，再继续测试。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "C17",
+      "group": "功能矩阵",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭马桶电源"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_onoff",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对电源或工作状态，刷新在线状态，必要时现场恢复后继续。"
+      },
+      "note": "电源关闭放在其他功能验证之后。操作后刷新在线状态；若设备离线，先在现场恢复电源，再继续测试。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R01",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "开自动翻盖"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_closing",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动翻盖开关，再按产品说明的触发方式验证；分别记录功能设置和触发动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R02",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "启用自动翻盖"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_closing",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动翻盖开关，再按产品说明的触发方式验证；分别记录功能设置和触发动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R03",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭自动翻盖"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_closing",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动翻盖开关，再按产品说明的触发方式验证；分别记录功能设置和触发动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R04",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭自动翻盖功能"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_closing",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动翻盖开关，再按产品说明的触发方式验证；分别记录功能设置和触发动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R05",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "脚触感应打开"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_kicking",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对脚触感应开关，再按产品说明触发脚触操作；分别记录设置和响应。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R06",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "开脚触感应"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_kicking",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对脚触感应开关，再按产品说明触发脚触操作；分别记录设置和响应。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R07",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "把脚触感应关掉"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_kicking",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对脚触感应开关，再按产品说明触发脚触操作；分别记录设置和响应。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R08",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "开启大冲"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_watering",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对目标马桶执行一次大冲，不替代为小冲、不重复冲水。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R09",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "开始大冲"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_watering",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对目标马桶执行一次大冲，不替代为小冲、不重复冲水。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R10",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "来个大冲"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_watering",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对目标马桶执行一次大冲，不替代为小冲、不重复冲水。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R11",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "帮我大冲"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_watering",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对目标马桶执行一次大冲，不替代为小冲、不重复冲水。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R12",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "开大冲"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_watering",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对目标马桶执行一次大冲，不替代为小冲、不重复冲水。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R13",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开自动润瓷"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_oiling_porcelain",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动润瓷开关，再按产品说明的触发条件观察润瓷；分别记录设置和动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R14",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭自动润瓷"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_oiling_porcelain",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动润瓷开关，再按产品说明的触发条件观察润瓷；分别记录设置和动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R15",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "停用自动润瓷"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_auto_oiling_porcelain",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对自动润瓷开关，再按产品说明的触发条件观察润瓷；分别记录设置和动作。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R16",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "开启夜灯功能"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 2,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370",
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "R17",
+      "group": "历史失败话术复测",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "停用夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 2,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370",
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K01",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "介绍一下浴霸的暖风功能"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "回答暖风相关知识；不调用控制函数。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K02",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "浴霸暖风耗电吗"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "回答与耗电有关的知识；不要因为出现暖风就进入控制。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K03",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "怎么打开浴霸暖风"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "回答操作方法；不能实际开启暖风。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K04",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "浴霸暖风现在开着吗"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "不控制设备。当前目录只提供在线状态，不能据此编造暖风已开或已关。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K05",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "介绍一下马桶自动润瓷功能"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "回答润瓷功能知识；不能开润瓷。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K06",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "怎么关闭镜柜夜灯"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "说明关闭方法；不能实际关闭夜灯。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K07",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "马桶夜灯关了吗"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "不控制设备；没有功能状态查询结果时说明无法确认。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "K08",
+      "group": "知识与状态隔离",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "这款马桶的功率是多少"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "按可信知识资料回答或澄清型号；不能误入设备控制。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N01",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开浴霸夜灯"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "说明浴霸夜灯尚未适配；不能改成打开马桶或镜柜夜灯。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N02",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭马桶冲水"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "说明冲水关闭未适配；不能改成执行大冲。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N03",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开小冲"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "明确说明小冲尚未适配；不能用大冲替代。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N04",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "小便冲水"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "明确说明小冲尚未适配；需要最终反馈，不能静默。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N05",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "把浴霸暖风调到30度"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "说明当前只适配暖风开关，温度设定尚未适配；不能降级为暖风 on。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N06",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开浴缸进水"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "说明当前家庭没有浴缸；不出现浴缸选择卡或进水确认卡。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N07",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开主卫马桶夜灯"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "当前目录没有主卫房间信息；澄清位置或说明无法匹配，不能把唯一马桶自动标成主卫。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N08",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开客卫镜柜夜灯"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "当前目录没有客卫房间信息；澄清位置或说明无法匹配，不能编造客卫。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N09",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开设备"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "澄清要控制的设备品类和功能；不能给所有设备下发开机。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "N10",
+      "group": "未适配与歧义边界",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "先不要打开浴霸暖风"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "理解否定要求，不出控制卡、不执行暖风 on。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S01",
+      "group": "候选筛选与指定设备",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 2,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370",
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "应有马桶、镜柜两台；本例点马桶，镜柜不变化，浴霸不出现。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S02",
+      "group": "候选筛选与指定设备",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 2,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370",
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "应有马桶、镜柜两台；本例点镜柜，马桶不变化，浴霸不出现。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S03",
+      "group": "候选筛选与指定设备",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "关闭夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 2,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370",
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "off",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "应保留两种适配品类，不能仅因模型填了镜柜就丢掉马桶。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S04",
+      "group": "候选筛选与指定设备",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开11楼1325马桶的夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0117866743127370"
+        ],
+        "selectedDeviceName": "ARROW0117866743127370",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "完整设备标签应命中该马桶；标签中的“11楼”不是接口 room 字段，不应因模型误拆位置而匹配失败。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S05",
+      "group": "候选筛选与指定设备",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开XL智能镜柜的夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S06",
+      "group": "候选筛选与指定设备",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开AQW11838-R-AM智能浴霸的暖风"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0217833154885800"
+        ],
+        "selectedDeviceName": "ARROW0217833154885800",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_warm_air",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中浴霸的暖风模式、指示和实际运行，记录生效时间。"
+      },
+      "note": "接口未返回设备功能能力；当前 capability 为软件品类适配表，须现场验证硬件实际支持情况。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S07",
+      "group": "候选筛选与指定设备",
+      "priority": "P1",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开ARROW0617918533761310的夜灯"
+      ],
+      "setup": "家庭设备刷新后与快照一致；记录相关功能原始状态。",
+      "steps": [
+        "输入原话一次，等待选择卡或明确反馈。",
+        "核对候选品类、名称和数量；点选前不得下发。",
+        "点选一台设备一次。",
+        "核对真实平台回执、下发字段和现场设备动作，记录后恢复原状态。"
+      ],
+      "expected": {
+        "candidateCount": 1,
+        "allowedDeviceNames": [
+          "ARROW0617918533761310"
+        ],
+        "selectedDeviceName": "ARROW0617918533761310",
+        "beforeSelectionDispatchCount": 0,
+        "controlDispatchCount": 1,
+        "cmd": "switch_night_light",
+        "param": "switch",
+        "value": "on",
+        "targetSelectionRequired": true,
+        "feedback": "以业务后端真实平台回执为依据；只有受理回执与现场动作均正确才判为功能通过。平台拒绝须如实显示原因。",
+        "physicalCheck": "核对选中设备夜灯亮灭，未选设备保持原状态。"
+      },
+      "note": "按设备号明确命中，仍按本轮配置展示一张选择卡。",
+      "observed": {
+        "inputMode": "",
+        "actualCandidateCount": null,
+        "functionCall": "",
+        "httpStatus": null,
+        "platformReceipt": "",
+        "actualCmdList": [],
+        "hardwareResult": "",
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "S08",
+      "group": "候选筛选与指定设备",
+      "priority": "P0",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开所有夜灯"
+      ],
+      "setup": "设备在线；可在同一通话逐条发送，上一条反馈结束后发送下一条。",
+      "steps": [
+        "输入原话一次。",
+        "观察最终反馈及后续 4 秒；核对没有设备控制选择卡和下发审计。"
+      ],
+      "expected": {
+        "candidateCount": 0,
+        "controlDispatchCount": 0,
+        "selectionCardCount": 0,
+        "feedback": "当前一次只支持选择一台设备，要求逐台确认；不能悄悄操作第一台或自动批量执行。"
+      },
+      "note": "",
+      "observed": {
+        "feedback": "",
+        "selectionCardCount": null,
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "T01",
+      "group": "多轮与语音",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜夜灯",
+        "怎么使用镜柜夜灯",
+        "关闭镜柜夜灯"
+      ],
+      "setup": "同一通话依次发送；前后控制各点选一次。",
+      "steps": [
+        "依次完成三轮。",
+        "确认中间知识问答不产生控制。"
+      ],
+      "expected": {
+        "feedback": "两次真实控制，一次知识答复；前后均选镜柜，知识问答不复用上一轮动作。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "T02",
+      "group": "多轮与语音",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开夜灯",
+        "把它关闭"
+      ],
+      "setup": "第一轮点选镜柜。",
+      "steps": [
+        "第二轮只输入“把它关闭”。",
+        "观察是承接前次镜柜、重新选卡还是澄清。"
+      ],
+      "expected": {
+        "feedback": "能唯一确认上下文时只操作前次镜柜；无法唯一确认时应澄清或重新选卡，不能默认第一台马桶。记录当前承接能力，不预设已经支持。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "T03",
+      "group": "多轮与语音",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开浴霸暖风",
+        "先不操作，介绍一下暖风功能"
+      ],
+      "setup": "第一轮出卡后不选设备。",
+      "steps": [
+        "发送第二句并等待答复。",
+        "检查旧卡是否失效；若仍可点击，点击旧卡并核对是否意外执行。"
+      ],
+      "expected": {
+        "feedback": "第二轮不应立即控制。记录旧卡是否正确失效；本例用于探索旧意图取消能力，不能因卡片出现就判通过。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "T04",
+      "group": "多轮与语音",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开浴霸暖风",
+        "关闭浴霸暖风"
+      ],
+      "setup": "同一通话，第一句发送后立即输入第二句。",
+      "steps": [
+        "观察排队顺序。",
+        "按对应顺序处理各选择卡。"
+      ],
+      "expected": {
+        "feedback": "每句最多一次下发，不能串错 on/off、重复发送或用旧响应覆盖新一轮的结果。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "T05",
+      "group": "多轮与语音",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开浴霸暖风",
+        "关闭浴霸暖风",
+        "怎么打开浴霸暖风",
+        "打开镜柜夜灯"
+      ],
+      "setup": "使用“按住说话”，逐句说，完成后恢复设备原状态。",
+      "steps": [
+        "检查识别出的原话。",
+        "控制语句各点选一次；知识语句不选设备。",
+        "与相同文字输入用例对照。"
+      ],
+      "expected": {
+        "feedback": "ASR 原话准确；三句控制、一句方法问答。若 ASR 错误，分别记录识别错误和后续路由结果。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "F01",
+      "group": "卡片与反馈",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜夜灯"
+      ],
+      "setup": "选择卡出现后核对设备。",
+      "steps": [
+        "快速连续点击同一张卡的镜柜按钮两次。",
+        "查看审计的实际下发次数。"
+      ],
+      "expected": {
+        "feedback": "只下发一次；第二次操作禁用或被拒绝，不能重复控制。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "F02",
+      "group": "卡片与反馈",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜夜灯"
+      ],
+      "setup": "选择卡出现后不点选。",
+      "steps": [
+        "等待超过5分钟。",
+        "再点镜柜按钮。"
+      ],
+      "expected": {
+        "feedback": "过期卡不得下发，提示请求已过期；需重新发起原话。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "F03",
+      "group": "卡片与反馈",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开夜灯"
+      ],
+      "setup": "出卡后不选择。",
+      "steps": [
+        "刷新页面，等待建立新通话。",
+        "观察有无自动重发旧原话。",
+        "重新输入“打开夜灯”。"
+      ],
+      "expected": {
+        "feedback": "刷新不自动重发控制原话、不复用旧选择；新通话重新返回马桶和镜柜两台候选。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "F04",
+      "group": "卡片与反馈",
+      "priority": "P2",
+      "availability": "当前可测",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜夜灯"
+      ],
+      "setup": "记录真实设备现象与平台回执。",
+      "steps": [
+        "点选镜柜一次。",
+        "分别记录 HTTP、业务码、设备动作和助手正文。"
+      ],
+      "expected": {
+        "feedback": "平台受理与硬件动作分别记录。无下发时声称已发送/执行、平台拒绝仍声称成功、设备未动作仍声称动作完成，均记录为反馈缺陷。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "E01",
+      "group": "环境变化扩展",
+      "priority": "P2",
+      "availability": "需准备环境",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开浴霸暖风"
+      ],
+      "setup": "在现场使浴霸离线，家庭设备刷新后确认 onlineStatus=0；测试后恢复。",
+      "steps": [
+        "输入原话。",
+        "若有单卡，点选后查看拒绝反馈和审计。"
+      ],
+      "expected": {
+        "feedback": "不能向离线设备发控制；反馈应说明离线。实际候选数量按刷新结果记录。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "E02",
+      "group": "环境变化扩展",
+      "priority": "P2",
+      "availability": "需准备环境",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜夜灯"
+      ],
+      "setup": "经业务平台为家庭933增加第二台镜柜；具备管理权限并恢复原环境后测试。",
+      "steps": [
+        "家庭设备刷新并重新连接，确认两台镜柜。",
+        "发送原话，选择其中一台。"
+      ],
+      "expected": {
+        "feedback": "候选只有两台镜柜，不混入马桶/浴霸；只操作选中的一台。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "E03",
+      "group": "环境变化扩展",
+      "priority": "P2",
+      "availability": "需准备环境",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开夜灯"
+      ],
+      "setup": "准备另一个获授权 homeId 及匹配凭证；修改启动配置，重启本地服务并建立新通话。",
+      "steps": [
+        "记录新家庭目录。",
+        "输入原话并对照新的候选。"
+      ],
+      "expected": {
+        "feedback": "候选和下发 homeId 均属于新家庭，没有家庭933的旧设备或卡片。当前页面没有 homeId 热切换入口，必须重启服务验证。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "E04",
+      "group": "环境变化扩展",
+      "priority": "P2",
+      "availability": "需准备环境",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开镜柜夜灯"
+      ],
+      "setup": "选择卡已出现；业务平台移除该镜柜或改变其归属，再刷新确认。",
+      "steps": [
+        "点击此前的旧镜柜选择卡。",
+        "查看是否再次查目录并拒绝旧目标。"
+      ],
+      "expected": {
+        "feedback": "不向已经移除或换家庭的旧设备下发；说明目录已变化并要求重新发起。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    },
+    {
+      "id": "E05",
+      "group": "环境变化扩展",
+      "priority": "P2",
+      "availability": "需准备环境",
+      "status": "NOT_RUN",
+      "prompts": [
+        "打开夜灯"
+      ],
+      "setup": "业务平台修改镜柜标签但保留设备号；准备变更前后的真实目录截图。",
+      "steps": [
+        "修改标签后刷新家庭设备并重新连接。",
+        "输入原话并核对新标签和设备号。"
+      ],
+      "expected": {
+        "feedback": "展示新标签，按设备号关联同一设备；没有旧目录残留和重复候选。"
+      },
+      "observed": {
+        "timeline": [],
+        "actualDispatchCount": null,
+        "result": "NOT_RUN",
+        "evidence": ""
+      }
+    }
+  ]
+}

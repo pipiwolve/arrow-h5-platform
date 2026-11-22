@@ -1,0 +1,42 @@
+{
+  "homeId": 933,
+  "validationOnly": true,
+  "devices": [
+    {
+      "deviceName": "ARROW0117866743127370",
+      "categoryCode": "01",
+      "deviceTagName": "11楼1325马桶",
+      "onlineStatus": 1,
+      "room": "",
+      "capability": [
+        "switch_watering",
+        "switch_night_light",
+        "switch_auto_closing",
+        "switch_kicking",
+        "switch_auto_oiling_porcelain",
+        "switch_onoff"
+      ]
+    },
+    {
+      "deviceName": "ARROW0217833154885800",
+      "categoryCode": "02",
+      "deviceTagName": "AQW11838-R-AM智能浴霸",
+      "onlineStatus": 1,
+      "room": "",
+      "capability": [
+        "switch_warm_air"
+      ]
+    },
+    {
+      "deviceName": "ARROW0617918533761310",
+      "categoryCode": "06",
+      "deviceTagName": "XL智能镜柜",
+      "onlineStatus": 1,
+      "room": "",
+      "capability": [
+        "switch_night_light",
+        "switch_onoff"
+      ]
+    }
+  ]
+}

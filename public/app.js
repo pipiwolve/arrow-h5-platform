@@ -22,7 +22,9 @@ let lastAsk = '';
 let roomTimer = 0;
 const spokenLocal = new Set();
 let localIntentAt = 0;
-let deviceRoute = 'local';
+let deviceRoute = 'cloud';
+let deviceContext = '';
+const functionFrames = new Map();
 
 function stopSpeech() {
   const media = $('therevideo');
@@ -41,7 +43,7 @@ const turns = createTurnGate({
   claim: () => api('/api/turn', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sessionId }),
+    body: JSON.stringify({ sessionId, userText: lastAsk }),
   }),
   breakTurn: stopSpeech,
 });
@@ -162,7 +164,7 @@ function paintAgent(text) {
 
 const DECISION_LABEL = { allow: '已放行', confirm: '等你确认', deny: '已拒绝' };
 const RESULT_LABEL = {
-  SUCCEEDED: '已执行', FAILED: '未成功', REJECTED: '已拒绝', CANCELLED: '已取消',
+  SUCCEEDED: '平台已受理', FAILED: '未成功', REJECTED: '已拒绝', CANCELLED: '已取消',
 };
 
 function addCard(card) {
@@ -171,7 +173,7 @@ function addCard(card) {
   const decision = data.decision || 'allow';
   el.className = 'card ' + (card.event === 'demo.choose' ? 'choose' : decision);
   if (card.event === 'demo.gate') {
-    el.innerHTML = `<div class="lv">${data.level || ''} · ${DECISION_LABEL[decision] || decision}</div><div>${(data.reasons || []).join('；') || data.say || ''}</div>`;
+    el.innerHTML = `<div class="lv">${esc(data.level || '')} · ${esc(DECISION_LABEL[decision] || decision)}</div><div>${esc((data.reasons || []).join('；') || data.say || '')}</div>`;
     if (decision === 'confirm' && data.pendingId) {
       const row = document.createElement('div');
       row.className = 'actions';
@@ -188,13 +190,15 @@ function addCard(card) {
       el.append(row);
     }
   } else if (card.event === 'demo.result') {
-    const body = data.response;
+    const body = data.iotResponse || data.response;
     const msg = (body && typeof body === 'object' && (body.msg || body.message)) || data.error || '';
     const label = RESULT_LABEL[data.result] || data.result || '';
-    el.innerHTML = `<div class="lv">${label}</div><div>${msg}</div>`;
+    el.innerHTML = `<div class="lv">${esc(label)}</div><div>${esc(msg)}</div>`;
   } else if (card.event === 'demo.choose') {
+    el.dataset.sessionId = sessionId;
     if (data.choiceId) el.dataset.choiceId = data.choiceId;
-    el.innerHTML = `<div class="lv">选择设备</div><div>${data.say || '有多台设备符合，选一台再下发。'}</div>`;
+    if (data.requestId) el.dataset.requestId = data.requestId;
+    el.innerHTML = `<div class="lv">选择${esc(data.category || '设备')}${data.count ? ` · ${data.count} 台` : ''}</div><div>${esc(data.say || '有多台设备符合，选一台再下发。')}</div>`;
     const row = document.createElement('div');
     row.className = 'actions';
     const sameName = new Map();
@@ -235,13 +239,31 @@ async function chooseDevice(action, deviceName, el) {
   if (el.dataset.sent) return;
   el.dataset.sent = '1';
   el.querySelectorAll('button').forEach((btn) => { btn.disabled = true; });
-  const out = await api('/api/choose', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sessionId, action, deviceName, userText: lastAsk, choiceId: el.dataset.choiceId }),
-  });
-  el.remove();
-  for (const card of out.cards || []) addCard(card);
+  try {
+    const body = el.dataset.requestId
+      ? { sessionId: el.dataset.sessionId || sessionId, requestId: el.dataset.requestId, deviceName }
+      : { sessionId, action, deviceName, userText: lastAsk, choiceId: el.dataset.choiceId };
+    const out = await api('/api/choose', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+    });
+    el.remove();
+    for (const card of out.cards || []) addCard(card);
+    deviceFeedback(out);
+  } catch (error) {
+    delete el.dataset.sent;
+    el.querySelectorAll('button').forEach((button) => { button.disabled = false; });
+    addBubble('agent', error.message);
+  }
+}
+
+function deviceFeedback(out) {
+  const text = String(out.spoken || out.receipt || '').trim();
+  if (!text) return;
+  addBubble('agent', text);
+  if (typeof window.BRTC_SendMessageToUser === 'function') {
+    spokenLocal.add(text);
+    window.BRTC_SendMessageToUser('[TTS]:' + text);
+  }
 }
 
 async function confirm(pendingId, decision, el) {
@@ -255,6 +277,7 @@ async function confirm(pendingId, decision, el) {
   });
   el.querySelector('.actions')?.remove();
   for (const card of out.cards || []) addCard(card);
+  deviceFeedback(out);
 }
 
 function stale(gen) {
@@ -306,7 +329,7 @@ async function onAgentFrame(msg) {
   if (data.startsWith('[F]:')) {
     if (/"result"\s*:/.test(data) && !data.includes('function_name')) return;
     // 设备指令已由本机列出选择。回一个不播报的结果，房间才不会隔一会儿再追问一次。
-    if (data.includes('control_device') && Date.now() - localIntentAt < 60000) {
+    if (deviceRoute === 'local' && data.includes('control_device') && Date.now() - localIntentAt < 60000) {
       if (typeof window.BRTC_SendMessageToUser === 'function') {
         window.BRTC_SendMessageToUser(roomControlAck(data));
       }
@@ -314,6 +337,10 @@ async function onAgentFrame(msg) {
     }
     const hold = agentBubble;
     const gen = turns.snapshot().turnGen;
+    const key = `${sessionId}:${gen}:${data}`;
+    if (functionFrames.has(key)) return;
+    functionFrames.set(key, true);
+    if (functionFrames.size > 100) functionFrames.delete(functionFrames.keys().next().value);
     const finished = await api('/api/frame', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -325,12 +352,12 @@ async function onAgentFrame(msg) {
     if (finished.reply && typeof window.BRTC_SendMessageToUser === 'function') {
       window.BRTC_SendMessageToUser(finished.reply);
     }
+    if (finished.spoken) spokenLocal.add(finished.spoken);
     for (const card of finished.cards || []) {
       if (card.event === 'demo.repair') continue;
       addCard(card);
     }
-    const spoken = String(finished.reply || '').match(/"content":"([^"]*)"/);
-    if (spoken?.[1]) paintAgent(spoken[1]);
+    if (finished.spoken && !(finished.cards || []).some((card) => card.event === 'demo.choose')) addBubble('agent', finished.spoken);
     releaseRoom(gen);
     return;
   }
@@ -375,6 +402,15 @@ async function onAgentFrame(msg) {
     }
     const spoken = userEcho(text, '').text;
     if (!spoken) return;
+    // 云端已经接收的普通 [Q] 是回显。长语音识别在上面的 dictating 分支只发一次 query。
+    if (deviceRoute === 'cloud') {
+      paintLiveUser(spoken, partial);
+      if (!partial) {
+        lastAsk = spoken;
+        userBubble = null;
+      }
+      return;
+    }
     // [Q] 的中间态是当前整句，不是增量。同一条气泡上改字。
     if (partial || corrected || userBubble?.dataset.live) {
       if (!userBubble) userBubble = addBubble('user', spoken);
@@ -500,6 +536,8 @@ new MutationObserver(() => { if (soundOn) playRoomAudio(); })
   .observe($('therevideo'), { childList: true, subtree: true });
 
 function startRtc(join) {
+  const joinedSession = sessionId;
+  const current = () => joinedSession === sessionId;
   window.BRTC_Start(Object.assign({}, join, {
     aspublisher: true,
     usingdatachannel: true,
@@ -511,16 +549,23 @@ function startRtc(join) {
     sessionevent: true,
     autoplaymuted: true,
     success: () => {
+      if (!current()) return;
       setStatus('已进房，等待授权');
       setRoomMic(false);
     },
+    destroyed: () => {
+      if (!current()) return;
+      setStatus('连接已结束');
+      $('btnReconnect').hidden = false;
+    },
     localvideopublished_ok: () => { if (!holding) setRoomMic(false); },
     error: (error) => {
+      if (!current()) return;
       setStatus('进房失败：' + error);
       $('booting').hidden = true;
-      unlockComposer();
+      $('btnReconnect').hidden = false;
     },
-    onmessage: (msg) => { onAgentFrame(msg).catch((e) => setStatus(e.message)); },
+    onmessage: (msg) => { if (current()) onAgentFrame(msg).catch((e) => setStatus(e.message)); },
   }));
 }
 
@@ -545,6 +590,9 @@ async function startCall() {
   if (connectPromise) return connectPromise;
   connectPromise = (async () => {
     setStatus('正在创建实例');
+    greeted = false;
+    licPassed = false;
+    $('btnReconnect').hidden = true;
     const opened = await api('/api/session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -552,6 +600,14 @@ async function startCall() {
     });
     sessionId = opened.session.id;
     licFrame = opened.licFrame || '';
+    deviceContext = '';
+    functionFrames.clear();
+    if (deviceRoute === 'cloud') {
+      try {
+        const roster = await api('/api/roster');
+        deviceContext = roster.text || '';
+      } catch {}
+    }
     if (typeof window.BRTC_Start !== 'function') {
       setStatus('BRTC SDK 未加载，连接未建立');
       throw new Error('BRTC SDK 未加载');
@@ -564,10 +620,16 @@ async function startCall() {
     setStatus(e.message);
     $('credHint').textContent = e.message;
     $('booting').hidden = true;
+    $('btnReconnect').hidden = false;
   } finally {
     connectPromise = null;
   }
 }
+
+$('btnReconnect').onclick = async () => {
+  await stopCall();
+  await startCall();
+};
 
 async function stopCall() {
   holding = false;
@@ -579,6 +641,8 @@ async function stopCall() {
   }
   sessionId = null;
   licFrame = '';
+  deviceContext = '';
+  functionFrames.clear();
 }
 
 $('prompts').onclick = (e) => {
@@ -654,6 +718,10 @@ async function openTurn(kind) {
   if (!gen) return 0;
   if (kind === 'room') {
     roomTimer = setTimeout(() => {
+      if (turns.snapshot().turnBusy && !stale(gen)) {
+        addBubble('agent', '这次没有收到云端反馈。可以重新连接后继续对话；原请求不会自动重发。');
+        $('btnReconnect').hidden = false;
+      }
       window.__arrowTurn = (window.__arrowTurn || 0) + 1;
       releaseRoom(gen);
     }, 20000);
@@ -662,10 +730,12 @@ async function openTurn(kind) {
 }
 
 async function sayToRoom(value, appendix) {
+  lastAsk = value;
   const gen = await openTurn('room');
   const latest = turns.waiting() ? turns.next() : value;
   if (!gen || stale(gen) || latest !== value) return;
-  const extra = appendix ? `\n${appendix}` : '';
+  const context = appendix || (deviceRoute === 'cloud' ? deviceContext : '');
+  const extra = context ? `\n${context}` : '';
   window.BRTC_SendMessageToUser('[T]:' + value + extra);
   sentText = value;
   lastAsk = value;
@@ -806,16 +876,7 @@ async function sendText(text) {
     return;
   }
   if (typeof window.BRTC_SendMessageToUser !== 'function') return;
-  let appendix = '';
-  if (deviceRoute === 'cloud' && !PRODUCT_ASK.test(value)) {
-    try {
-      const roster = await api('/api/roster');
-      appendix = roster.text || '';
-    } catch (e) {
-      addBubble('agent', '设备清单没有取到，这一句只把原话送进房间。');
-    }
-  }
-  await sayToRoom(value, appendix);
+  await sayToRoom(value);
 }
 
 $('textForm').onsubmit = (e) => {
@@ -854,7 +915,7 @@ async function loadDevices() {
         <article class="device">
           <div>
             <div class="name">${esc(d.deviceTagName || d.deviceName)}</div>
-            <div class="meta">${esc(d.deviceName)}</div>
+            <div class="meta">${esc(d.category || '')}${d.category ? ' · ' : ''}${esc(d.deviceName)}</div>
           </div>
           <div class="state ${d.onlineStatus ? 'on' : 'off'}">${d.onlineStatus ? '在线' : '离线'}</div>
         </article>`).join('')}
@@ -996,12 +1057,28 @@ window.visualViewport?.addEventListener('resize', pinKeyboard);
 window.visualViewport?.addEventListener('scroll', pinKeyboard);
 window.addEventListener('pagehide', () => { stopCall(); });
 
+function renderStarters(items) {
+  const fragment = document.createDocumentFragment();
+  for (const item of Array.isArray(items) ? items : []) {
+    const text = typeof item === 'string' ? item.trim() : '';
+    if (!text) continue;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.text = text;
+    button.textContent = text;
+    button.disabled = !greeted;
+    fragment.append(button);
+  }
+  $('prompts').replaceChildren(fragment);
+}
+
 function enableStarters() {
   document.querySelectorAll('#prompts button').forEach((btn) => { btn.disabled = false; });
 }
 
 api('/api/config').then((cfg) => {
   deviceRoute = cfg.deviceRoute === 'cloud' ? 'cloud' : 'local';
-  $('credHint').textContent = cfg.ready ? '' : `还不能连接，缺 ${cfg.missing.join('、')}`;
+  renderStarters(cfg.starters);
+  $('credHint').textContent = cfg.ready ? (cfg.iotMode === 'mock' ? '模拟设备测试' : '') : `还不能连接，缺 ${cfg.missing.join('、')}`;
   if (cfg.ready) startCall();
 }).catch((e) => { $('credHint').textContent = e.message; });

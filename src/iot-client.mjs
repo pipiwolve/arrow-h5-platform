@@ -18,7 +18,7 @@ export function createIotClient({ baseUrl, token, appPlatform, deviceSystemPlatf
     const started = Date.now();
     let res, text;
     try {
-      res = await fetch(url, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+      res = await fetch(url, { method, headers, body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(8000) });
       text = await res.text();
     } catch (e) {
       return { ok: false, ms: Date.now() - started, request: { method, url: url.href, body }, error: `网关不可达：${e.message}` };

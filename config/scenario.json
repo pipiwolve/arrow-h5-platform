@@ -16,11 +16,14 @@
     "sayhi": "你好，我是箭牌智家助手。可以直接说想打开或关闭的设备，也可以问产品怎么用。"
   },
   "starters": [
-    "把主卫的浴缸进水打开",
-    "把主卫坐便器的大冲打开",
-    "把主卫镜柜的夜灯打开",
-    "我家坐便器不出水了，要报修",
-    "AKB1357 有哪些功能"
+    "打开马桶冲水",
+    "打开浴霸暖风",
+    "打开镜柜夜灯",
+    "关闭浴霸暖风",
+    "马桶自动润瓷有什么用",
+    "怎么打开浴霸暖风",
+    "我家马桶不出水了，要报修",
+    "查看我的报修进度"
   ],
   "riskRules": [
     {
@@ -43,6 +46,7 @@
     "defaultRiskLevel": "M"
   },
   "commands": [
+    { "cmd": "switch_warm_air", "feature": "warm_air", "params": { "switch": ["on", "off"] }, "desc": "浴霸暖风", "appliesTo": ["02"] },
     { "cmd": "switch_watering", "params": { "switch": ["on"] }, "desc": "马桶大冲", "appliesTo": ["01"] },
     { "cmd": "switch_night_light", "params": { "switch": ["on", "off"] }, "desc": "夜灯", "appliesTo": ["01", "06"] },
     { "cmd": "switch_auto_closing", "params": { "switch": ["on", "off"] }, "desc": "马桶自动翻盖", "appliesTo": ["01"] },

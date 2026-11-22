@@ -14,10 +14,13 @@ for (const k of ['id', 'brand', 'iot', 'agent', 'policy', 'commands', 'repair'])
 }
 
 const ENV = loadEnv(ROOT);
+if (ENV.IOT_HOME_ID) SCENARIO.iot.homeId = Number(ENV.IOT_HOME_ID);
 const FIXTURE = (process.env.IOT_FIXTURE || ENV.IOT_FIXTURE) === 'real' ? 'real' : 'demo';
 const fixtureName = FIXTURE === 'real' ? 'devices.real.json' : 'devices.json';
-const fixtureFile = path.join(ROOT, '..', '箭牌demo打通', 'iot', fixtureName);
+const fixtureFile = ENV.IOT_FIXTURE_FILE
+  ? path.resolve(ROOT, ENV.IOT_FIXTURE_FILE)
+  : path.join(ROOT, '..', '箭牌demo打通', 'iot', fixtureName);
 if (!fs.existsSync(fixtureFile)) throw new Error(`找不到设备清单：${fixtureFile}`);
 
 export const DEVICES = JSON.parse(fs.readFileSync(fixtureFile, 'utf8'));
-export const FIXTURE_NAME = FIXTURE;
+export const FIXTURE_NAME = ENV.IOT_FIXTURE_FILE ? path.basename(fixtureFile, '.json') : FIXTURE;

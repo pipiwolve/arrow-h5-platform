@@ -1,42 +1,42 @@
 // 把物联网平台刚返回的设备和指令表收成一段事实。
-// 人设在百度控制台。这段只在用户要操作设备时附在当轮 [T] 后面，给模型选设备。
+// 人设在百度控制台。这段在进房时读取，为函数参数提供目录上下文。
 // 它不是对用户说的话。模型若照抄，visibleReply 会从气泡里拿掉。
 
-const CATEGORY = { '01': '马桶', '04': '浴缸', '06': '镜柜' };
+import { catalogRows } from './device-catalog.mjs';
 
 export const ROSTER_MARK = '【家庭设备】';
 
 export function buildRole({ scenario, devices, live }) {
   const lines = [
-    `${ROSTER_MARK}下面是本轮可选设备。deviceName、cmd、param、value 只能从这段里逐字取。`,
-    '- 用户开、关、冲水、进水、夜灯、翻盖、脚触、润瓷时，必须调用 control_device。不要用文字反问，不要只回「准备发给平台」而不调用。',
-    '- 选设备按这个顺序：先按房间收窄（主卫、客卫、11楼）；再按品类或型号收窄（坐便器、马桶、浴缸、镜柜，或 AKB、AQW、QN 型号）；收窄后仍有多台，取这段清单里排在最前面的那一台。',
-    '- 收窄后一台都没有，不要调用函数，正文说这一次没有对得上的设备。',
-    '- deviceName 只能填设备号那一串（ARROW 开头），不要填昵称、型号或房间。不要把这段清单复述给用户。',
+    `${ROSTER_MARK}这是家庭设备目录和软件适配表，仅作为上下文。实际可选设备由后端重新查询。`,
+    '- 先区分用户是在问知识、查询状态，还是明确要求立即控制。介绍功能、询问如何使用、询问耗电、询问是否已经开启，均不调用控制函数。',
+    '- 用户明确要求立即操作时调用 control_device，提取品类、功能、打开或关闭；定时要求走场景函数。含糊表达先澄清。',
+    '- 未点名设备时不要自行选第一台。deviceName 可以留空；后端按品类、功能和位置筛选，多台时页面提供选择卡。',
+    '- 若函数仍要求 deviceName 必填，只能使用目录中真实存在的设备号；后端会重新筛选，模型填的设备号不代表用户已选择。',
+    '- 不编造设备、房间、功能或命令，不向用户索要接口字段；准备控制不代表平台已经执行。不要复述这段目录。',
   ];
-  const rows = Array.isArray(live?.rows) ? live.rows : [];
+  const rows = catalogRows({ rows: live?.rows, devices, commands: scenario.commands });
   if (!live?.ok) {
     lines.push(`设备列表这次没取到${live?.error ? `（${live.error}）` : ''}。不要编造设备，不要声称某台在线。`);
   } else if (!rows.length) {
     lines.push('平台返回 0 台设备。不要编造设备。');
   } else {
     for (const d of rows) {
-      const known = devices.find((x) => x.deviceName === d.deviceName) || {};
-      const room = known.room || '';
-      const tag = d.deviceTagName || known.deviceTagName || '';
-      const cat = CATEGORY[d.categoryCode || known.categoryCode] || '';
+      const room = d.room || '';
+      const tag = d.deviceTagName;
+      const cat = d.category;
       const online = d.onlineStatus ? '在线' : '离线';
-      const caps = Array.isArray(known.capability) ? known.capability.join(',') : '';
-      lines.push(`- 设备号 ${d.deviceName}；${[room, tag, cat, online].filter(Boolean).join(' ')}；可执行 ${caps}`);
+      const caps = d.capability.join(',');
+      lines.push(`- 设备号 ${d.deviceName}；品类编码 ${d.categoryCode}；${[room, tag, cat, online].filter(Boolean).join(' ')}；软件适配 ${caps}`);
     }
-    lines.push('离线设备也可以提交，正文写准备发给平台，不要写已经执行。');
+    lines.push('离线设备由后端停止下发并说明原因。');
   }
   lines.push('指令参数名都是 switch，取值逐字使用：');
   for (const c of scenario.commands) {
     const vals = Object.entries(c.params).map(([k, v]) => `${k}=${v.join('/')}`).join(' ');
     lines.push(`- ${c.cmd} ${vals} ${c.desc}`);
   }
-  lines.push('开、关、冲水、进水、夜灯、翻盖、脚触、润瓷的句子，一律走 control_device。');
+  lines.push('知识问答直接回答；只有明确的执行要求才调用控制函数，后端返回结果后再反馈。');
   return lines.join('\n').slice(0, 6000);
 }
 

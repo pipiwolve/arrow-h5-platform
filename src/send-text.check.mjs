@@ -117,6 +117,7 @@ context.createTurnGate = null;
 vm.runInContext(gateSrc, context);
 vm.runInContext(appSrc + '\nglobalThis.__sendText = sendText;\nglobalThis.__startHold = startHold;\nglobalThis.__stopHold = stopHold;\nglobalThis.__finishDictation = finishDictation;\nglobalThis.__onAgentFrame = onAgentFrame;\nglobalThis.__setRoute = (value) => { deviceRoute = value; };\nglobalThis.__session = () => { sessionId = "hs_test"; licPassed = true; };', context);
 context.__session();
+context.__setRoute('local');
 
 function nodeText(node) {
   const textNode = node.children?.find((child) => child.className === 'text');
@@ -402,21 +403,21 @@ assert.equal(sent[0].includes('"result":"ok"'), true);
 assert.equal(sent[0].includes('post_function'), false);
 assert.equal(sent[0].includes('room-1'), true);
 
-// cloud 路由不再本机补槽。设备指令进房间，并附上家庭设备。
+// cloud 路由直接发送原句；设备上下文在进房时加载，不再按关键词提前查候选。
 el('stream').children.length = 0;
 sent.length = 0;
 apiLog.length = 0;
 context.__setRoute('cloud');
 await context.__sendText('来个大冲');
 assert.equal(apiLog.includes('/api/intent'), false, apiLog.join(','));
-assert.ok(apiLog.includes('/api/roster'), apiLog.join(','));
-assert.equal(sent.some((frame) => frame.startsWith('[T]:来个大冲\n【家庭设备】')), true, sent.join(' | '));
+assert.equal(apiLog.includes('/api/roster'), false, apiLog.join(','));
+assert.equal(sent.filter((frame) => frame === '[T]:来个大冲').length, 1, sent.join(' | '));
 assert.equal(agentLines().some((line) => line.includes('选一台')), false);
 
 el('stream').children.length = 0;
 sent.length = 0;
 await context.__sendText('帮我冲个马桶');
-assert.equal(sent.some((frame) => frame.startsWith('[T]:帮我冲个马桶\n【家庭设备】')), true, sent.join(' | '));
+assert.equal(sent.filter((frame) => frame === '[T]:帮我冲个马桶').length, 1, sent.join(' | '));
 
 el('stream').children.length = 0;
 sent.length = 0;

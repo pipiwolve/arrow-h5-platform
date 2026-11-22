@@ -7,3 +7,6 @@ cards.jsonl
 node_modules/
 .DS_Store
 .codegraph/
+.playwright-cli/
+output/playwright/
+deployment-evidence/

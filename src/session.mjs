@@ -71,7 +71,7 @@ export function createSessions({ brtc, scenario, store }) {
   function noteUserText(id, text) {
     const rec = live.get(id);
     const value = String(text || '').trim();
-    if (rec && value) rec.lastUserText = value.slice(0, 200);
+    if (rec && value) rec.lastUserText = value;
   }
 
   /**

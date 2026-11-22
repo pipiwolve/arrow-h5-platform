@@ -32,7 +32,8 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
       ? [...(rec.action.conditionList || []), ...(rec.action.actionList || [])]
       : rec.action.targets || [];
     const targets = source.map((t) => {
-      const dev = devices.find((d) => d.deviceName === t.deviceName) || {};
+      const dev = devices.find((d) => d.deviceName === t.deviceName)
+        || rec.items.find((item) => item.deviceName === t.deviceName) || {};
       return {
         deviceName: t.deviceName, deviceTagName: dev.deviceTagName || '',
         room: dev.room || '', cmd: t.cmd, param: t.param, value: t.value,
@@ -59,8 +60,9 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
     if (card?.event !== 'demo.result') return '';
     const body = data.iotResponse && typeof data.iotResponse === 'object' ? data.iotResponse : null;
     const msg = body?.msg || body?.message || data.error || '';
-    const accepted = body && (body.code === 200 || body.code === 10000) && body.success !== false;
+    const accepted = data.result === 'SUCCEEDED';
     if (accepted) return '平台已受理。';
+    if (data.httpStatus >= 400) return `平台请求失败（HTTP ${data.httpStatus}），这一次没有成功下发。`;
     if (/设备离线/.test(msg)) return '设备当前离线，指令已送到平台，这一次没有执行。';
     return msg ? `平台返回：${msg}` : '平台没有受理。';
   }
@@ -233,13 +235,16 @@ export function createTurn({ scenario, devices, gate, iot, audit, liveDevices })
         kind: rejected.rec.action.action, actor: 'app-user', sessionId,
         level: rejected.rec.level, decision: 'REJECTED', pendingId, result: 'CANCELLED',
       });
-      return { ok: true, cards: [{ event: 'demo.gate', data: { decision: 'cancel', pendingId, level: rejected.rec.level } }] };
+      const spoken = '已取消，这一次没有下发。';
+      return { ok: true, state: 'CANCELLED', spoken, receipt: spoken, cards: [{ event: 'demo.gate', data: { decision: 'cancel', pendingId, level: rejected.rec.level } }] };
     }
     const claimed = gate.claim(pendingId);
     if (!claimed.ok) return { ok: false, error: claimed.error };
     const out = await execute(claimed.rec, { trigger: 'confirm', sessionId });
     gate.settle(pendingId, out.ok ? 'SUCCEEDED' : 'FAILED');
-    return { ok: true, cards: [{ event: 'demo.result', data: out }] };
+    const card = { event: 'demo.result', data: out };
+    const spoken = receipt(card);
+    return { ok: true, state: out.result, spoken, receipt: spoken, cards: [card] };
   }
 
   return { finish, confirm, execute, chooseDevice };

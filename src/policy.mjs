@@ -38,6 +38,9 @@ export function createGate({ scenario, devices }) {
     if (!spec.appliesTo.includes(dev.categoryCode)) {
       throw new Error(`${dev.deviceTagName} 不支持指令 ${item.cmd}`);
     }
+    if (Array.isArray(dev.capability) && !dev.capability.includes(item.cmd)) {
+      throw new Error(`${dev.deviceTagName} 没有适配所请求的功能`);
+    }
     const allowed = spec.params[item.param];
     if (!allowed) throw new Error(`指令 ${item.cmd} 没有参数 ${item.param}`);
     if (!allowed.includes(String(item.value))) {
@@ -137,5 +140,10 @@ export function createGate({ scenario, devices }) {
     return { ok: true, rec };
   }
 
-  return { evaluate, claim, settle, reject };
+  function updateDevices(rows) {
+    byName.clear();
+    for (const row of rows) byName.set(row.deviceName, row);
+  }
+
+  return { evaluate, claim, settle, reject, updateDevices };
 }

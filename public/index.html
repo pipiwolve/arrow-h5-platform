@@ -27,6 +27,7 @@
       <header class="chat-head">
         <img class="mark" src="favicon.png" alt="">
         <h1 id="callTitle">箭牌智能AI助手</h1>
+        <button type="button" id="btnReconnect" class="mini" hidden>重新连接</button>
       </header>
       <div class="status" id="status" hidden>空闲</div>
       <div class="stage" aria-label="音视频">
@@ -38,13 +39,7 @@
           <i></i>
           <p>箭牌 AI 助手正在赶来</p>
         </div>
-        <div class="prompts" id="prompts">
-          <button type="button" data-text="把主卫的浴缸进水打开" disabled>把主卫的浴缸进水打开</button>
-          <button type="button" data-text="把主卫坐便器的大冲打开" disabled>把主卫坐便器的大冲打开</button>
-          <button type="button" data-text="把主卫镜柜的夜灯打开" disabled>把主卫镜柜的夜灯打开</button>
-          <button type="button" data-text="我家坐便器不出水了，要报修" disabled>我家坐便器不出水了，要报修</button>
-          <button type="button" data-text="AKB1357 有哪些功能" disabled>AKB1357 有哪些功能</button>
-        </div>
+        <div class="prompts" id="prompts"></div>
       </div>
       <div class="dock" id="dock">
         <form class="composer" id="textForm">
@@ -82,7 +77,7 @@
     </section>
   </main>
 </div>
-<script type="module" src="app.js?v=57"></script>
+<script type="module" src="app.js?v=61"></script>
 <script src="https://brtc-sdk.cdn.bcebos.com/npm/baidurtc@1.2.18/baidu.rtc.sdk.js" async></script>
 </body>
 </html>

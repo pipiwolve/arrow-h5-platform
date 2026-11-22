@@ -1,0 +1,410 @@
+{
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "query": "打开浴霸暖风",
+  "captureMethod": "临时本机代理记录BRTC应用层帧与H5业务HTTP消息；IoT请求来自执行器保存的真实请求/回执；不是TCP二进制pcap。",
+  "counts": {
+    "userQueryCount": 1,
+    "cloudFunctionCount": 1,
+    "deviceSelectionCount": 1,
+    "iotControlRequestCount": 1
+  },
+  "homeId": 933,
+  "singleDeviceMode": "card",
+  "outcome": {
+    "httpStatus": 200,
+    "response": {
+      "success": true,
+      "code": 200,
+      "msg": "OK",
+      "data": null
+    },
+    "ms": 661,
+    "backendState": "SUCCEEDED",
+    "spoken": "平台已受理。",
+    "hardwareActionConfirmed": false
+  },
+  "stages": {
+    "roster": {
+      "sequence": 1,
+      "at": "2026-11-22T15:38:02.476Z",
+      "transport": "HTTP",
+      "path": "/api/roster",
+      "request": {
+        "method": "GET",
+        "body": null
+      },
+      "status": 200,
+      "response": {
+        "text": "【家庭设备】这是家庭设备目录和软件适配表，仅作为上下文。实际可选设备由后端重新查询。\n- 先区分用户是在问知识、查询状态，还是明确要求立即控制。介绍功能、询问如何使用、询问耗电、询问是否已经开启，均不调用控制函数。\n- 用户明确要求立即操作时调用 control_device，提取品类、功能、打开或关闭；定时要求走场景函数。含糊表达先澄清。\n- 未点名设备时不要自行选第一台。deviceName 可以留空；后端按品类、功能和位置筛选，多台时页面提供选择卡。\n- 若函数仍要求 deviceName 必填，只能使用目录中真实存在的设备号；后端会重新筛选，模型填的设备号不代表用户已选择。\n- 不编造设备、房间、功能或命令，不向用户索要接口字段；准备控制不代表平台已经执行。不要复述这段目录。\n- 设备号 ARROW0217833154885800；品类编码 02；AQW11838-R-AM智能浴霸 浴霸 在线；软件适配 switch_warm_air\n- 设备号 ARROW0117866743127370；品类编码 01；11楼1325马桶 马桶 在线；软件适配 switch_watering,switch_night_light,switch_auto_closing,switch_kicking,switch_auto_oiling_porcelain,switch_onoff\n- 设备号 ARROW0617918533761310；品类编码 06；XL智能镜柜 镜柜 在线；软件适配 switch_night_light,switch_onoff\n离线设备由后端停止下发并说明原因。\n指令参数名都是 switch，取值逐字使用：\n- switch_warm_air switch=on/off 浴霸暖风\n- switch_watering switch=on 马桶大冲\n- switch_night_light switch=on/off 夜灯\n- switch_auto_closing switch=on/off 马桶自动翻盖\n- switch_kicking switch=on/off 马桶脚触感应\n- switch_auto_oiling_porcelain switch=on/off 马桶自动润瓷\n- switch_onoff switch=on/off 开关\n- switch_water_in switch=on/off 浴缸进水\n知识问答直接回答；只有明确的执行要求才调用控制函数，后端返回结果后再反馈。"
+      }
+    },
+    "outgoingQuery": {
+      "sequence": 5,
+      "at": "2026-11-22T15:38:24.765Z",
+      "transport": "BRTC_APPLICATION_FRAME",
+      "direction": "outgoing",
+      "payload": "[T]:打开浴霸暖风\n【家庭设备】这是家庭设备目录和软件适配表，仅作为上下文。实际可选设备由后端重新查询。\n- 先区分用户是在问知识、查询状态，还是明确要求立即控制。介绍功能、询问如何使用、询问耗电、询问是否已经开启，均不调用控制函数。\n- 用户明确要求立即操作时调用 control_device，提取品类、功能、打开或关闭；定时要求走场景函数。含糊表达先澄清。\n- 未点名设备时不要自行选第一台。deviceName 可以留空；后端按品类、功能和位置筛选，多台时页面提供选择卡。\n- 若函数仍要求 deviceName 必填，只能使用目录中真实存在的设备号；后端会重新筛选，模型填的设备号不代表用户已选择。\n- 不编造设备、房间、功能或命令，不向用户索要接口字段；准备控制不代表平台已经执行。不要复述这段目录。\n- 设备号 ARROW0217833154885800；品类编码 02；AQW11838-R-AM智能浴霸 浴霸 在线；软件适配 switch_warm_air\n- 设备号 ARROW0117866743127370；品类编码 01；11楼1325马桶 马桶 在线；软件适配 switch_watering,switch_night_light,switch_auto_closing,switch_kicking,switch_auto_oiling_porcelain,switch_onoff\n- 设备号 ARROW0617918533761310；品类编码 06；XL智能镜柜 镜柜 在线；软件适配 switch_night_light,switch_onoff\n离线设备由后端停止下发并说明原因。\n指令参数名都是 switch，取值逐字使用：\n- switch_warm_air switch=on/off 浴霸暖风\n- switch_watering switch=on 马桶大冲\n- switch_night_light switch=on/off 夜灯\n- switch_auto_closing switch=on/off 马桶自动翻盖\n- switch_kicking switch=on/off 马桶脚触感应\n- switch_auto_oiling_porcelain switch=on/off 马桶自动润瓷\n- switch_onoff switch=on/off 开关\n- switch_water_in switch=on/off 浴缸进水\n知识问答直接回答；只有明确的执行要求才调用控制函数，后端返回结果后再反馈。"
+    },
+    "cloudFunction": {
+      "captured": {
+        "sequence": 7,
+        "at": "2026-11-22T15:38:26.857Z",
+        "transport": "BRTC_APPLICATION_FRAME",
+        "direction": "incoming",
+        "payload": "[F]:{\"session_id\":\"<CLOUD_FUNCTION_SESSION>\",\"content\":\"{\\\"function_name\\\":\\\"control_device\\\",\\\"parameter_list\\\":[{\\\"feature\\\":\\\"warm_air\\\"},{\\\"operation\\\":\\\"on\\\"}]}\",\"query\":\"打开浴霸暖风\\\\n【家庭设备】这是家庭设备目录和软件适配表，仅作为上下文。实际可选设备由后端重新查询。\\\\n- 先区分用户是在问知识、查询状态，还是明确要求立即控制。介绍功能、询问如何使用、询问耗电、询问是否已经开启，均不调用控制函数。\\\\n- 用户明确要求立即操作时调用 control_device，提取品类、功能、打开或关闭；定时要求走场景函数。含糊表达先澄清。\\\\n- 未点名设备时不要自行选第一台。deviceName 可以留空；后端按品类、功能和位置筛选，多台时页面提供选择卡。\\\\n- 若函数仍要求 deviceName 必填，只能使用目录中真实存在的设备号；后端会重新筛选，模型填的设备号不代表用户已选择。\\\\n- 不编造设备、房间、功能或命令，不向用户索要接口字段；准备控制不代表平台已经执行。不要复述这段目录。\\\\n- 设备号 ARROW0217833154885800；品类编码 02；AQW11838-R-AM智能浴霸 浴霸 在线；软件适配 switch_warm_air\\\\n- 设备号 ARROW0117866743127370；品类编码 01；11楼1325马桶 马桶 在线；软件适配 switch_watering,switch_night_light,switch_auto_closing,switch_kicking,switch_auto_oiling_porcelain,switch_onoff\\\\n- 设备号 ARROW0617918533761310；品类编码 06；XL智能镜柜 镜柜 在线；软件适配 switch_night_light,switch_onoff\\\\n离线设备由后端停止下发并说明原因。\\\\n指令参数名都是 switch，取值逐字使用：\\\\n- switch_warm_air switch=on/off 浴霸暖风\\\\n- switch_watering switch=on 马桶大冲\\\\n- switch_night_light switch=on/off 夜灯\\\\n- switch_auto_closing switch=on/off 马桶自动翻盖\\\\n- switch_kicking switch=on/off 马桶脚触感应\\\\n- switch_auto_oiling_porcelain switch=on/off 马桶自动润瓷\\\\n- switch_onoff switch=on/off 开关\\\\n- switch_water_in switch=on/off 浴缸进水\\\\n知识问答直接回答；只有明确的执行要求才调用控制函数，后端返回结果后再反馈。\"}"
+      },
+      "decodedEnvelope": {
+        "session_id": "<CLOUD_FUNCTION_SESSION>",
+        "content": "{\"function_name\":\"control_device\",\"parameter_list\":[{\"feature\":\"warm_air\"},{\"operation\":\"on\"}]}",
+        "query": "打开浴霸暖风\\n【家庭设备】这是家庭设备目录和软件适配表，仅作为上下文。实际可选设备由后端重新查询。\\n- 先区分用户是在问知识、查询状态，还是明确要求立即控制。介绍功能、询问如何使用、询问耗电、询问是否已经开启，均不调用控制函数。\\n- 用户明确要求立即操作时调用 control_device，提取品类、功能、打开或关闭；定时要求走场景函数。含糊表达先澄清。\\n- 未点名设备时不要自行选第一台。deviceName 可以留空；后端按品类、功能和位置筛选，多台时页面提供选择卡。\\n- 若函数仍要求 deviceName 必填，只能使用目录中真实存在的设备号；后端会重新筛选，模型填的设备号不代表用户已选择。\\n- 不编造设备、房间、功能或命令，不向用户索要接口字段；准备控制不代表平台已经执行。不要复述这段目录。\\n- 设备号 ARROW0217833154885800；品类编码 02；AQW11838-R-AM智能浴霸 浴霸 在线；软件适配 switch_warm_air\\n- 设备号 ARROW0117866743127370；品类编码 01；11楼1325马桶 马桶 在线；软件适配 switch_watering,switch_night_light,switch_auto_closing,switch_kicking,switch_auto_oiling_porcelain,switch_onoff\\n- 设备号 ARROW0617918533761310；品类编码 06；XL智能镜柜 镜柜 在线；软件适配 switch_night_light,switch_onoff\\n离线设备由后端停止下发并说明原因。\\n指令参数名都是 switch，取值逐字使用：\\n- switch_warm_air switch=on/off 浴霸暖风\\n- switch_watering switch=on 马桶大冲\\n- switch_night_light switch=on/off 夜灯\\n- switch_auto_closing switch=on/off 马桶自动翻盖\\n- switch_kicking switch=on/off 马桶脚触感应\\n- switch_auto_oiling_porcelain switch=on/off 马桶自动润瓷\\n- switch_onoff switch=on/off 开关\\n- switch_water_in switch=on/off 浴缸进水\\n知识问答直接回答；只有明确的执行要求才调用控制函数，后端返回结果后再反馈。"
+      },
+      "decodedContent": {
+        "function_name": "control_device",
+        "parameter_list": [
+          {
+            "feature": "warm_air"
+          },
+          {
+            "operation": "on"
+          }
+        ]
+      }
+    },
+    "backendFrameExchange": {
+      "sequence": 8,
+      "at": "2026-11-22T15:38:27.809Z",
+      "transport": "HTTP",
+      "path": "/api/frame",
+      "request": {
+        "method": "POST",
+        "body": {
+          "sessionId": "<LOCAL_SESSION>",
+          "frame": "[F]:{\"session_id\":\"<CLOUD_FUNCTION_SESSION>\",\"content\":\"{\\\"function_name\\\":\\\"control_device\\\",\\\"parameter_list\\\":[{\\\"feature\\\":\\\"warm_air\\\"},{\\\"operation\\\":\\\"on\\\"}]}\",\"query\":\"打开浴霸暖风\\\\n【家庭设备】这是家庭设备目录和软件适配表，仅作为上下文。实际可选设备由后端重新查询。\\\\n- 先区分用户是在问知识、查询状态，还是明确要求立即控制。介绍功能、询问如何使用、询问耗电、询问是否已经开启，均不调用控制函数。\\\\n- 用户明确要求立即操作时调用 control_device，提取品类、功能、打开或关闭；定时要求走场景函数。含糊表达先澄清。\\\\n- 未点名设备时不要自行选第一台。deviceName 可以留空；后端按品类、功能和位置筛选，多台时页面提供选择卡。\\\\n- 若函数仍要求 deviceName 必填，只能使用目录中真实存在的设备号；后端会重新筛选，模型填的设备号不代表用户已选择。\\\\n- 不编造设备、房间、功能或命令，不向用户索要接口字段；准备控制不代表平台已经执行。不要复述这段目录。\\\\n- 设备号 ARROW0217833154885800；品类编码 02；AQW11838-R-AM智能浴霸 浴霸 在线；软件适配 switch_warm_air\\\\n- 设备号 ARROW0117866743127370；品类编码 01；11楼1325马桶 马桶 在线；软件适配 switch_watering,switch_night_light,switch_auto_closing,switch_kicking,switch_auto_oiling_porcelain,switch_onoff\\\\n- 设备号 ARROW0617918533761310；品类编码 06；XL智能镜柜 镜柜 在线；软件适配 switch_night_light,switch_onoff\\\\n离线设备由后端停止下发并说明原因。\\\\n指令参数名都是 switch，取值逐字使用：\\\\n- switch_warm_air switch=on/off 浴霸暖风\\\\n- switch_watering switch=on 马桶大冲\\\\n- switch_night_light switch=on/off 夜灯\\\\n- switch_auto_closing switch=on/off 马桶自动翻盖\\\\n- switch_kicking switch=on/off 马桶脚触感应\\\\n- switch_auto_oiling_porcelain switch=on/off 马桶自动润瓷\\\\n- switch_onoff switch=on/off 开关\\\\n- switch_water_in switch=on/off 浴缸进水\\\\n知识问答直接回答；只有明确的执行要求才调用控制函数，后端返回结果后再反馈。\"}",
+          "userText": "打开浴霸暖风",
+          "turnGen": 1
+        }
+      },
+      "status": 200,
+      "response": {
+        "parsed": {
+          "kind": "function",
+          "name": "control_device"
+        },
+        "action": {
+          "action": "device.control",
+          "categoryCode": "",
+          "feature": "warm_air",
+          "operation": "on",
+          "room": "",
+          "deviceAlias": "",
+          "targets": [
+            {
+              "deviceName": "",
+              "cmd": "",
+              "param": "switch",
+              "value": ""
+            }
+          ],
+          "say": ""
+        },
+        "reply": "[F]:{\"session_id\":\"<CLOUD_FUNCTION_SESSION>\",\"result\":\"ok\",\"message\":\"找到 1 台符合条件的浴霸，请在页面选择一台。\",\"post_function\":[{\"type\":\"text\",\"content\":\"找到 1 台符合条件的浴霸，请在页面选择一台。\"}]}",
+        "cards": [
+          {
+            "event": "demo.choose",
+            "data": {
+              "requestId": "dc_f1e16312976da49ef896742b",
+              "choiceId": "dc_f1e16312976da49ef896742b",
+              "homeId": 933,
+              "count": 1,
+              "categoryCode": "02",
+              "category": "浴霸",
+              "choices": [
+                {
+                  "deviceName": "ARROW0217833154885800",
+                  "deviceTagName": "AQW11838-R-AM智能浴霸",
+                  "categoryCode": "02",
+                  "category": "浴霸",
+                  "room": "",
+                  "onlineStatus": 1,
+                  "capability": [
+                    "switch_warm_air"
+                  ],
+                  "capabilitySource": "category-adapter"
+                }
+              ],
+              "say": "找到 1 台符合条件的浴霸，请在页面选择一台。"
+            }
+          }
+        ],
+        "state": "WAITING_SELECTION",
+        "requestId": "dc_f1e16312976da49ef896742b",
+        "catalog": {
+          "totalCount": 3,
+          "categories": [
+            {
+              "categoryCode": "02",
+              "category": "浴霸",
+              "count": 1,
+              "onlineCount": 1
+            },
+            {
+              "categoryCode": "01",
+              "category": "马桶",
+              "count": 1,
+              "onlineCount": 1
+            },
+            {
+              "categoryCode": "06",
+              "category": "镜柜",
+              "count": 1,
+              "onlineCount": 1
+            }
+          ],
+          "categoryCode": "02",
+          "feature": "warm_air",
+          "candidateCount": 1
+        },
+        "spoken": "找到 1 台符合条件的浴霸，请在页面选择一台。",
+        "replayed": false
+      }
+    },
+    "normalizedAction": {
+      "source": "实际/api/frame返回的action；仍未绑定指令和设备",
+      "value": {
+        "action": "device.control",
+        "categoryCode": "",
+        "feature": "warm_air",
+        "operation": "on",
+        "room": "",
+        "deviceAlias": "",
+        "targets": [
+          {
+            "deviceName": "",
+            "cmd": "",
+            "param": "switch",
+            "value": ""
+          }
+        ],
+        "say": ""
+      }
+    },
+    "resolvedAction": {
+      "source": "使用当前源码resolveControl和本轮输入还原；不是内部状态的直接网络抓取",
+      "value": {
+        "action": "device.control",
+        "categoryCode": "02",
+        "feature": "warm_air",
+        "operation": "on",
+        "room": "",
+        "deviceAlias": "",
+        "targets": [
+          {
+            "deviceName": "",
+            "cmd": "switch_warm_air",
+            "param": "switch",
+            "value": "on"
+          }
+        ],
+        "say": ""
+      }
+    },
+    "initialFunctionReply": {
+      "sequence": 9,
+      "at": "2026-11-22T15:38:27.820Z",
+      "transport": "BRTC_APPLICATION_FRAME",
+      "direction": "outgoing",
+      "payload": "[F]:{\"session_id\":\"<CLOUD_FUNCTION_SESSION>\",\"result\":\"ok\",\"message\":\"找到 1 台符合条件的浴霸，请在页面选择一台。\",\"post_function\":[{\"type\":\"text\",\"content\":\"找到 1 台符合条件的浴霸，请在页面选择一台。\"}]}"
+    },
+    "deviceSelectionExchange": {
+      "sequence": 10,
+      "at": "2026-11-22T15:39:21.154Z",
+      "transport": "HTTP",
+      "path": "/api/choose",
+      "request": {
+        "method": "POST",
+        "body": {
+          "sessionId": "<LOCAL_SESSION>",
+          "requestId": "dc_f1e16312976da49ef896742b",
+          "deviceName": "ARROW0217833154885800"
+        }
+      },
+      "status": 200,
+      "response": {
+        "cards": [
+          {
+            "event": "demo.gate",
+            "data": {
+              "decision": "allow",
+              "level": "M",
+              "reasons": [
+                "可以下发"
+              ],
+              "pendingId": null,
+              "say": ""
+            }
+          },
+          {
+            "event": "demo.result",
+            "data": {
+              "kind": "device.control",
+              "actor": "app-user",
+              "sessionId": "<LOCAL_SESSION>",
+              "homeId": 933,
+              "level": "M",
+              "reasons": [
+                "可以下发"
+              ],
+              "decision": "EXECUTED",
+              "trigger": "auto",
+              "targets": [
+                {
+                  "deviceName": "ARROW0217833154885800",
+                  "deviceTagName": "AQW11838-R-AM智能浴霸",
+                  "room": "",
+                  "cmd": "switch_warm_air",
+                  "param": "switch",
+                  "value": "on"
+                }
+              ],
+              "iotRequest": {
+                "method": "POST",
+                "url": "https://api-uatiot.arrowgroup.com.cn/ext/v3/ai/control",
+                "headers": {
+                  "Authorization": "***",
+                  "appPlatform": "arrow",
+                  "Accept": "application/json",
+                  "ArrowDeviceSystemPlatform": "0",
+                  "Content-Type": "application/json"
+                },
+                "body": {
+                  "homeId": 933,
+                  "cmdList": [
+                    {
+                      "deviceName": "ARROW0217833154885800",
+                      "cmd": "switch_warm_air",
+                      "param": "switch",
+                      "value": "on"
+                    }
+                  ]
+                }
+              },
+              "iotResponse": {
+                "success": true,
+                "code": 200,
+                "msg": "OK",
+                "data": null
+              },
+              "result": "SUCCEEDED",
+              "httpStatus": 200,
+              "error": null,
+              "ms": 661,
+              "ok": true
+            }
+          }
+        ],
+        "verdict": {
+          "decision": "allow",
+          "level": "M",
+          "action": {
+            "action": "device.control",
+            "categoryCode": "02",
+            "feature": "warm_air",
+            "operation": "on",
+            "room": "",
+            "deviceAlias": "",
+            "targets": [
+              {
+                "deviceName": "ARROW0217833154885800",
+                "cmd": "switch_warm_air",
+                "param": "switch",
+                "value": "on"
+              }
+            ],
+            "say": "",
+            "homeId": 933
+          },
+          "items": [
+            {
+              "deviceName": "ARROW0217833154885800",
+              "cmd": "switch_warm_air",
+              "param": "switch",
+              "value": "on",
+              "group": "设备指令",
+              "level": "M",
+              "label": "常规开关",
+              "deviceTagName": "AQW11838-R-AM智能浴霸",
+              "room": ""
+            }
+          ],
+          "reasons": [
+            "可以下发"
+          ]
+        },
+        "receipt": "平台已受理。",
+        "spoken": "平台已受理。",
+        "state": "SUCCEEDED",
+        "requestId": "dc_f1e16312976da49ef896742b"
+      }
+    },
+    "finalAction": {
+      "source": "实际/api/choose返回的verdict.action",
+      "value": {
+        "action": "device.control",
+        "categoryCode": "02",
+        "feature": "warm_air",
+        "operation": "on",
+        "room": "",
+        "deviceAlias": "",
+        "targets": [
+          {
+            "deviceName": "ARROW0217833154885800",
+            "cmd": "switch_warm_air",
+            "param": "switch",
+            "value": "on"
+          }
+        ],
+        "say": "",
+        "homeId": 933
+      }
+    },
+    "iot": {
+      "source": "真实执行器的iotRequest/iotResponse快照",
+      "request": {
+        "method": "POST",
+        "url": "https://api-uatiot.arrowgroup.com.cn/ext/v3/ai/control",
+        "headers": {
+          "Authorization": "***",
+          "appPlatform": "arrow",
+          "Accept": "application/json",
+          "ArrowDeviceSystemPlatform": "0",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "homeId": 933,
+          "cmdList": [
+            {
+              "deviceName": "ARROW0217833154885800",
+              "cmd": "switch_warm_air",
+              "param": "switch",
+              "value": "on"
+            }
+          ]
+        }
+      },
+      "response": {
+        "success": true,
+        "code": 200,
+        "msg": "OK",
+        "data": null
+      }
+    },
+    "finalTts": {
+      "sequence": 11,
+      "at": "2026-11-22T15:39:21.191Z",
+      "transport": "BRTC_APPLICATION_FRAME",
+      "direction": "outgoing",
+      "payload": "[TTS]:平台已受理。"
+    }
+  }
+}

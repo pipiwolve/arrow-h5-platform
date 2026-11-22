@@ -1,0 +1,883 @@
+{
+  "note": "固定验收语料；旧小冲11句改为拒绝测试，非产品能力配置。",
+  "customer": [
+    {
+      "id": "customer-01",
+      "query": "打开自动翻盖",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-02",
+      "query": "开启自动翻盖",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-03",
+      "query": "自动翻盖打开",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-04",
+      "query": "把自动翻盖打开",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-05",
+      "query": "开自动翻盖",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-06",
+      "query": "启用自动翻盖",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-07",
+      "query": "自动翻盖开一下",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-08",
+      "query": "关闭自动翻盖",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-09",
+      "query": "关掉自动翻盖",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-10",
+      "query": "自动翻盖关了",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-11",
+      "query": "把自动翻盖关掉",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-12",
+      "query": "停用自动翻盖",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-13",
+      "query": "关闭自动翻盖功能",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-14",
+      "query": "别自动翻盖了",
+      "cmd": "switch_auto_closing",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-15",
+      "query": "打开脚触感应",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-16",
+      "query": "开启脚触感应",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-17",
+      "query": "脚触感应打开",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-18",
+      "query": "把脚触感应打开",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-19",
+      "query": "开脚触感应",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-20",
+      "query": "启用脚触感应",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-21",
+      "query": "脚触感应开一下",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-22",
+      "query": "关闭脚触感应",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-23",
+      "query": "关掉脚触感应",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-24",
+      "query": "脚触感应关了",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-25",
+      "query": "把脚触感应关掉",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-26",
+      "query": "停用脚触感应",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-27",
+      "query": "关闭脚触感应功能",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-28",
+      "query": "别脚触感应了",
+      "cmd": "switch_kicking",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-29",
+      "query": "打开大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-30",
+      "query": "开启大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-31",
+      "query": "开始大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-32",
+      "query": "大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-33",
+      "query": "来个大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-34",
+      "query": "帮我大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-35",
+      "query": "我要大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-36",
+      "query": "启动大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-37",
+      "query": "开大冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-38",
+      "query": "冲一下",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-39",
+      "query": "冲水",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-40",
+      "query": "冲",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-41",
+      "query": "打开小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-42",
+      "query": "开启小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-43",
+      "query": "开始小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-44",
+      "query": "小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-45",
+      "query": "来个小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-46",
+      "query": "帮我小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-47",
+      "query": "我要小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-48",
+      "query": "启动小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-49",
+      "query": "开小冲",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-50",
+      "query": "小便冲水",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-51",
+      "query": "冲小",
+      "cmd": "switch_watering_small",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": null,
+      "noDispatch": true,
+      "reason": "当前软件适配表未支持小冲"
+    },
+    {
+      "id": "customer-52",
+      "query": "打开自动润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-53",
+      "query": "开启自动润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-54",
+      "query": "自动润瓷打开",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-55",
+      "query": "把自动润瓷打开",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-56",
+      "query": "开自动润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-57",
+      "query": "启用自动润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-58",
+      "query": "自动润瓷开一下",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-59",
+      "query": "关闭自动润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-60",
+      "query": "关掉自动润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-61",
+      "query": "自动润瓷关了",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-62",
+      "query": "把自动润瓷关掉",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-63",
+      "query": "停用自动润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-64",
+      "query": "关闭自动润瓷功能",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-65",
+      "query": "别自动润瓷了",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 6
+    },
+    {
+      "id": "customer-66",
+      "query": "打开夜灯",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-67",
+      "query": "开启夜灯",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-68",
+      "query": "夜灯打开",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-69",
+      "query": "把夜灯打开",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-70",
+      "query": "开夜灯",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-71",
+      "query": "启用夜灯",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-72",
+      "query": "夜灯开一下",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-73",
+      "query": "开启夜灯功能",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-74",
+      "query": "关闭夜灯",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-75",
+      "query": "关掉夜灯",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-76",
+      "query": "夜灯关了",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-77",
+      "query": "把夜灯关掉",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-78",
+      "query": "停用夜灯",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-79",
+      "query": "关闭夜灯功能",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    },
+    {
+      "id": "customer-80",
+      "query": "别夜灯了",
+      "cmd": "switch_night_light",
+      "param": "switch",
+      "value": "off",
+      "categoryCode": "01",
+      "count": 9,
+      "categories": [
+        "01",
+        "06"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "negative-01",
+      "query": "介绍一下浴霸的暖风功能",
+      "noDispatch": true,
+      "reason": "知识"
+    },
+    {
+      "id": "negative-02",
+      "query": "浴霸暖风耗电吗",
+      "noDispatch": true,
+      "reason": "知识"
+    },
+    {
+      "id": "negative-03",
+      "query": "怎么打开浴霸暖风",
+      "noDispatch": true,
+      "reason": "方法"
+    },
+    {
+      "id": "negative-04",
+      "query": "浴霸暖风现在开着吗",
+      "noDispatch": true,
+      "reason": "状态"
+    },
+    {
+      "id": "negative-05",
+      "query": "关闭马桶冲水",
+      "noDispatch": true,
+      "reason": "冲水 off 非法"
+    },
+    {
+      "id": "negative-06",
+      "query": "打开浴霸夜灯",
+      "noDispatch": true,
+      "reason": "品类不支持功能"
+    },
+    {
+      "id": "negative-07",
+      "query": "打开设备",
+      "noDispatch": true,
+      "reason": "缺少明确功能"
+    }
+  ],
+  "single": [
+    {
+      "id": "single-flush",
+      "requireCard": true,
+      "query": "打开马桶冲水",
+      "cmd": "switch_watering",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 1
+    },
+    {
+      "id": "single-porcelain",
+      "requireCard": true,
+      "query": "打开马桶润瓷",
+      "cmd": "switch_auto_oiling_porcelain",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "01",
+      "count": 1
+    },
+    {
+      "id": "single-heater",
+      "requireCard": true,
+      "query": "打开浴霸暖风",
+      "cmd": "switch_warm_air",
+      "param": "switch",
+      "value": "on",
+      "categoryCode": "02",
+      "count": 1
+    }
+  ]
+}
